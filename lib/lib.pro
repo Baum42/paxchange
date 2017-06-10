@@ -11,13 +11,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 !custom_standard_plg: DEFINES += PS_STD_PLG=\\\"generic/\\\"
 
 HEADERS += \
-		packagemanagerplugin.h \
-		lib_global.h \
+	packagemanagerplugin.h \
+	lib_global.h \
 	pluginloader.h \
 	exception.h
 
 SOURCES += \
-		packagemanagerplugin.cpp \
+	packagemanagerplugin.cpp \
 	pluginloader.cpp \
 	exception.cpp
 

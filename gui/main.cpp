@@ -27,6 +27,10 @@ int main(int argc, char *argv[])
 	}
 
 	MainWindow w(plugin);
+	QObject::connect(&w, &MainWindow::savePackages,
+					 qApp, [](QStringList s){
+		qDebug() << "Database update:" << s;
+	});
 	w.show();
 
 	return a.exec();

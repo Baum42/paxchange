@@ -102,7 +102,8 @@
           <string>X</string>
          </property>
          <property name="icon">
-          <iconset theme="edit-clear-all-symbolic"/>
+          <iconset theme="edit-clear-all-symbolic">
+           <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="shortcut">
           <string>Esc</string>
@@ -129,7 +130,7 @@
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
-      <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>

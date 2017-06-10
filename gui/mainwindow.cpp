@@ -23,6 +23,12 @@ MainWindow::~MainWindow()
 	delete _ui;
 }
 
+void MainWindow::accept()
+{
+	emit savePackages(_dbModel->stringList());
+	QDialog::accept();
+}
+
 void MainWindow::setupFilters()
 {
 	foreach (auto filter, _plugin->extraFilters()) {

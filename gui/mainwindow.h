@@ -18,6 +18,12 @@ public:
 	explicit MainWindow(PackageManagerPlugin *plugin, QWidget *parent = nullptr);
 	~MainWindow();
 
+public slots:
+	void accept() override;
+
+signals:
+	void savePackages(const QStringList &packages);
+
 private slots:
 	void reloadPackages();
 
