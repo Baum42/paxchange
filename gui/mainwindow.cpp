@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
-#include <QCheckBox>
+#include <QDebug>
 
 MainWindow::MainWindow(PackageManagerPlugin *plugin, QWidget *parent) :
 	QDialog(parent),
@@ -10,6 +9,7 @@ MainWindow::MainWindow(PackageManagerPlugin *plugin, QWidget *parent) :
 {
 	ui->setupUi(this);
 	setupFilters();
+	reloadPackages();
 }
 
 MainWindow::~MainWindow()
@@ -26,10 +26,14 @@ void MainWindow::setupFilters()
 		connect(check, &QCheckBox::clicked,
 				this, &MainWindow::reloadPackages);
 		ui->checkLayout->addWidget(check);
+		_boxes.append(check);
 	}
 }
 
 void MainWindow::reloadPackages()
 {
-
+	QList<bool> filters;
+	foreach(auto box, _boxes)
+		filters.append(box->isChecked());
+	qDebug() << _plugin->listPackages(filters);
 }
