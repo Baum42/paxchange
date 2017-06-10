@@ -9,11 +9,13 @@ class PacState
 
 	Q_PROPERTY(QString name MEMBER name)
 	Q_PROPERTY(bool installed MEMBER installed)
+	Q_PROPERTY(bool baumFilter MEMBER baumFilter)
 
 public:
 	PacState();
 	QString name;
 	bool installed;
+	bool baumFilter;
 };
 
 #endif // PACSTATE_H
