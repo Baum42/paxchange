@@ -23,6 +23,7 @@ public:
 	explicit PluginLoader(QObject *parent = nullptr);
 
 	QStringList availablePlugins() const;
+	QString defaultPlugin() const;
 	PackageManagerPlugin *loadPlugin(const QString &name);
 
 private:

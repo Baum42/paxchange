@@ -8,16 +8,18 @@ VERSION = $$PACSYNCVER
 DEFINES += PACSYNC_LIBRARY
 DEFINES += QT_DEPRECATED_WARNINGS
 
+!custom_standard_plg: DEFINES += PS_STD_PLG=\\\"generic/\\\"
+
 HEADERS += \
 		packagemanagerplugin.h \
 		lib_global.h \
-    pluginloader.h \
-    exception.h
+	pluginloader.h \
+	exception.h
 
 SOURCES += \
 		packagemanagerplugin.cpp \
-    pluginloader.cpp \
-    exception.cpp
+	pluginloader.cpp \
+	exception.cpp
 
 unix {
 	target.path = $$[QT_INSTALL_LIBS]
