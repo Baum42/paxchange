@@ -11,9 +11,9 @@ Project {
 		Depends { name: "Qt"; submodules: ["core", "jsonserializer"] }
 
 		files: [
-			 "lib/packageplugin.cpp",
-			 "lib/packageplugin.h",
-		 ]
+         "lib/packageplugin.cpp",
+         "lib/packageplugin.h",
+     ]
 
 		Group {     // Properties for the produced executable
 			fileTagsFilter: product.type
