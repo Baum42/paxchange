@@ -56,18 +56,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QToolButton" name="toolButton_3">
-         <property name="text">
-          <string>&gt;&gt;</string>
-         </property>
-         <property name="icon">
-          <iconset theme="go-last">
-           <normaloff>.</normaloff>.</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="toolButton">
+        <widget class="QToolButton" name="addButton">
          <property name="text">
           <string>-&gt;</string>
          </property>
@@ -75,10 +64,13 @@
           <iconset theme="go-next">
            <normaloff>.</normaloff>.</iconset>
          </property>
+         <property name="shortcut">
+          <string>Ctrl+Right</string>
+         </property>
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="toolButton_2">
+        <widget class="QToolButton" name="removeButton">
          <property name="text">
           <string>&lt;-</string>
          </property>
@@ -86,16 +78,8 @@
           <iconset theme="go-previous">
            <normaloff>.</normaloff>.</iconset>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="toolButton_4">
-         <property name="text">
-          <string>&lt;&lt;</string>
-         </property>
-         <property name="icon">
-          <iconset theme="go-first">
-           <normaloff>.</normaloff>.</iconset>
+         <property name="shortcut">
+          <string>Ctrl+Left</string>
          </property>
         </widget>
        </item>
@@ -111,6 +95,19 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QToolButton" name="clearAllButton">
+         <property name="text">
+          <string>X</string>
+         </property>
+         <property name="icon">
+          <iconset theme="edit-clear-all-symbolic"/>
+         </property>
+         <property name="shortcut">
+          <string>Esc</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -142,22 +139,6 @@
  <connections>
   <connection>
    <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>528</x>
-     <y>573</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>407</x>
-     <y>490</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
    <signal>rejected()</signal>
    <receiver>MainWindow</receiver>
    <slot>reject()</slot>
@@ -169,6 +150,22 @@
     <hint type="destinationlabel">
      <x>397</x>
      <y>526</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>528</x>
+     <y>573</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>407</x>
+     <y>490</y>
     </hint>
    </hints>
   </connection>
