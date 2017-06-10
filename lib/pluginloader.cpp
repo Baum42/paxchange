@@ -1,6 +1,8 @@
 #include "pluginloader.h"
 #include <QDir>
 #include <QJsonArray>
+#include <QJsonValue>
+#include <QDebug>
 #ifndef QT_NO_DEBUG
 #include <QCoreApplication>
 #else
@@ -25,8 +27,10 @@ PluginLoader::PluginLoader(QObject *parent) :
 		if(meta["iid"].toString() == PackageManagerPlugin_iid) {
 			auto keys = meta["meta"].toObject()["keys"].toArray();
 			if(!keys.isEmpty()) {
-				foreach (auto key, keys)
-					_availablePlugins.insert(key, loader);
+				foreach (auto key, keys) {
+					qDebug() << "Found plugin for key" << key.toString();
+					_availablePlugins.insert(key.toString(), loader);
+				}
 				continue;
 			}
 		}
