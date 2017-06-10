@@ -27,7 +27,7 @@ public:
 	virtual void startUninstallation(const QStringList &packages, bool noConfirm) = 0;
 
 signals:
-	void operationCompleted(bool success, const QString &message);
+	void operationCompleted();
 	void packagesChanged(const QStringList &added, const QStringList &removed);
 };
 
