@@ -40,8 +40,10 @@ QStringList PacDummyPlugin::listPackages(QList<bool> extraFilters)
 
 void PacDummyPlugin::startInstallation(const QStringList &packages, bool noConfirm)
 {
+	Q_UNUSED(noConfirm);
+
 	QProcess process;
-	process.start(qgetenv("TERM"), QStringList() << "-e" << (QStringList() << "echo install" << (noConfirm ? "--noConfirm" : "") << "&&" << qgetenv("SHELL")).join(" "));
+	process.start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
 
 	foreach (auto package, packages) {
 		for(int i = 0; i < _pacList.size(); i++){
@@ -53,8 +55,10 @@ void PacDummyPlugin::startInstallation(const QStringList &packages, bool noConfi
 
 void PacDummyPlugin::startUninstallation(const QStringList &packages, bool noConfirm)
 {
+	Q_UNUSED(noConfirm);
+
 	QProcess process;
-	process.start(qgetenv("TERM"), QStringList() << "-e" << (QStringList() << "echo uninstall" << (noConfirm ? "--noConfirm" : "") << "&&" << qgetenv("SHELL")).join(" "));
+	process.start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
 
 	foreach (auto package, packages) {
 		for(int i = 0; i < _pacList.size(); i++){
