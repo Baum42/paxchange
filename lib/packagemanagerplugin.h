@@ -5,6 +5,8 @@
 
 #include <QObject>
 
+#define PackageManagerPlugin_iid "de.baum42.pacsync.PackageManagerPlugin"
+
 class LIBSHARED_EXPORT PackageManagerPlugin : public QObject
 {
 public:
