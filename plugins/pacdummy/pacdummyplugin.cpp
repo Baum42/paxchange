@@ -50,6 +50,8 @@ void PacDummyPlugin::startInstallation(const QStringList &packages, bool noConfi
 				_pacList[i].installed = true;
 		}
 	}
+
+	emit operationCompleted();
 }
 
 void PacDummyPlugin::startUninstallation(const QStringList &packages, bool noConfirm)
@@ -64,4 +66,6 @@ void PacDummyPlugin::startUninstallation(const QStringList &packages, bool noCon
 				_pacList[i].installed = false;
 		}
 	}
+
+	emit operationCompleted();
 }

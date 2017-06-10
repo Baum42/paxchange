@@ -55,7 +55,7 @@ void MainWindow::on_addButton_clicked()
 	auto indexes = _ui->localPackageListView->selectionModel()->selectedIndexes();
 	auto targetList = _dbModel->stringList();
 	foreach(auto index, indexes) {
-		auto pkgName = _pkgModel->data(index).toString();
+		auto pkgName = _pkgModel->data(index, Qt::DisplayRole).toString();//TODO 5.9
 		if(!targetList.contains(pkgName))
 			targetList.append(pkgName);
 	}
