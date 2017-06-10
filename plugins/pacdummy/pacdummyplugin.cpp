@@ -1,12 +1,12 @@
 #include "pacdummyplugin.h"
 
 #include <QFile>
-#include <QProcess>
 
 
 PacDummyPlugin::PacDummyPlugin(QObject *parent) :
 	PackageManagerPlugin(parent),
-	_js(new QJsonSerializer(this))
+	_js(new QJsonSerializer(this)),
+	_process(new QProcess(this))
 {
 	QJsonSerializer::registerListConverters<PacState>();
 	QFile file(SRCDIR + QStringLiteral("/fakeman.json"));
@@ -40,8 +40,9 @@ QStringList PacDummyPlugin::listPackages(QList<bool> extraFilters)
 
 void PacDummyPlugin::startInstallation(const QStringList &packages, bool noConfirm)
 {
-	QProcess process;
-	process.start(qgetenv("TERM"), QStringList() << "-e" << "echo install" << (noConfirm ? "--noConfirm" : "") << qgetenv("SHELL"));
+	Q_UNUSED(noConfirm);
+
+	_process->start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
 
 	foreach (auto package, packages) {
 		for(int i = 0; i < _pacList.size(); i++){
@@ -53,8 +54,9 @@ void PacDummyPlugin::startInstallation(const QStringList &packages, bool noConfi
 
 void PacDummyPlugin::startUninstallation(const QStringList &packages, bool noConfirm)
 {
-	QProcess process;
-	process.start(qgetenv("TERM"), QStringList() << "-e" << "echo uninstall" << (noConfirm ? "--noConfirm" : "") << qgetenv("SHELL"));
+	Q_UNUSED(noConfirm);
+
+	_process->start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
 
 	foreach (auto package, packages) {
 		for(int i = 0; i < _pacList.size(); i++){

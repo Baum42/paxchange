@@ -5,6 +5,7 @@
 
 #include <packagemanagerplugin.h>
 #include <QJsonSerializer>
+#include <QProcess>
 
 class PacDummyPlugin : public PackageManagerPlugin
 {
@@ -23,6 +24,7 @@ public:
 private:
 	QList<PacState> _pacList;
 	QJsonSerializer *_js;
+	QProcess *_process;
 };
 
 #endif // PACDUMMYPLUGIN_H
