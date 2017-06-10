@@ -3,7 +3,9 @@
 
 #include "lib_global.h"
 
-class LIBSHARED_EXPORT PackageManagerPlugin
+#include <QtGui/QGenericPlugin>
+
+class LIBSHARED_EXPORT PackageManagerPlugin : public QGenericPlugin
 {
 
 public:
