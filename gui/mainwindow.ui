@@ -22,32 +22,7 @@
      <property name="title">
       <string>Filters</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QCheckBox" name="explicitCheckbox">
-        <property name="text">
-         <string>Explicitly installed packages only</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="leafCheckbox">
-        <property name="text">
-         <string>Leaf-Packages only</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="aurCheckbox">
-        <property name="text">
-         <string>Include AUR packages</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <layout class="QVBoxLayout" name="checkLayout"/>
     </widget>
    </item>
    <item>

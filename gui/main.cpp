@@ -15,17 +15,18 @@ int main(int argc, char *argv[])
 	parser.process(a);
 
 	PluginLoader loader;
+	PackageManagerPlugin *plugin = nullptr;
 	try {
 		auto key = parser.value("p");
 		if(key.isEmpty())
 			key = loader.defaultPlugin();
-		auto plugin = loader.loadPlugin(key);
+		plugin = loader.loadPlugin(key);
 	} catch(PluginLoadException &e) {
 		qDebug() << e.what();
 		return EXIT_FAILURE;
 	}
 
-	MainWindow w;
+	MainWindow w(plugin);
 	w.show();
 
 	return a.exec();
