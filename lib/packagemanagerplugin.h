@@ -9,6 +9,8 @@
 
 class LIBSHARED_EXPORT PackageManagerPlugin : public QObject
 {
+	Q_OBJECT
+
 public:
 	struct FilterInfo {
 		QString text;

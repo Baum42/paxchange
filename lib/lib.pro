@@ -10,12 +10,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
 		packagemanagerplugin.h \
-		lib_global.h
+		lib_global.h \
+    pluginloader.h \
+    exception.h
 
 SOURCES += \
-		packagemanagerplugin.cpp
+		packagemanagerplugin.cpp \
+    pluginloader.cpp \
+    exception.cpp
 
 unix {
-	target.path = /usr/lib
+	target.path = $$[QT_INSTALL_LIBS]
 	INSTALLS += target
 }
