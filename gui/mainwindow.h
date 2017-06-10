@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QCheckBox>
+#include <QStringListModel>
 #include "packagemanagerplugin.h"
 
 namespace Ui {
@@ -20,10 +21,16 @@ public:
 private slots:
 	void reloadPackages();
 
+	void on_addButton_clicked();
+	void on_removeButton_clicked();
+	void on_clearAllButton_clicked();
+
 private:
-	Ui::MainWindow *ui;
+	Ui::MainWindow *_ui;
 	PackageManagerPlugin *_plugin;
 	QList<QCheckBox*> _boxes;
+
+	QStringListModel *_pkgModel;
 
 	void setupFilters();
 };
