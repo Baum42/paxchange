@@ -1,0 +1,22 @@
+[
+  {
+    "name" : "nano",
+    "installed" : true,
+    "baumFilter" : true
+  },
+  {
+    "name" : "htop",
+    "installed" : true,
+    "baumFilter" : false
+  },
+  {
+    "name" : "baum",
+    "installed" : true,
+    "baumFilter" : true
+  },
+  {
+    "name" : "google-chrome",
+    "installed" : false,
+    "baumFilter" : false
+  }
+]
