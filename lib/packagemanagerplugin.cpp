@@ -1,6 +1,6 @@
 #include "packagemanagerplugin.h"
 
 
-PackageManagerPlugin::PackageManagerPlugin()
-{
-}
+PackageManagerPlugin::PackageManagerPlugin(QObject *parent) :
+	QObject(parent)
+{}
