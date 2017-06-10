@@ -1,12 +1,12 @@
 #include "pacdummyplugin.h"
 
 #include <QFile>
-#include <QProcess>
 
 
 PacDummyPlugin::PacDummyPlugin(QObject *parent) :
 	PackageManagerPlugin(parent),
-	_js(new QJsonSerializer(this))
+	_js(new QJsonSerializer(this)),
+	_process(new QProcess(this))
 {
 	QJsonSerializer::registerListConverters<PacState>();
 	QFile file(SRCDIR + QStringLiteral("/fakeman.json"));
@@ -42,8 +42,7 @@ void PacDummyPlugin::startInstallation(const QStringList &packages, bool noConfi
 {
 	Q_UNUSED(noConfirm);
 
-	QProcess process;
-	process.start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
+	_process->start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
 
 	foreach (auto package, packages) {
 		for(int i = 0; i < _pacList.size(); i++){
@@ -57,8 +56,7 @@ void PacDummyPlugin::startUninstallation(const QStringList &packages, bool noCon
 {
 	Q_UNUSED(noConfirm);
 
-	QProcess process;
-	process.start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
+	_process->start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
 
 	foreach (auto package, packages) {
 		for(int i = 0; i < _pacList.size(); i++){
