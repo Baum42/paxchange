@@ -9,10 +9,10 @@ PacDummyPlugin::PacDummyPlugin(QObject *parent) :
 	_js(new QJsonSerializer(this))
 {
 	QJsonSerializer::registerListConverters<PacState>();
-	/*QFile file(SRCDIR + QStringLiteral("/pacdummy.json"));
+	QFile file(SRCDIR + QStringLiteral("/fakeman.json"));
 	file.open(QIODevice::ReadOnly);
 
-	_pacList = _js->deserializeFrom<QList<PacState>>(&file);*/
+	_pacList = _js->deserializeFrom<QList<PacState>>(&file);
 }
 
 
@@ -40,10 +40,26 @@ QStringList PacDummyPlugin::listPackages(QList<bool> extraFilters)
 
 void PacDummyPlugin::startInstallation(const QStringList &packages, bool noConfirm)
 {
-	/*QProcess process;
-	process.start("gedit", QStringList() << docPath);*/
+	QProcess process;
+	process.start(qgetenv("TERM"), QStringList() << "-e" << "echo install" << (noConfirm ? "--noConfirm" : "") << qgetenv("SHELL"));
+
+	foreach (auto package, packages) {
+		for(int i = 0; i < _pacList.size(); i++){
+			if(_pacList[i].name == package)
+				_pacList[i].installed = true;
+		}
+	}
 }
 
 void PacDummyPlugin::startUninstallation(const QStringList &packages, bool noConfirm)
 {
+	QProcess process;
+	process.start(qgetenv("TERM"), QStringList() << "-e" << "echo uninstall" << (noConfirm ? "--noConfirm" : "") << qgetenv("SHELL"));
+
+	foreach (auto package, packages) {
+		for(int i = 0; i < _pacList.size(); i++){
+			if(_pacList[i].name == package)
+				_pacList[i].installed = false;
+		}
+	}
 }
