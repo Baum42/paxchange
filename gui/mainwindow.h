@@ -31,6 +31,7 @@ private:
 	QList<QCheckBox*> _boxes;
 
 	QStringListModel *_pkgModel;
+	QStringListModel *_dbModel;
 
 	void setupFilters();
 };

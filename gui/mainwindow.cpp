@@ -7,10 +7,12 @@ MainWindow::MainWindow(PackageManagerPlugin *plugin, QWidget *parent) :
 	_ui(new Ui::MainWindow),
 	_plugin(plugin),
 	_boxes(),
-	_pkgModel(new QStringListModel(this))
+	_pkgModel(new QStringListModel(this)),
+	_dbModel(new QStringListModel(this))
 {
 	_ui->setupUi(this);
 	_ui->localPackageListView->setModel(_pkgModel);
+	_ui->dbPackageListView->setModel(_dbModel);
 
 	setupFilters();
 	reloadPackages();
@@ -44,12 +46,24 @@ void MainWindow::reloadPackages()
 
 void MainWindow::on_addButton_clicked()
 {
-
+	auto indexes = _ui->localPackageListView->selectionModel()->selectedIndexes();
+	auto targetList = _dbModel->stringList();
+	foreach(auto index, indexes) {
+		auto pkgName = _pkgModel->data(index).toString();
+		if(!targetList.contains(pkgName))
+			targetList.append(pkgName);
+	}
+	_dbModel->setStringList(targetList);
 }
 
 void MainWindow::on_removeButton_clicked()
 {
-
+	auto indexes = _ui->dbPackageListView->selectionModel()->selectedIndexes();
+	QList<QPersistentModelIndex> pIndexes;
+	foreach(auto index, indexes)
+		pIndexes.append(index);
+	foreach(auto index, pIndexes)
+		_dbModel->removeRow(index.row(), index.parent());
 }
 
 void MainWindow::on_clearAllButton_clicked()
