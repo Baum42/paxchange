@@ -8,15 +8,23 @@
 #include "packagemanagerplugin.h"
 
 namespace Ui {
-class EditPackagesDialog;
+class EditPackagesWidget;
 }
 
-class EditPackagesDialog : public QDialog
+class EditPackagesWidget : public QWidget
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QStringList packages READ packages WRITE setPackages USER true)
+
 public:
-	static QStringList editPackages(const QStringList &currentPackages = QStringList(), bool *ok = nullptr, QWidget *parent = nullptr);
+	explicit EditPackagesWidget(QWidget *parent = nullptr);
+	~EditPackagesWidget();
+
+	QStringList packages() const;
+
+public slots:
+	void setPackages(QStringList packages);
 
 private slots:
 	void reloadPackages();
@@ -27,7 +35,7 @@ private slots:
 	void on_regexEdit_textChanged(const QString &text);
 
 private:
-	Ui::EditPackagesDialog *_ui;
+	Ui::EditPackagesWidget *_ui;
 	PackageManagerPlugin *_plugin;
 	QList<QCheckBox*> _boxes;
 
@@ -35,9 +43,6 @@ private:
 	QSortFilterProxyModel *_pkgFilter;
 	QStringListModel *_dbModel;
 	QSortFilterProxyModel *_dbFilter;
-
-	explicit EditPackagesDialog(QWidget *parent = nullptr);
-	~EditPackagesDialog();
 
 	void setupFilters();
 };

@@ -4,7 +4,8 @@
 #include <QDebug>
 #include <dialogmaster.h>
 
-#include "editpackagesdialog.h"
+#include "contentdialog.h"
+#include "editpackageswidget.h"
 
 TrayControl::TrayControl(QObject *parent) :
 	QObject(parent),
@@ -30,7 +31,7 @@ TrayControl::~TrayControl()
 
 void TrayControl::debugMainWindow()
 {
-	qDebug() << EditPackagesDialog::editPackages();
+	qDebug() << ContentDialog::execute<EditPackagesWidget, QStringList>();
 }
 
 void TrayControl::about()

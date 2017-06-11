@@ -1,12 +1,12 @@
-#include "editpackagesdialog.h"
-#include "ui_editpackagesdialog.h"
+#include "editpackageswidget.h"
+#include "ui_editpackageswidget.h"
 #include "pluginloader.h"
 #include <QDebug>
 #include <dialogmaster.h>
 
-EditPackagesDialog::EditPackagesDialog(QWidget *parent) :
-	QDialog(parent),
-	_ui(new Ui::EditPackagesDialog),
+EditPackagesWidget::EditPackagesWidget(QWidget *parent) :
+	QWidget(parent),
+	_ui(new Ui::EditPackagesWidget),
 	_plugin(PluginLoader::plugin()),
 	_boxes(),
 	_pkgModel(new QStringListModel(this)),
@@ -15,7 +15,6 @@ EditPackagesDialog::EditPackagesDialog(QWidget *parent) :
 	_dbFilter(new QSortFilterProxyModel(this))
 {
 	_ui->setupUi(this);
-	DialogMaster::masterDialog(this);
 
 	_pkgFilter->setSourceModel(_pkgModel);
 	_pkgFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -24,39 +23,34 @@ EditPackagesDialog::EditPackagesDialog(QWidget *parent) :
 	_dbFilter->setSourceModel(_dbModel);
 	_dbFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
 	_ui->dbPackageListView->setModel(_dbFilter);
+
+	setupFilters();
+	reloadPackages();
 }
 
-EditPackagesDialog::~EditPackagesDialog()
+EditPackagesWidget::~EditPackagesWidget()
 {
 	delete _ui;
 }
 
-QStringList EditPackagesDialog::editPackages(const QStringList &currentPackages, bool *ok, QWidget *parent)
+QStringList EditPackagesWidget::packages() const
 {
-	EditPackagesDialog dialog(parent);
-	dialog._dbModel->setStringList(currentPackages);
-	dialog.setupFilters();
-	dialog.reloadPackages();
-
-	if(dialog.exec() == QDialog::Accepted) {
-		if(ok)
-			*ok = true;
-		return dialog._dbModel->stringList();
-	} else {
-		if(ok)
-			*ok = false;
-		return currentPackages;
-	}
+	return _dbModel->stringList();
 }
 
-void EditPackagesDialog::setupFilters()
+void EditPackagesWidget::setPackages(QStringList packages)
+{
+	_dbModel->setStringList(packages);
+}
+
+void EditPackagesWidget::setupFilters()
 {
 	foreach (auto filter, _plugin->extraFilters()) {
 		auto check = new QCheckBox(filter.text, _ui->groupBox);
 		check->setToolTip(filter.toolTip);
 		check->setChecked(filter.defaultValue);
 		connect(check, &QCheckBox::clicked,
-				this, &EditPackagesDialog::reloadPackages);
+				this, &EditPackagesWidget::reloadPackages);
 		_ui->checkLayout->addWidget(check);
 		_boxes.append(check);
 	}
@@ -65,7 +59,7 @@ void EditPackagesDialog::setupFilters()
 		_ui->groupBox->setVisible(false);
 }
 
-void EditPackagesDialog::reloadPackages()
+void EditPackagesWidget::reloadPackages()
 {
 	QList<bool> filters;
 	foreach(auto box, _boxes)
@@ -73,7 +67,7 @@ void EditPackagesDialog::reloadPackages()
 	_pkgModel->setStringList(_plugin->listPackages(filters));
 }
 
-void EditPackagesDialog::on_addButton_clicked()
+void EditPackagesWidget::on_addButton_clicked()
 {
 	auto indexes = _ui->localPackageListView->selectionModel()->selectedIndexes();
 	auto targetList = _dbModel->stringList();
@@ -85,7 +79,7 @@ void EditPackagesDialog::on_addButton_clicked()
 	_dbModel->setStringList(targetList);
 }
 
-void EditPackagesDialog::on_removeButton_clicked()
+void EditPackagesWidget::on_removeButton_clicked()
 {
 	auto indexes = _ui->dbPackageListView->selectionModel()->selectedIndexes();
 	QList<QPersistentModelIndex> pIndexes;
@@ -95,13 +89,13 @@ void EditPackagesDialog::on_removeButton_clicked()
 		_dbModel->removeRow(index.row(), index.parent());
 }
 
-void EditPackagesDialog::on_clearAllButton_clicked()
+void EditPackagesWidget::on_clearAllButton_clicked()
 {
 	_ui->localPackageListView->clearSelection();
 	_ui->dbPackageListView->clearSelection();
 }
 
-void EditPackagesDialog::on_regexEdit_textChanged(const QString &text)
+void EditPackagesWidget::on_regexEdit_textChanged(const QString &text)
 {
 	QRegExp regex(text, Qt::CaseInsensitive);
 	if(regex.isValid()) {
