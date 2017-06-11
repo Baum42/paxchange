@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="main.svg">icons/pacsync.svg</file>
+    </qresource>
+</RCC>
