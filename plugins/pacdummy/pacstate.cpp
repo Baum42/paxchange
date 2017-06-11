@@ -1,5 +1,8 @@
 #include "pacstate.h"
 
-PacState::PacState()
+PacState::PacState() :
+	name(""),
+	installed(false),
+	baumFilter(false)
 {
 }

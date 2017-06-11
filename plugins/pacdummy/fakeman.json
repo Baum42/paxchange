@@ -10,6 +10,11 @@
     "baumFilter" : false
   },
   {
+    "name" : "pacaur",
+    "installed" : true,
+    "baumFilter" : true
+  },
+  {
     "name" : "baum",
     "installed" : true,
     "baumFilter" : true
