@@ -1,8 +1,8 @@
-#include "mainwindow.h"
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDebug>
 #include "pluginloader.h"
+#include "editpackagesdialog.h"
 
 static void setupParser(QCommandLineParser &parser);
 
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	qDebug() << MainWindow::editPackages(plugin, nullptr, {"nano"});
+	qDebug() << EditPackagesDialog::editPackages(plugin, nullptr, {"nano"});
 	//TODO return a.exec();
 	return 0;
 }

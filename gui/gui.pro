@@ -8,14 +8,14 @@ VERSION = $$PACSYNCVER
 DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
-		mainwindow.h
+    editpackagesdialog.h
 
 SOURCES += \
 		main.cpp \
-		mainwindow.cpp
+    editpackagesdialog.cpp
 
 FORMS += \
-		mainwindow.ui
+    editpackagesdialog.ui
 
 unix {
 	target.path = $$[QT_INSTALL_BINS]

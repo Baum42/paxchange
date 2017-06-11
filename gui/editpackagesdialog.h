@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef EDITPACKAGESDIALOG_H
+#define EDITPACKAGESDIALOG_H
 
 #include <QDialog>
 #include <QCheckBox>
@@ -7,18 +7,15 @@
 #include "packagemanagerplugin.h"
 
 namespace Ui {
-class MainWindow;
+class EditPackagesDialog;
 }
 
-class MainWindow : public QDialog
+class EditPackagesDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
 	static QStringList editPackages(PackageManagerPlugin *plugin, QWidget *parent = nullptr, const QStringList &currentPackages = QStringList(), bool *ok = nullptr);
-
-signals:
-	void savePackages(const QStringList &packages);
 
 private slots:
 	void reloadPackages();
@@ -28,17 +25,17 @@ private slots:
 	void on_clearAllButton_clicked();
 
 private:
-	Ui::MainWindow *_ui;
+	Ui::EditPackagesDialog *_ui;
 	PackageManagerPlugin *_plugin;
 	QList<QCheckBox*> _boxes;
 
 	QStringListModel *_pkgModel;
 	QStringListModel *_dbModel;
 
-	explicit MainWindow(QWidget *parent = nullptr);
-	~MainWindow();
+	explicit EditPackagesDialog(QWidget *parent = nullptr);
+	~EditPackagesDialog();
 
 	void setupFilters();
 };
 
-#endif // MAINWINDOW_H
+#endif // EDITPACKAGESDIALOG_H

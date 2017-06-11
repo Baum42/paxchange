@@ -1,10 +1,10 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "editpackagesdialog.h"
+#include "ui_editpackagesdialog.h"
 #include <QDebug>
 
-MainWindow::MainWindow(QWidget *parent) :
+EditPackagesDialog::EditPackagesDialog(QWidget *parent) :
 	QDialog(parent),
-	_ui(new Ui::MainWindow),
+	_ui(new Ui::EditPackagesDialog),
 	_plugin(nullptr),
 	_boxes(),
 	_pkgModel(new QStringListModel(this)),
@@ -15,14 +15,14 @@ MainWindow::MainWindow(QWidget *parent) :
 	_ui->dbPackageListView->setModel(_dbModel);
 }
 
-MainWindow::~MainWindow()
+EditPackagesDialog::~EditPackagesDialog()
 {
 	delete _ui;
 }
 
-QStringList MainWindow::editPackages(PackageManagerPlugin *plugin, QWidget *parent, const QStringList &currentPackages, bool *ok)
+QStringList EditPackagesDialog::editPackages(PackageManagerPlugin *plugin, QWidget *parent, const QStringList &currentPackages, bool *ok)
 {
-	MainWindow dialog(parent);
+	EditPackagesDialog dialog(parent);
 	dialog._plugin = plugin;
 	dialog._dbModel->setStringList(currentPackages);
 	dialog.setupFilters();
@@ -39,14 +39,14 @@ QStringList MainWindow::editPackages(PackageManagerPlugin *plugin, QWidget *pare
 	}
 }
 
-void MainWindow::setupFilters()
+void EditPackagesDialog::setupFilters()
 {
 	foreach (auto filter, _plugin->extraFilters()) {
 		auto check = new QCheckBox(filter.text, _ui->groupBox);
 		check->setToolTip(filter.toolTip);
 		check->setChecked(filter.defaultValue);
 		connect(check, &QCheckBox::clicked,
-				this, &MainWindow::reloadPackages);
+				this, &EditPackagesDialog::reloadPackages);
 		_ui->checkLayout->addWidget(check);
 		_boxes.append(check);
 	}
@@ -55,7 +55,7 @@ void MainWindow::setupFilters()
 		_ui->groupBox->setVisible(false);
 }
 
-void MainWindow::reloadPackages()
+void EditPackagesDialog::reloadPackages()
 {
 	QList<bool> filters;
 	foreach(auto box, _boxes)
@@ -63,7 +63,7 @@ void MainWindow::reloadPackages()
 	_pkgModel->setStringList(_plugin->listPackages(filters));
 }
 
-void MainWindow::on_addButton_clicked()
+void EditPackagesDialog::on_addButton_clicked()
 {
 	auto indexes = _ui->localPackageListView->selectionModel()->selectedIndexes();
 	auto targetList = _dbModel->stringList();
@@ -75,7 +75,7 @@ void MainWindow::on_addButton_clicked()
 	_dbModel->setStringList(targetList);
 }
 
-void MainWindow::on_removeButton_clicked()
+void EditPackagesDialog::on_removeButton_clicked()
 {
 	auto indexes = _ui->dbPackageListView->selectionModel()->selectedIndexes();
 	QList<QPersistentModelIndex> pIndexes;
@@ -85,7 +85,7 @@ void MainWindow::on_removeButton_clicked()
 		_dbModel->removeRow(index.row(), index.parent());
 }
 
-void MainWindow::on_clearAllButton_clicked()
+void EditPackagesDialog::on_clearAllButton_clicked()
 {
 	_ui->localPackageListView->clearSelection();
 	_ui->dbPackageListView->clearSelection();

@@ -3,6 +3,7 @@ TEMPLATE = subdirs
 SUBDIRS += \
 	lib \
 	gui \
-    plugins
+	plugins
 
 gui.depends += lib
+plugins.depends += lib
