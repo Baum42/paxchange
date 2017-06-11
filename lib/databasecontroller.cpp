@@ -13,7 +13,7 @@ DatabaseController::DatabaseController(QObject *parent) :
 	_packageDatabase(),
 	watcher(new QFileSystemWatcher(this))
 {
-	_settings->beginGroup(QStringLiteral("DatabaseController"));
+	_settings->beginGroup(QStringLiteral("lib/dbcontroller"));
 
 	if(_settings->contains(QStringLiteral("path")))
 		loadDb(_settings->value(QStringLiteral("path")).toString());
@@ -21,11 +21,7 @@ DatabaseController::DatabaseController(QObject *parent) :
 
 QStringList DatabaseController::listPackages() const
 {
-	QStringList list;
-	foreach (auto p, _packageDatabase.packages) {
-		list.append(p.name);
-	}
-	return list;
+	return _packageDatabase.packages.keys();
 }
 
 QString DatabaseController::currentPath() const
@@ -37,13 +33,14 @@ void DatabaseController::createDb(const QString &path, const QStringList &packag
 {//TODO Exceptioon
 	PackageDatabase p;
 	foreach (auto package, packages) {
-		p.packages.append({package, false});
+		p.packages[package] = {package, false};
 	}
 
 	QFile file(path);
 	if(!file.open(QIODevice::WriteOnly))
 		;//throw ..
 
+	p.parseHarderToJson(_js);
 	_js->serializeTo<PackageDatabase>(&file, p);
 	file.close();
 
@@ -59,14 +56,16 @@ void DatabaseController::loadDb(const QString &path)
 	_dbFile->setFileName(path);
 
 	_packageDatabase = _js->deserializeFrom<PackageDatabase>(_dbFile);
+	_packageDatabase.parseHarderFromJson(_js);//TODO use QHash later
 
 	watcher->addPath(_dbFile->fileName());
 }
 
 void DatabaseController::updateDb(const QStringList &packages)
 {
-	/*foreach (auto package, packages) {//TODO use QHASH
-		_packageDatabase.
+	/*foreach (auto package, packages) {
+		if(_packageDatabase.packages.contains(package))
+
 	}*/
 }
 

@@ -1,6 +1,7 @@
 #ifndef PACKAGEDATABASE_H
 #define PACKAGEDATABASE_H
 
+#include <QJsonSerializer>
 #include <QObject>
 
 
@@ -24,7 +25,7 @@ class PackageDatabase
 	Q_GADGET
 
 	Q_PROPERTY(Mode mode MEMBER mode)
-	Q_PROPERTY(QList<PackageInfo> packages MEMBER packages)
+	Q_PROPERTY(QJsonObject packages MEMBER _pkg)
 
 public:
 	enum Mode{
@@ -35,7 +36,13 @@ public:
 
 	PackageDatabase();
 	Mode mode;
-	QList<PackageInfo> packages;
+	QHash<QString, PackageInfo> packages;
+
+	void parseHarderFromJson(QJsonSerializer *s);
+	void parseHarderToJson(QJsonSerializer *s);
+
+private:
+	QJsonObject _pkg;
 };
 
 #endif // PACKAGEDATABASE_H
