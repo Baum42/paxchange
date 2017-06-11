@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>fakeman.json</file>
+    </qresource>
+</RCC>
