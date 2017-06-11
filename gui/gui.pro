@@ -25,16 +25,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(vendor/vendor.pri)
 
 HEADERS += \
-	editpackagesdialog.h \
-    traycontrol.h
+    traycontrol.h \
+    contentdialog.h \
+    editpackageswidget.h
 
 SOURCES += \
 		main.cpp \
-	editpackagesdialog.cpp \
-    traycontrol.cpp
+    traycontrol.cpp \
+    contentdialog.cpp \
+    editpackageswidget.cpp
 
 FORMS += \
-	editpackagesdialog.ui
+    editpackageswidget.ui
 
 unix {
 	target.path = $$[QT_INSTALL_BINS]

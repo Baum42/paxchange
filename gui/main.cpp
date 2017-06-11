@@ -3,7 +3,7 @@
 #include <QDebug>
 #include "traycontrol.h"
 #include "pluginloader.h"
-#include "editpackagesdialog.h"
+#include "editpackageswidget.h"
 
 static void setupParser(QCommandLineParser &parser);
 
