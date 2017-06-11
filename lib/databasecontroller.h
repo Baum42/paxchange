@@ -37,6 +37,7 @@ private:
 	QJsonSerializer *_js;
 	PackageDatabase _packageDatabase;
 	QFileSystemWatcher *_watcher;
+	bool _loaded;
 
 	void cleanUp();
 };

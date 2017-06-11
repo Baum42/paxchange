@@ -14,13 +14,14 @@ DatabaseController::DatabaseController(QObject *parent) :
 	_dbFile(new QFile()),
 	_js(new QJsonSerializer(this)),
 	_packageDatabase(),
-	_watcher(new QFileSystemWatcher(this))
+	_watcher(new QFileSystemWatcher(this)),
+	_loaded(false)
 {
 	_settings->beginGroup(QStringLiteral("lib/dbcontroller"));
 
 	try {
-	if(_settings->contains(QStringLiteral("path")))
-		loadDb(_settings->value(QStringLiteral("path")).toString());
+		if(_settings->contains(QStringLiteral("path")))
+			loadDb(_settings->value(QStringLiteral("path")).toString());
 	} catch(QException &e) {
 		qCritical() << e.what();
 		cleanUp();
@@ -45,15 +46,14 @@ QString DatabaseController::currentPath() const
 void DatabaseController::createDb(const QString &path, const QStringList &packages)
 {//TODO Exceptioon
 	PackageDatabase p;
-	foreach (auto package, packages) {
+	foreach (auto package, packages)
 		p.packages[package] = {package, false};
-	}
 
 	QFile file(path);
 	if(!file.open(QIODevice::WriteOnly))
 		;//throw ..
 
-	p.parseHarderToJson(_js);
+	p.parseHarderToJson(_js);//TODO use QHash later
 	_js->serializeTo<PackageDatabase>(&file, p);
 	file.close();
 
@@ -73,19 +73,35 @@ void DatabaseController::loadDb(const QString &path)
 	_packageDatabase.parseHarderFromJson(_js);//TODO use QHash later
 
 	_watcher->addPath(_dbFile->fileName());
+	_loaded = true;
 }
 
 bool DatabaseController::isLoaded() const
 {
-	return 42;
+	return _loaded;
 }
 
 void DatabaseController::updateDb(const QStringList &packages)
 {
-	/*foreach (auto package, packages) {
-		if(_packageDatabase.packages.contains(package))
+	auto set = QSet<QString>::fromList(packages);
+	for(auto it = _packageDatabase.packages.begin(); it != _packageDatabase.packages.end(); ) {
+		if(!set.contains(it.key()))
+			it = _packageDatabase.packages.erase(it);
+		else{
+			set.remove(it.key());
+			it++;
+		}
+	}
 
-	}*/
+	foreach (auto package, set)
+		_packageDatabase.packages[package] = {package};
+
+	if(!_dbFile->open(QIODevice::WriteOnly))
+		;//throw ..
+
+	_packageDatabase.parseHarderToJson(_js);//TODO use QHash later
+	_js->serializeTo<PackageDatabase>(_dbFile, _packageDatabase);
+	_dbFile->close();
 }
 
 void DatabaseController::sync()
