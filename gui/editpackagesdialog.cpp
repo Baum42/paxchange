@@ -14,6 +14,9 @@ EditPackagesDialog::EditPackagesDialog(QWidget *parent) :
 	_ui->setupUi(this);
 	_ui->localPackageListView->setModel(_pkgModel);
 	_ui->dbPackageListView->setModel(_dbModel);
+
+	connect(_ui->regexEdit, &QLineEdit::textChanged,
+			this, &EditPackagesDialog::reloadPackages);
 }
 
 EditPackagesDialog::~EditPackagesDialog()
@@ -57,10 +60,17 @@ void EditPackagesDialog::setupFilters()
 
 void EditPackagesDialog::reloadPackages()
 {
-	QList<bool> filters;
-	foreach(auto box, _boxes)
-		filters.append(box->isChecked());
-	_pkgModel->setStringList(_plugin->listPackages(filters));
+	QRegularExpression regex(_ui->regexEdit->text(),
+							 QRegularExpression::CaseInsensitiveOption |
+							 QRegularExpression::DontCaptureOption |
+							 QRegularExpression::DontAutomaticallyOptimizeOption);
+	if(regex.isValid()) {
+		QList<bool> filters;
+		foreach(auto box, _boxes)
+			filters.append(box->isChecked());
+		auto packages = _plugin->listPackages(filters);
+		_pkgModel->setStringList(packages.filter(regex));
+	}
 }
 
 void EditPackagesDialog::on_addButton_clicked()

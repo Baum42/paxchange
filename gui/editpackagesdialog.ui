@@ -26,7 +26,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="regexEdit">
      <property name="placeholderText">
       <string>Enter a regular expression to filter the lists below</string>
      </property>
@@ -184,7 +184,7 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>lineEdit</tabstop>
+  <tabstop>regexEdit</tabstop>
   <tabstop>localPackageListView</tabstop>
   <tabstop>dbPackageListView</tabstop>
   <tabstop>addButton</tabstop>
