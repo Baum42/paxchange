@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDebug>
+#include "traycontrol.h"
 #include "pluginloader.h"
 #include "editpackagesdialog.h"
 
@@ -28,9 +29,8 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	qDebug() << EditPackagesDialog::editPackages({"nano"});
-	//TODO return a.exec();
-	return 0;
+	TrayControl tray;
+	return a.exec();
 }
 
 static void setupParser(QCommandLineParser &parser)

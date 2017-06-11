@@ -25,11 +25,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(vendor/vendor.pri)
 
 HEADERS += \
-	editpackagesdialog.h
+	editpackagesdialog.h \
+    traycontrol.h
 
 SOURCES += \
 		main.cpp \
-	editpackagesdialog.cpp
+	editpackagesdialog.cpp \
+    traycontrol.cpp
 
 FORMS += \
 	editpackagesdialog.ui
