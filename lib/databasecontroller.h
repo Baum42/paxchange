@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QSettings>
 #include <QJsonSerializer>
+#include <QFileSystemWatcher>
 
 class DatabaseController : public QObject
 {
@@ -16,11 +17,12 @@ public:
 
 	QStringList listPackages() const;
 	QString currentPath() const;
-
-public slots:
 	void createDb(const QString &path, const QStringList &packages);
 	void loadDb(const QString &path);
+
+public slots:
 	void updateDb(const QStringList &packages);
+	void sync();
 
 signals:
 	void syncCheck(const QStringList &packages);
@@ -30,8 +32,7 @@ private:
 	QFile *_dbFile;
 	QJsonSerializer *_js;
 	PackageDatabase _packageDatabase;
-
-	void removeOldDb();
+	QFileSystemWatcher *watcher;
 };
 
 #endif // DATABASECONTROLLER_H

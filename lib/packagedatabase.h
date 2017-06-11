@@ -12,7 +12,7 @@ class PackageInfo
 	Q_PROPERTY(bool conflict MEMBER conflict)
 
 public:
-	PackageInfo();
+	PackageInfo(QString name = "", bool conflict = false);
 	QString name;
 	bool conflict;
 

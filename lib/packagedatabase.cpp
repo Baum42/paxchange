@@ -2,9 +2,10 @@
 
 
 
-PackageInfo::PackageInfo() :
-	name(""),
-	conflict(false)
+
+PackageInfo::PackageInfo(QString name, bool conflict) :
+	name(name),
+	conflict(conflict)
 {
 
 }
