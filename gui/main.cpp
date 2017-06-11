@@ -29,8 +29,7 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	DatabaseWizard w;
-	return w.exec();
+	return DatabaseWizard::run();
 
 	TrayControl tray;
 	return a.exec();

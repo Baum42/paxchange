@@ -8,10 +8,12 @@ class DatabaseWizard : public QWizard
 	Q_OBJECT
 public:
 	explicit DatabaseWizard(QWidget *parent = nullptr);
+	~DatabaseWizard();
 
-signals:
+	static bool run();
 
 public slots:
+	void accept() override;
 };
 
 #endif // DATABASEWIZARD_H
