@@ -27,16 +27,24 @@ include(vendor/vendor.pri)
 HEADERS += \
     traycontrol.h \
     contentdialog.h \
-    editpackageswidget.h
+    editpackageswidget.h \
+    databasewizard.h \
+    dbselectionpage.h \
+    dbpathpage.h
 
 SOURCES += \
 		main.cpp \
     traycontrol.cpp \
     contentdialog.cpp \
-    editpackageswidget.cpp
+    editpackageswidget.cpp \
+    databasewizard.cpp \
+    dbselectionpage.cpp \
+    dbpathpage.cpp
 
 FORMS += \
-    editpackageswidget.ui
+    editpackageswidget.ui \
+    dbselectionpage.ui \
+    dbpathpage.ui
 
 unix {
 	target.path = $$[QT_INSTALL_BINS]
@@ -52,3 +60,6 @@ DEPENDPATH += $$PWD/../lib
 
 RESOURCES += \
 	pacsync_gui.qrc
+
+DISTFILES += \
+    application-x-pacsync.xml

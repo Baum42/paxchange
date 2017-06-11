@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+	<mime-type type="application/x-pacsync-database">
+		<comment>Package database of Pac-Sync</comment>
+		<comment xml:lang="en">Package database of Pac-Sync</comment>
+		<icon name="x-pacsync-database"/>
+		<glob pattern="*.psdb"/>
+	</mime-type>
+</mime-info>
