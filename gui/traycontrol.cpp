@@ -44,10 +44,8 @@ void TrayControl::editPackages()
 	auto packages = ContentDialog::execute<EditPackagesWidget, QStringList>(ctr->listPackages(),
 																			nullptr,
 																			&ok);
-	if(ok) {
+	if(ok)
 		ctr->updateDb(packages);
-		ctr->sync();
-	}
 }
 
 void TrayControl::about()
