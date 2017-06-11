@@ -32,6 +32,7 @@ void PackageDatabase::parseHarderFromJson(QJsonSerializer *s)
 
 void PackageDatabase::parseHarderToJson(QJsonSerializer *s)
 {
+	_pkg = QJsonObject();
 	for(auto it = packages.constBegin(); it != packages.constEnd(); it++)
 		_pkg.insert(it.key(), s->serialize<PackageInfo>(it.value()));
 }

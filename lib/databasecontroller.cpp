@@ -111,6 +111,8 @@ void DatabaseController::sync()
 
 void DatabaseController::cleanUp()
 {
+	if(_dbFile->isOpen())
+		_dbFile->close();
 	_packageDatabase = PackageDatabase();
 	_watcher->deleteLater();
 	_watcher = new QFileSystemWatcher(this);
