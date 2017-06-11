@@ -11,8 +11,11 @@
 class DatabaseController : public QObject
 {
 	Q_OBJECT
+
 public:
 	explicit DatabaseController(QObject *parent = nullptr);
+
+	static DatabaseController *instance();
 
 	QStringList listPackages() const;
 	QString currentPath() const;

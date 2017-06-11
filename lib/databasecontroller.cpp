@@ -1,6 +1,9 @@
 #include "databasecontroller.h"
 
 #include <QCoreApplication>
+#include <QGlobalStatic>
+
+Q_GLOBAL_STATIC(DatabaseController, _instance)
 
 static void setupDatabaseController();
 Q_COREAPP_STARTUP_FUNCTION(setupDatabaseController)
@@ -14,6 +17,11 @@ DatabaseController::DatabaseController(QObject *parent) :
 {
 	_settings->beginGroup(QStringLiteral("DatabaseController"));
 	//TODOload db
+}
+
+DatabaseController *DatabaseController::instance()
+{
+	return _instance;
 }
 
 QStringList DatabaseController::listPackages() const
