@@ -6,7 +6,7 @@
 #include <QFile>
 #include <QObject>
 #include <QSettings>
-#include <QJsonSerializer>
+#include <QtJsonSerializer/QJsonSerializer>
 
 class DatabaseController : public QObject
 {

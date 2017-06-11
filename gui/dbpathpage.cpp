@@ -1,5 +1,9 @@
 #include "dbpathpage.h"
 #include "ui_dbpathpage.h"
+#include <QAbstractButton>
+#include <QDebug>
+#include <dialogmaster.h>
+#include <databasecontroller.h>
 
 DbPathPage::DbPathPage(QWidget *parent) :
 	QWizardPage(parent),
@@ -26,6 +30,7 @@ void DbPathPage::initializePage()
 		setTitle(tr("Open Existing Database"));
 		setSubTitle(tr("Open an existing Pac-Sync database to be used for this machine."));
 		ui->pathedit->setPathMode(QPathEdit::ExistingFile);
+		ui->pathedit->setPath(DatabaseController::instance()->currentPath());
 		setFinalPage(true);
 	}
 }
@@ -35,4 +40,20 @@ void DbPathPage::cleanupPage()
 	setTitle(QString());
 	setSubTitle(QString());
 	ui->pathedit->clear();
+}
+
+bool DbPathPage::validatePage()
+{
+	if(field(QStringLiteral("isLoad")).toBool()) {
+		try {
+			DatabaseController::instance()->loadDb(ui->pathedit->path());
+			return true;
+		} catch(QException &e) {
+			qWarning() << e.what();
+			DialogMaster::warning(this, tr("Failed to load database!"));
+			return false;
+		}
+	}
+
+	return true;
 }

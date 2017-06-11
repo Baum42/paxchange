@@ -3,6 +3,7 @@
 
 #include "dbselectionpage.h"
 #include "dbpathpage.h"
+#include "dbpackagespage.h"
 
 DatabaseWizard::DatabaseWizard(QWidget *parent) :
 	QWizard(parent)
@@ -16,4 +17,5 @@ DatabaseWizard::DatabaseWizard(QWidget *parent) :
 
 	addPage(new DbSelectionPage(this));
 	addPage(new DbPathPage(this));
+	addPage(new DbPackagesPage(this));
 }

@@ -17,6 +17,7 @@ public:
 
 	void initializePage() override;
 	void cleanupPage() override;
+	bool validatePage() override;
 
 private:
 	Ui::DbPathPage *ui;
