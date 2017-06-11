@@ -1,11 +1,12 @@
 #include "editpackagesdialog.h"
 #include "ui_editpackagesdialog.h"
+#include "pluginloader.h"
 #include <QDebug>
 
 EditPackagesDialog::EditPackagesDialog(QWidget *parent) :
 	QDialog(parent),
 	_ui(new Ui::EditPackagesDialog),
-	_plugin(nullptr),
+	_plugin(PluginLoader::plugin()),
 	_boxes(),
 	_pkgModel(new QStringListModel(this)),
 	_dbModel(new QStringListModel(this))
@@ -20,10 +21,9 @@ EditPackagesDialog::~EditPackagesDialog()
 	delete _ui;
 }
 
-QStringList EditPackagesDialog::editPackages(PackageManagerPlugin *plugin, QWidget *parent, const QStringList &currentPackages, bool *ok)
+QStringList EditPackagesDialog::editPackages(QWidget *parent, const QStringList &currentPackages, bool *ok)
 {
 	EditPackagesDialog dialog(parent);
-	dialog._plugin = plugin;
 	dialog._dbModel->setStringList(currentPackages);
 	dialog.setupFilters();
 	dialog.reloadPackages();

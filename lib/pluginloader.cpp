@@ -3,14 +3,19 @@
 #include <QJsonArray>
 #include <QJsonValue>
 #include <QDebug>
+#include <QGlobalStatic>
 #ifndef QT_NO_DEBUG
 #include <QCoreApplication>
 #else
 #include <QLibraryInfo>
 #endif
 
+Q_GLOBAL_STATIC(PluginLoader, pluginLoader)
+
 PluginLoader::PluginLoader(QObject *parent) :
-	QObject(parent)
+	QObject(parent),
+	_availablePlugins(),
+	_plugin(nullptr)
 {
 #ifndef QT_NO_DEBUG
 	auto path = QCoreApplication::applicationDirPath() + QStringLiteral("/..");
@@ -39,9 +44,34 @@ PluginLoader::PluginLoader(QObject *parent) :
 	}
 }
 
-QStringList PluginLoader::availablePlugins() const
+QStringList PluginLoader::availablePlugins()
 {
-	return _availablePlugins.keys();
+	return pluginLoader->_availablePlugins.keys();
+}
+
+void PluginLoader::loadPlugin(const QString &overwrite)
+{
+	auto name = overwrite;
+	if(name.isEmpty())
+		name = pluginLoader->defaultPlugin();
+
+	auto loader = pluginLoader->_availablePlugins.value(name, nullptr);
+	if(!loader)
+		throw PluginLoadException(QStringLiteral("The given key does not name a plugin"));
+
+	if(loader->load()) {
+		auto object = loader->instance();
+		pluginLoader->_plugin = qobject_cast<PackageManagerPlugin*>(object);
+		if(!pluginLoader->_plugin)
+			throw PluginLoadException(QStringLiteral("The loaded plugin is not a PackageManagerPlugin"));
+	} else
+		throw PluginLoadException(QStringLiteral("Failed to load plugin with error : %1")
+								  .arg(loader->errorString()));
+}
+
+PackageManagerPlugin *PluginLoader::plugin()
+{
+	return pluginLoader->_plugin;
 }
 
 QString PluginLoader::defaultPlugin() const
@@ -52,23 +82,7 @@ QString PluginLoader::defaultPlugin() const
 		throw PluginLoadException("No default plugin is defined or available");
 }
 
-PackageManagerPlugin *PluginLoader::loadPlugin(const QString &name)
-{
-	auto loader = _availablePlugins.value(name, nullptr);
-	if(!loader)
-		throw PluginLoadException(QStringLiteral("The given key does not name a plugin"));
 
-	if(loader->load()) {
-		auto object = loader->instance();
-		auto plugin = qobject_cast<PackageManagerPlugin*>(object);
-		if(plugin)
-			return plugin;
-		else
-			throw PluginLoadException(QStringLiteral("The loaded plugin is not a PackageManagerPlugin"));
-	} else
-		throw PluginLoadException(QStringLiteral("Failed to load plugin with error : %1")
-								  .arg(loader->errorString()));
-}
 
 PluginLoadException::PluginLoadException(const QString &what) :
 	Exception(what)

@@ -15,19 +15,14 @@ int main(int argc, char *argv[])
 	setupParser(parser);
 	parser.process(a);
 
-	PluginLoader loader;
-	PackageManagerPlugin *plugin = nullptr;
 	try {
-		auto key = parser.value("p");
-		if(key.isEmpty())
-			key = loader.defaultPlugin();
-		plugin = loader.loadPlugin(key);
+		PluginLoader::loadPlugin(parser.value("p"));
 	} catch(PluginLoadException &e) {
-		qDebug() << e.what();
+		qCritical() << e.what();
 		return EXIT_FAILURE;
 	}
 
-	qDebug() << EditPackagesDialog::editPackages(plugin, nullptr, {"nano"});
+	qDebug() << EditPackagesDialog::editPackages(nullptr, {"nano"});
 	//TODO return a.exec();
 	return 0;
 }

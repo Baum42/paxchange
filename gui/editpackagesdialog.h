@@ -15,7 +15,7 @@ class EditPackagesDialog : public QDialog
 	Q_OBJECT
 
 public:
-	static QStringList editPackages(PackageManagerPlugin *plugin, QWidget *parent = nullptr, const QStringList &currentPackages = QStringList(), bool *ok = nullptr);
+	static QStringList editPackages(QWidget *parent = nullptr, const QStringList &currentPackages = QStringList(), bool *ok = nullptr);
 
 private slots:
 	void reloadPackages();

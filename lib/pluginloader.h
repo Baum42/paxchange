@@ -22,12 +22,16 @@ class PluginLoader : public QObject
 public:
 	explicit PluginLoader(QObject *parent = nullptr);
 
-	QStringList availablePlugins() const;
-	QString defaultPlugin() const;
-	PackageManagerPlugin *loadPlugin(const QString &name);
+	static QStringList availablePlugins();
+	static void loadPlugin(const QString &overwrite);
+
+	static PackageManagerPlugin *plugin();
 
 private:
 	QHash<QString, QPluginLoader*> _availablePlugins;
+	PackageManagerPlugin *_plugin;
+
+	QString defaultPlugin() const;
 };
 
 #endif // PLUGINLOADER_H
