@@ -26,6 +26,9 @@ DatabaseController::DatabaseController(QObject *parent) :
 		qCritical() << e.what();
 		cleanUp();
 	}
+
+	connect(_watcher, &QFileSystemWatcher::fileChanged,
+			this, &DatabaseController::fileChanged);
 }
 
 DatabaseController *DatabaseController::instance()
