@@ -1,6 +1,9 @@
 #include "databasecontroller.h"
 
 #include <QCoreApplication>
+#include <QGlobalStatic>
+
+Q_GLOBAL_STATIC(DatabaseController, _instance)
 
 static void setupDatabaseController();
 Q_COREAPP_STARTUP_FUNCTION(setupDatabaseController)
@@ -17,6 +20,11 @@ DatabaseController::DatabaseController(QObject *parent) :
 
 	if(_settings->contains(QStringLiteral("path")))
 		loadDb(_settings->value(QStringLiteral("path")).toString());
+}
+
+DatabaseController *DatabaseController::instance()
+{
+	return _instance;
 }
 
 QStringList DatabaseController::listPackages() const

@@ -35,7 +35,7 @@ QVariant ContentDialog::execute(QWidget *contentWidget, const QVariant &defaultV
 	prop.write(contentWidget, defaultValue);
 
 	QSettings settings;
-	settings.beginGroup(QStringLiteral("contentDialog"));
+	settings.beginGroup(QStringLiteral("gui/dialogs"));
 	if(settings.contains(contentWidget->objectName()))
 		dialog.restoreGeometry(settings.value(contentWidget->objectName()).toByteArray());
 	else

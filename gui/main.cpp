@@ -3,7 +3,7 @@
 #include <QDebug>
 #include "traycontrol.h"
 #include "pluginloader.h"
-#include "editpackageswidget.h"
+#include "databasewizard.h"
 
 static void setupParser(QCommandLineParser &parser);
 
@@ -28,6 +28,8 @@ int main(int argc, char *argv[])
 		qCritical() << e.what();
 		return EXIT_FAILURE;
 	}
+
+	return DatabaseWizard::run();
 
 	TrayControl tray;
 	return a.exec();

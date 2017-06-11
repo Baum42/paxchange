@@ -25,6 +25,7 @@ public:
 
 public slots:
 	void setPackages(QStringList packages);
+	void clear();
 
 private slots:
 	void reloadPackages();

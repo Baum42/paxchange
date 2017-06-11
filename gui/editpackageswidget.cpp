@@ -43,6 +43,16 @@ void EditPackagesWidget::setPackages(QStringList packages)
 	_dbModel->setStringList(packages);
 }
 
+void EditPackagesWidget::clear()
+{
+	_dbModel->setStringList(QStringList());
+	auto filters = _plugin->extraFilters();
+	for(auto i = 0; i < _boxes.size(); i++)
+		_boxes[i]->setChecked(filters[i].defaultValue);
+	_ui->regexEdit->clear();
+	_ui->clearAllButton->click();
+}
+
 void EditPackagesWidget::setupFilters()
 {
 	foreach (auto filter, _plugin->extraFilters()) {

@@ -5,13 +5,13 @@ QT       += core gui widgets
 TARGET = pacsync
 VERSION = $$PACSYNCVER
 
-#RC_ICONS += ./icons/pacsync.ico
+RC_ICONS += ./icons/pacsync.ico
 QMAKE_TARGET_COMPANY = "Baum42"
 QMAKE_TARGET_PRODUCT = $$TARGET
 QMAKE_TARGET_DESCRIPTION = "Pac-Sync"
 QMAKE_TARGET_COPYRIGHT = "Felix Barz & Mike Zeller"
 
-ICON = main.icns
+ICON = ./icons/pacsync.icns
 QMAKE_TARGET_BUNDLE_PREFIX = de.baum42
 
 DEFINES += "TARGET=\\\"$$TARGET\\\""
@@ -25,18 +25,28 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(vendor/vendor.pri)
 
 HEADERS += \
-    traycontrol.h \
-    contentdialog.h \
-    editpackageswidget.h
+	traycontrol.h \
+	contentdialog.h \
+	editpackageswidget.h \
+	databasewizard.h \
+	dbselectionpage.h \
+	dbpathpage.h \
+	dbpackagespage.h
 
 SOURCES += \
 		main.cpp \
-    traycontrol.cpp \
-    contentdialog.cpp \
-    editpackageswidget.cpp
+	traycontrol.cpp \
+	contentdialog.cpp \
+	editpackageswidget.cpp \
+	databasewizard.cpp \
+	dbselectionpage.cpp \
+	dbpathpage.cpp \
+	dbpackagespage.cpp
 
 FORMS += \
-    editpackageswidget.ui
+	editpackageswidget.ui \
+	dbselectionpage.ui \
+	dbpathpage.ui
 
 unix {
 	target.path = $$[QT_INSTALL_BINS]
@@ -52,3 +62,6 @@ DEPENDPATH += $$PWD/../lib
 
 RESOURCES += \
 	pacsync_gui.qrc
+
+DISTFILES += \
+	application-x-pacsync.xml
