@@ -14,7 +14,8 @@ public:
 	~TrayControl();
 
 private slots:
-	void debugMainWindow();
+	void changeDatabase();
+	void editPackages();
 
 	void about();
 

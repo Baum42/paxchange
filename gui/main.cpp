@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDebug>
+#include <databasecontroller.h>
 #include "traycontrol.h"
 #include "pluginloader.h"
 #include "databasewizard.h"
@@ -29,7 +30,10 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	return DatabaseWizard::run();
+	if(!DatabaseController::instance()->isLoaded()) {
+		if(!DatabaseWizard::run())
+			return EXIT_SUCCESS;
+	}
 
 	TrayControl tray;
 	return a.exec();
