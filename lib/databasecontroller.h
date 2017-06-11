@@ -22,6 +22,7 @@ public:
 	QString currentPath() const;
 	void createDb(const QString &path, const QStringList &packages);
 	void loadDb(const QString &path);
+	bool isLoaded() const;
 
 public slots:
 	void updateDb(const QStringList &packages);

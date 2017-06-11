@@ -75,6 +75,11 @@ void DatabaseController::loadDb(const QString &path)
 	_watcher->addPath(_dbFile->fileName());
 }
 
+bool DatabaseController::isLoaded() const
+{
+	return 42;
+}
+
 void DatabaseController::updateDb(const QStringList &packages)
 {
 	/*foreach (auto package, packages) {
