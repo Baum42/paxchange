@@ -8,7 +8,7 @@
 
 TrayControl::TrayControl(QObject *parent) :
 	QObject(parent),
-	_tray(new QSystemTrayIcon(QApplication::windowIcon(), this)),
+	_tray(new QSystemTrayIcon(QIcon(QStringLiteral(":/icons/tray.ico")), this)),
 	_trayMenu(new QMenu())
 {
 	_trayMenu->addAction(QIcon::fromTheme("package-upgrade"), tr("Edit Packages"), this, &TrayControl::debugMainWindow);
