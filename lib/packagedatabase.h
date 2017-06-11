@@ -1,7 +1,7 @@
 #ifndef PACKAGEDATABASE_H
 #define PACKAGEDATABASE_H
 
-#include <QJsonSerializer>
+#include <QtJsonSerializer/QJsonSerializer>
 #include <QObject>
 
 

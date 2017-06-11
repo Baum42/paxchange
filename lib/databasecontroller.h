@@ -35,7 +35,9 @@ private:
 	QFile *_dbFile;
 	QJsonSerializer *_js;
 	PackageDatabase _packageDatabase;
-	QFileSystemWatcher *watcher;
+	QFileSystemWatcher *_watcher;
+
+	void cleanUp();
 };
 
 #endif // DATABASECONTROLLER_H

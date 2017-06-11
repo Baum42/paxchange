@@ -14,12 +14,17 @@ DatabaseController::DatabaseController(QObject *parent) :
 	_dbFile(new QFile()),
 	_js(new QJsonSerializer(this)),
 	_packageDatabase(),
-	watcher(new QFileSystemWatcher(this))
+	_watcher(new QFileSystemWatcher(this))
 {
 	_settings->beginGroup(QStringLiteral("lib/dbcontroller"));
 
+	try {
 	if(_settings->contains(QStringLiteral("path")))
 		loadDb(_settings->value(QStringLiteral("path")).toString());
+	} catch(QException &e) {
+		qCritical() << e.what();
+		cleanUp();
+	}
 }
 
 DatabaseController *DatabaseController::instance()
@@ -57,16 +62,17 @@ void DatabaseController::createDb(const QString &path, const QStringList &packag
 
 void DatabaseController::loadDb(const QString &path)
 {//TODO Exceptioon
-	watcher->deleteLater();
-	watcher = new QFileSystemWatcher(this);
+	cleanUp();
 
 	_settings->setValue(QStringLiteral("path"), path);
 	_dbFile->setFileName(path);
 
+	_dbFile->open(QIODevice::ReadOnly);
 	_packageDatabase = _js->deserializeFrom<PackageDatabase>(_dbFile);
+	_dbFile->close();
 	_packageDatabase.parseHarderFromJson(_js);//TODO use QHash later
 
-	watcher->addPath(_dbFile->fileName());
+	_watcher->addPath(_dbFile->fileName());
 }
 
 void DatabaseController::updateDb(const QStringList &packages)
@@ -80,6 +86,13 @@ void DatabaseController::updateDb(const QStringList &packages)
 void DatabaseController::sync()
 {
 
+}
+
+void DatabaseController::cleanUp()
+{
+	_packageDatabase = PackageDatabase();
+	_watcher->deleteLater();
+	_watcher = new QFileSystemWatcher(this);
 }
 
 static void setupDatabaseController(){
