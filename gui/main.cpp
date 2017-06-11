@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	qDebug() << EditPackagesDialog::editPackages(nullptr, {"nano"});
+	qDebug() << EditPackagesDialog::editPackages({"nano"});
 	//TODO return a.exec();
 	return 0;
 }

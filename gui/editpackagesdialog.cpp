@@ -2,6 +2,7 @@
 #include "ui_editpackagesdialog.h"
 #include "pluginloader.h"
 #include <QDebug>
+#include <dialogmaster.h>
 
 EditPackagesDialog::EditPackagesDialog(QWidget *parent) :
 	QDialog(parent),
@@ -14,6 +15,7 @@ EditPackagesDialog::EditPackagesDialog(QWidget *parent) :
 	_dbFilter(new QSortFilterProxyModel(this))
 {
 	_ui->setupUi(this);
+	DialogMaster::masterDialog(this);
 
 	_pkgFilter->setSourceModel(_pkgModel);
 	_pkgFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -29,7 +31,7 @@ EditPackagesDialog::~EditPackagesDialog()
 	delete _ui;
 }
 
-QStringList EditPackagesDialog::editPackages(QWidget *parent, const QStringList &currentPackages, bool *ok)
+QStringList EditPackagesDialog::editPackages(const QStringList &currentPackages, bool *ok, QWidget *parent)
 {
 	EditPackagesDialog dialog(parent);
 	dialog._dbModel->setStringList(currentPackages);
