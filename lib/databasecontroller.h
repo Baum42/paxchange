@@ -31,6 +31,9 @@ public slots:
 signals:
 	void syncCheck(const QStringList &packages);
 
+private slots:
+	void fileChanged();
+
 private:
 	QSettings *_settings;
 	QFile *_dbFile;
@@ -40,6 +43,7 @@ private:
 	bool _loaded;
 
 	void cleanUp();
+	void readFile();
 };
 
 #endif // DATABASECONTROLLER_H

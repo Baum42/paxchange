@@ -67,10 +67,7 @@ void DatabaseController::loadDb(const QString &path)
 	_settings->setValue(QStringLiteral("path"), path);
 	_dbFile->setFileName(path);
 
-	_dbFile->open(QIODevice::ReadOnly);
-	_packageDatabase = _js->deserializeFrom<PackageDatabase>(_dbFile);
-	_dbFile->close();
-	_packageDatabase.parseHarderFromJson(_js);//TODO use QHash later
+	readFile();
 
 	_watcher->addPath(_dbFile->fileName());
 	_loaded = true;
@@ -106,7 +103,19 @@ void DatabaseController::updateDb(const QStringList &packages)
 
 void DatabaseController::sync()
 {
+	Q_UNIMPLEMENTED();
+}
 
+void DatabaseController::fileChanged()
+{
+	try {
+		readFile();
+		sync();
+	} catch(QException &e){
+		qWarning() << "Failed to reload changed file:" << e.what();
+		if(_dbFile->isOpen())
+			_dbFile->close();
+	}
 }
 
 void DatabaseController::cleanUp()
@@ -114,8 +123,16 @@ void DatabaseController::cleanUp()
 	if(_dbFile->isOpen())
 		_dbFile->close();
 	_packageDatabase = PackageDatabase();
-	_watcher->deleteLater();
-	_watcher = new QFileSystemWatcher(this);
+	_watcher->removePaths(_watcher->files());
+}
+
+void DatabaseController::readFile()
+{
+	_dbFile->open(QIODevice::ReadOnly);
+	auto pdb = _js->deserializeFrom<PackageDatabase>(_dbFile);
+	_dbFile->close();
+	pdb.parseHarderFromJson(_js);	//TODO use QHash later
+	_packageDatabase = pdb;
 }
 
 static void setupDatabaseController(){
