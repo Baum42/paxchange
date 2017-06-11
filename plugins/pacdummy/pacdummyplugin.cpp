@@ -35,11 +35,13 @@ QStringList PacDummyPlugin::listPackages(QList<bool> extraFilters)
 		if(!pacState.installed)
 			continue;
 
-		if(!extraFilters[0] && !extraFilters[1]
-				|| (extraFilters[0] && !extraFilters[1] && pacState.baumFilter)
-				|| (extraFilters[1] && !extraFilters[0] && pacState._42Filter)
-				|| (extraFilters[0] && extraFilters[1] && pacState.baumFilter && pacState._42Filter))
-			list.append(pacState.name);
+		if(extraFilters[0] && !pacState.filterBaum)
+			continue;
+
+		if(extraFilters[1] && !pacState.filter42)
+			continue;
+
+		list.append(pacState.name);
 	}
 	return list;
 }

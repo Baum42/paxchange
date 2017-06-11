@@ -1,32 +1,62 @@
 [
-  {
-    "name" : "nano",
-    "installed" : true,
-    "baumFilter" : true,
-    "42" : false
-  },
-  {
-    "name" : "htop",
-    "installed" : true,
-    "baumFilter" : false,
-    "42" : false
-  },
-  {
-    "name" : "pacaur",
-    "installed" : true,
-    "baumFilter" : true,
-    "42" : false
-  },
-  {
-    "name" : "baum",
-    "installed" : true,
-    "baumFilter" : true,
-    "42" : true
-  },
-  {
-    "name" : "google-chrome",
-    "installed" : false,
-    "baumFilter" : false,
-    "42" : true
-  }
+    {
+        "name" : "nano",
+        "installed" : true,
+        "filterBaum" : true,
+        "filter42" : false
+    },
+    {
+        "name" : "htop",
+        "installed" : true,
+        "filterBaum" : false,
+        "filter42" : false
+    },
+    {
+        "name" : "pacaur",
+        "installed" : true,
+        "filterBaum" : true,
+        "filter42" : false
+    },
+    {
+        "name" : "baum",
+        "installed" : true,
+        "filterBaum" : true,
+        "filter42" : true
+    },
+    {
+        "name" : "google-chrome",
+        "installed" : false,
+        "filterBaum" : false,
+        "filter42" : true
+    },
+    {
+        "name" : "gitkraken",
+        "installed" : true,
+        "filterBaum" : false,
+        "filter42" : true
+    },
+    {
+        "name" : "seafile-client",
+        "installed" : true,
+        "filterBaum" : false,
+        "filter42" : true
+    },
+    {
+        "name" : "qtcreator",
+        "installed" : true,
+        "filterBaum" : true,
+        "filter42" : true
+    },
+    {
+        "name" : "edge",
+        "installed" : false,
+        "filterBaum" : true,
+        "filter42" : true
+    },
+    {
+        "name" : "firefox",
+        "installed" : false,
+        "filterBaum" : true,
+        "filter42" : true
+    }
 ]
