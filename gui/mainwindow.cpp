@@ -2,10 +2,10 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 
-MainWindow::MainWindow(PackageManagerPlugin *plugin, QWidget *parent) :
+MainWindow::MainWindow(QWidget *parent) :
 	QDialog(parent),
 	_ui(new Ui::MainWindow),
-	_plugin(plugin),
+	_plugin(nullptr),
 	_boxes(),
 	_pkgModel(new QStringListModel(this)),
 	_dbModel(new QStringListModel(this))
@@ -13,9 +13,6 @@ MainWindow::MainWindow(PackageManagerPlugin *plugin, QWidget *parent) :
 	_ui->setupUi(this);
 	_ui->localPackageListView->setModel(_pkgModel);
 	_ui->dbPackageListView->setModel(_dbModel);
-
-	setupFilters();
-	reloadPackages();
 }
 
 MainWindow::~MainWindow()
@@ -23,10 +20,23 @@ MainWindow::~MainWindow()
 	delete _ui;
 }
 
-void MainWindow::accept()
+QStringList MainWindow::editPackages(PackageManagerPlugin *plugin, QWidget *parent, const QStringList &currentPackages, bool *ok)
 {
-	emit savePackages(_dbModel->stringList());
-	QDialog::accept();
+	MainWindow dialog(parent);
+	dialog._plugin = plugin;
+	dialog._dbModel->setStringList(currentPackages);
+	dialog.setupFilters();
+	dialog.reloadPackages();
+
+	if(dialog.exec() == QDialog::Accepted) {
+		if(ok)
+			*ok = true;
+		return dialog._dbModel->stringList();
+	} else {
+		if(ok)
+			*ok = false;
+		return currentPackages;
+	}
 }
 
 void MainWindow::setupFilters()
@@ -40,6 +50,9 @@ void MainWindow::setupFilters()
 		_ui->checkLayout->addWidget(check);
 		_boxes.append(check);
 	}
+
+	if(_boxes.isEmpty())
+		_ui->groupBox->setVisible(false);
 }
 
 void MainWindow::reloadPackages()

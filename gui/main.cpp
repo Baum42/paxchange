@@ -9,6 +9,7 @@ static void setupParser(QCommandLineParser &parser);
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
+	QApplication::setQuitOnLastWindowClosed(false);
 
 	QCommandLineParser parser;
 	setupParser(parser);
@@ -26,14 +27,9 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	MainWindow w(plugin);
-	QObject::connect(&w, &MainWindow::savePackages,
-					 qApp, [](QStringList s){
-		qDebug() << "Database update:" << s;
-	});
-	w.show();
-
-	return a.exec();
+	qDebug() << MainWindow::editPackages(plugin, nullptr, {"nano"});
+	//TODO return a.exec();
+	return 0;
 }
 
 static void setupParser(QCommandLineParser &parser)

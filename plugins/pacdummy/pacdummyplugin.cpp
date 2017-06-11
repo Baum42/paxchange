@@ -19,8 +19,8 @@ PacDummyPlugin::PacDummyPlugin(QObject *parent) :
 QList<PacDummyPlugin::FilterInfo> PacDummyPlugin::extraFilters()
 {
 	QList<PacDummyPlugin::FilterInfo> list;
-	list.append({"baum", "baum is importand", true});
-	list.append({"==", "==", false});
+	list.append({"&baum", "baum is importand", true});
+	list.append({"==", QString(), false});
 	list.append({"42", "meaning of life", true});
 	return list;
 }

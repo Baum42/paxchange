@@ -15,11 +15,7 @@ class MainWindow : public QDialog
 	Q_OBJECT
 
 public:
-	explicit MainWindow(PackageManagerPlugin *plugin, QWidget *parent = nullptr);
-	~MainWindow();
-
-public slots:
-	void accept() override;
+	static QStringList editPackages(PackageManagerPlugin *plugin, QWidget *parent = nullptr, const QStringList &currentPackages = QStringList(), bool *ok = nullptr);
 
 signals:
 	void savePackages(const QStringList &packages);
@@ -38,6 +34,9 @@ private:
 
 	QStringListModel *_pkgModel;
 	QStringListModel *_dbModel;
+
+	explicit MainWindow(QWidget *parent = nullptr);
+	~MainWindow();
 
 	void setupFilters();
 };
