@@ -1,18 +1,22 @@
 #include "pacdummyplugin.h"
 
-#include <QFile>
+#include <QCoreApplication>
 
 
 PacDummyPlugin::PacDummyPlugin(QObject *parent) :
 	PackageManagerPlugin(parent),
 	_js(new QJsonSerializer(this)),
-	_process(new QProcess(this))
+	_process(new QProcess(this)),
+	_file(new QFile(QCoreApplication::applicationDirPath() + QStringLiteral("/fakeman.json"), this))
 {
 	QJsonSerializer::registerListConverters<PacState>();
-	QFile file(SRCDIR + QStringLiteral("/fakeman.json"));
-	file.open(QIODevice::ReadOnly);
 
-	_pacList = _js->deserializeFrom<QList<PacState>>(&file);
+	if(QFile::copy(QStringLiteral(":/fakeman.json"), _file->fileName()))
+		_file->setPermissions(QFile::ReadOwner | QFile::WriteOwner);
+
+	_file->open(QIODevice::ReadOnly);
+	_pacList = _js->deserializeFrom<QList<PacState>>(_file);
+	_file->close();
 }
 
 
@@ -44,11 +48,20 @@ void PacDummyPlugin::startInstallation(const QStringList &packages, bool noConfi
 
 	_process->start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
 
+	bool stateChanged = false;
 	foreach (auto package, packages) {
 		for(int i = 0; i < _pacList.size(); i++){
-			if(_pacList[i].name == package)
+			if(_pacList[i].name == package){
 				_pacList[i].installed = true;
+				stateChanged = true;
+			}
 		}
+	}
+
+	if(stateChanged){
+		_file->open(QIODevice::WriteOnly);
+		_js->serializeTo<QList<PacState>>(_file, _pacList);
+		_file->close();
 	}
 
 	emit operationCompleted();
@@ -60,11 +73,20 @@ void PacDummyPlugin::startUninstallation(const QStringList &packages, bool noCon
 
 	_process->start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
 
+	bool stateChanged = false;
 	foreach (auto package, packages) {
 		for(int i = 0; i < _pacList.size(); i++){
-			if(_pacList[i].name == package)
+			if(_pacList[i].name == package){
 				_pacList[i].installed = false;
+				stateChanged = true;
+			}
 		}
+	}
+
+	if(stateChanged){
+		_file->open(QIODevice::WriteOnly);
+		_js->serializeTo<QList<PacState>>(_file, _pacList);
+		_file->close();
 	}
 
 	emit operationCompleted();

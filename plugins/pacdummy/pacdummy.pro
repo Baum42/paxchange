@@ -35,3 +35,6 @@ else:unix: LIBS += -L$$OUT_PWD/../../lib/ -lpacsync
 
 INCLUDEPATH += $$PWD/../../lib
 DEPENDPATH += $$PWD/../../lib
+
+RESOURCES += \
+    pacdummy.qrc
