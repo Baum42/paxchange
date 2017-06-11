@@ -48,6 +48,7 @@ void DatabaseWizard::accept()
 		} else if(field(QStringLiteral("isLoad")).toBool()) {
 			ctr->updateDb(field(QStringLiteral("packages")).toStringList());
 		}
+		ctr->sync();
 		QWizard::accept();
 	} catch(QException &e) {
 		qCritical() << e.what();
