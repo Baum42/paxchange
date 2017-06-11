@@ -14,12 +14,16 @@ HEADERS += \
 	packagemanagerplugin.h \
 	lib_global.h \
 	pluginloader.h \
-	exception.h
+	exception.h \
+    databasecontroller.h \
+    packagedatabase.h
 
 SOURCES += \
 	packagemanagerplugin.cpp \
 	pluginloader.cpp \
-	exception.cpp
+	exception.cpp \
+    databasecontroller.cpp \
+    packagedatabase.cpp
 
 unix {
 	target.path = $$[QT_INSTALL_LIBS]
