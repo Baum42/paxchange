@@ -195,33 +195,33 @@
  <connections>
   <connection>
    <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>reject()</slot>
+   <signal>accepted()</signal>
+   <receiver>EditPackagesDialog</receiver>
+   <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>472</x>
-     <y>581</y>
+     <x>503</x>
+     <y>587</y>
     </hint>
     <hint type="destinationlabel">
-     <x>397</x>
-     <y>526</y>
+     <x>395</x>
+     <y>498</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>accept()</slot>
+   <signal>rejected()</signal>
+   <receiver>EditPackagesDialog</receiver>
+   <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>528</x>
-     <y>573</y>
+     <x>459</x>
+     <y>583</y>
     </hint>
     <hint type="destinationlabel">
-     <x>407</x>
-     <y>490</y>
+     <x>399</x>
+     <y>438</y>
     </hint>
    </hints>
   </connection>
