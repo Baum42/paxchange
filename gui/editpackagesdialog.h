@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QCheckBox>
 #include <QStringListModel>
+#include <QSortFilterProxyModel>
 #include "packagemanagerplugin.h"
 
 namespace Ui {
@@ -23,6 +24,7 @@ private slots:
 	void on_addButton_clicked();
 	void on_removeButton_clicked();
 	void on_clearAllButton_clicked();
+	void on_regexEdit_textChanged(const QString &text);
 
 private:
 	Ui::EditPackagesDialog *_ui;
@@ -30,7 +32,9 @@ private:
 	QList<QCheckBox*> _boxes;
 
 	QStringListModel *_pkgModel;
+	QSortFilterProxyModel *_pkgFilter;
 	QStringListModel *_dbModel;
+	QSortFilterProxyModel *_dbFilter;
 
 	explicit EditPackagesDialog(QWidget *parent = nullptr);
 	~EditPackagesDialog();
