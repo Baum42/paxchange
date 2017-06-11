@@ -1,6 +1,7 @@
 TEMPLATE = lib
 
-QT       -= gui
+QT += jsonserializer
+QT -= gui
 
 TARGET = pacsync
 VERSION = $$PACSYNCVER

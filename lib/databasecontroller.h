@@ -1,9 +1,12 @@
 #ifndef DATABASECONTROLLER_H
 #define DATABASECONTROLLER_H
 
+#include "packagedatabase.h"
+
 #include <QFile>
 #include <QObject>
 #include <QSettings>
+#include <QJsonSerializer>
 
 class DatabaseController : public QObject
 {
@@ -25,6 +28,8 @@ signals:
 private:
 	QSettings *_settings;
 	QFile *_dbFile;
+	QJsonSerializer *_js;
+	PackageDatabase _packageDatabase;
 
 	void removeOldDb();
 };
