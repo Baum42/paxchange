@@ -2,26 +2,31 @@
   {
     "name" : "nano",
     "installed" : true,
-    "baumFilter" : true
+    "baumFilter" : true,
+    "42" : false
   },
   {
     "name" : "htop",
     "installed" : true,
-    "baumFilter" : false
+    "baumFilter" : false,
+    "42" : false
   },
   {
     "name" : "pacaur",
     "installed" : true,
-    "baumFilter" : true
+    "baumFilter" : true,
+    "42" : false
   },
   {
     "name" : "baum",
     "installed" : true,
-    "baumFilter" : true
+    "baumFilter" : true,
+    "42" : true
   },
   {
     "name" : "google-chrome",
     "installed" : false,
-    "baumFilter" : false
+    "baumFilter" : false,
+    "42" : true
   }
 ]

@@ -16,6 +16,7 @@ public:
 	QString name;
 	bool installed;
 	bool baumFilter;
+	bool _42Filter;
 };
 
 #endif // PACSTATE_H

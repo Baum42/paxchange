@@ -3,6 +3,7 @@
 PacState::PacState() :
 	name(""),
 	installed(false),
-	baumFilter(false)
+	baumFilter(false),
+	_42Filter(false)
 {
 }
