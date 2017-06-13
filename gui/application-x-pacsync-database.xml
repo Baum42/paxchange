@@ -3,7 +3,9 @@
 	<mime-type type="application/x-pacsync-database">
 		<comment>Package database of Pac-Sync</comment>
 		<comment xml:lang="en">Package database of Pac-Sync</comment>
+		<comment xml:lang="de">Pac-Sync Paket-Datenbank</comment>
 		<icon name="x-pacsync-database"/>
+		<glob-deleteall/>
 		<glob pattern="*.psdb"/>
 	</mime-type>
 </mime-info>

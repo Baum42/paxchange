@@ -48,6 +48,12 @@ FORMS += \
 	dbselectionpage.ui \
 	dbpathpage.ui
 
+RESOURCES += \
+	pacsync_gui.qrc
+
+DISTFILES += \
+	application-x-pacsync-database.xml
+
 unix {
 	target.path = $$[QT_INSTALL_BINS]
 	INSTALLS += target
@@ -59,9 +65,3 @@ else:unix: LIBS += -L$$OUT_PWD/../lib/ -lpacsync
 
 INCLUDEPATH += $$PWD/../lib
 DEPENDPATH += $$PWD/../lib
-
-RESOURCES += \
-	pacsync_gui.qrc
-
-DISTFILES += \
-	application-x-pacsync.xml
