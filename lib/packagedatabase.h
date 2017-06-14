@@ -39,8 +39,8 @@ public:
 	Mode mode;
 	QHash<QString, PackageInfo> packages;
 
-	void parseHarderFromJson(QJsonSerializer *s);
-	void parseHarderToJson(QJsonSerializer *s);
+	void parseHarderFromJson(QJsonSerializer *s);//TODO use QHash later
+	void parseHarderToJson(QJsonSerializer *s);//TODO use QHash later
 
 private:
 	QJsonObject _pkg;
