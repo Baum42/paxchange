@@ -31,7 +31,8 @@ HEADERS += \
 	databasewizard.h \
 	dbselectionpage.h \
 	dbpathpage.h \
-	dbpackagespage.h
+	dbpackagespage.h \
+    packagemodel.h
 
 SOURCES += \
 		main.cpp \
@@ -41,7 +42,8 @@ SOURCES += \
 	databasewizard.cpp \
 	dbselectionpage.cpp \
 	dbpathpage.cpp \
-	dbpackagespage.cpp
+	dbpackagespage.cpp \
+    packagemodel.cpp
 
 FORMS += \
 	editpackageswidget.ui \

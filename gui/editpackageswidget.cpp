@@ -11,7 +11,7 @@ EditPackagesWidget::EditPackagesWidget(QWidget *parent) :
 	_boxes(),
 	_pkgModel(new QStringListModel(this)),
 	_pkgFilter(new QSortFilterProxyModel(this)),
-	_dbModel(new QStringListModel(this)),
+	_dbModel(new PackageModel(this)),
 	_dbFilter(new QSortFilterProxyModel(this))
 {
 	_ui->setupUi(this);

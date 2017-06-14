@@ -25,7 +25,8 @@ public:
 
 	OperationQueue *operationQueue() const;
 
-	QStringList listPackages() const;//TODO all data (color code)
+	QStringList listPackages() const;
+	PackageInfo getInfo(const QString &pkgName) const;
 	QString currentPath() const;
 	void createDb(const QString &path, const QStringList &packages);
 	void loadDb(const QString &path);

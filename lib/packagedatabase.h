@@ -14,9 +14,11 @@ class LIBPACSYNC_SHARED_EXPORT PackageInfo
 	Q_PROPERTY(bool removed MEMBER removed)
 
 public:
-	PackageInfo(QString name = "", bool removed = false);
+	PackageInfo(QString name = QString(), bool removed = false);
 	QString name;
 	bool removed;
+
+	bool isValid() const;
 
 	bool operator ==(const PackageInfo &other) const;
 };

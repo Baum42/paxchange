@@ -10,6 +10,11 @@ PackageInfo::PackageInfo(QString name, bool removed) :
 
 }
 
+bool PackageInfo::isValid() const
+{
+	return !name.isNull();
+}
+
 bool PackageInfo::operator ==(const PackageInfo &other) const
 {
 	return this->name == other.name;

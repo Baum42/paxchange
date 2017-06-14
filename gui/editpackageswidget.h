@@ -5,7 +5,8 @@
 #include <QCheckBox>
 #include <QStringListModel>
 #include <QSortFilterProxyModel>
-#include "packagemanagerplugin.h"
+#include <packagemanagerplugin.h>
+#include "packagemodel.h"
 
 namespace Ui {
 class EditPackagesWidget;
@@ -42,7 +43,7 @@ private:
 
 	QStringListModel *_pkgModel;
 	QSortFilterProxyModel *_pkgFilter;
-	QStringListModel *_dbModel;
+	PackageModel *_dbModel;
 	QSortFilterProxyModel *_dbFilter;
 
 	void setupFilters();

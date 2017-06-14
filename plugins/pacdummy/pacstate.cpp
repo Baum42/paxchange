@@ -1,9 +1,8 @@
 #include "pacstate.h"
 
 PacState::PacState() :
-	name(""),
+	name(),
 	installed(false),
 	filterBaum(false),
 	filter42(false)
-{
-}
+{}

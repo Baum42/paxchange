@@ -55,6 +55,11 @@ QStringList DatabaseController::listPackages() const
 	return _packageDatabase.packages.keys();
 }
 
+PackageInfo DatabaseController::getInfo(const QString &pkgName) const
+{
+	return _packageDatabase.packages.value(pkgName);
+}
+
 QString DatabaseController::currentPath() const
 {
 	return _dbPath;
