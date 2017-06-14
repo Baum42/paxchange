@@ -28,6 +28,15 @@ QList<PacDummyPlugin::FilterInfo> PacDummyPlugin::extraFilters()
 	return list;
 }
 
+QStringList PacDummyPlugin::listAllPackages()
+{
+	QStringList list;
+	foreach (auto pacState, _pacList)
+		list.append(pacState.name);
+
+	return list;
+}
+
 QStringList PacDummyPlugin::listPackages(QList<bool> extraFilters)
 {
 	QStringList list;

@@ -1,4 +1,5 @@
 #include "databasecontroller.h"
+#include "pluginloader.h"
 
 #include <QCoreApplication>
 #include <QGlobalStatic>
@@ -106,7 +107,20 @@ void DatabaseController::updateDb(const QStringList &packages)
 
 void DatabaseController::sync()
 {
-	Q_UNIMPLEMENTED();
+	QStringList pI, pUI;
+	auto installedP = PluginLoader::plugin()->listAllPackages();
+	auto targetP = _packageDatabase.packages;
+
+	for(auto it = targetP.constBegin(); it != targetP.constEnd(); it++){
+		auto contains = installedP.contains(it->name);
+		if(!contains)
+			pI.append(it->name);
+
+		if(it->removed && contains)
+			pUI.append(it->name);
+	}
+
+	operationsRequiered(pI, pUI);
 }
 
 void DatabaseController::fileChanged()

@@ -18,7 +18,7 @@ public:
 
 	static DatabaseController *instance();
 
-	QStringList listPackages() const;
+	QStringList listPackages() const;//TODO all data (color code)
 	QString currentPath() const;
 	void createDb(const QString &path, const QStringList &packages);
 	void loadDb(const QString &path);
@@ -29,7 +29,7 @@ public slots:
 	void sync();
 
 signals:
-	void syncCheck(const QStringList &packages);
+	void operationsRequiered(const QStringList &packagesInstall, const QStringList &packagesUninstall);
 
 private slots:
 	void fileChanged();

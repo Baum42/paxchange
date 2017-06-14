@@ -3,9 +3,9 @@
 
 
 
-PackageInfo::PackageInfo(QString name, bool conflict) :
+PackageInfo::PackageInfo(QString name, bool removed) :
 	name(name),
-	conflict(conflict)
+	removed(removed)
 {
 
 }
