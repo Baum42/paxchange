@@ -43,15 +43,16 @@ private slots:
 
 private:
 	QSettings *_settings;
-	QFile *_dbFile;
+	QString _dbPath;
 	QJsonSerializer *_js;
 	PackageDatabase _packageDatabase;
-	QFileSystemWatcher *_watcher;
+	QFileSystemWatcher *_watcher;//TODO writeSettings --> skipNext
 	bool _loaded;
 
 	void cleanUp();
 	void readFile();
+	void writeFile(PackageDatabase p, const QString &path);
 	QString lockPath(const QString &path);
-};
+	};
 
 #endif // DATABASECONTROLLER_H
