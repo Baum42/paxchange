@@ -81,6 +81,16 @@ bool DatabaseController::isLoaded() const
 	return _loaded;
 }
 
+QSettings::SettingsMap DatabaseController::readSettings() const
+{
+	Q_UNIMPLEMENTED();//TODO implement
+}
+
+void DatabaseController::writeSettings(const QSettings::SettingsMap &map)
+{
+	Q_UNIMPLEMENTED();//TODO implement
+}
+
 void DatabaseController::updateDb(const QStringList &packages)
 {
 	auto set = QSet<QString>::fromList(packages);
