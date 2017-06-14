@@ -91,12 +91,12 @@ bool DatabaseController::isLoaded() const
 
 QSettings::SettingsMap DatabaseController::readSettings() const
 {
-	Q_UNIMPLEMENTED();//TODO implement
+	return QJsonValue(_packageDatabase.settings).toVariant().toMap();
 }
 
 void DatabaseController::writeSettings(const QSettings::SettingsMap &map)
 {
-	Q_UNIMPLEMENTED();//TODO implement
+	_packageDatabase.settings = QJsonValue::fromVariant(map).toObject();
 }
 
 void DatabaseController::updateDb(const QStringList &packages)

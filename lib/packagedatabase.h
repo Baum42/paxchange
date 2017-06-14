@@ -27,6 +27,7 @@ class LIBPACSYNC_SHARED_EXPORT PackageDatabase
 
 	Q_PROPERTY(Mode mode MEMBER mode)
 	Q_PROPERTY(QJsonObject packages MEMBER _pkg)
+	Q_PROPERTY(QJsonObject settings MEMBER settings)
 
 public:
 	enum Mode{
@@ -38,6 +39,8 @@ public:
 	PackageDatabase();
 	Mode mode;
 	QHash<QString, PackageInfo> packages;
+
+	QJsonObject settings;
 
 	void parseHarderFromJson(QJsonSerializer *s);//TODO use QHash later
 	void parseHarderToJson(QJsonSerializer *s);//TODO use QHash later
