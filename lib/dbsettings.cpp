@@ -48,12 +48,14 @@ void DbSettings::triggerChange()
 
 static bool readDbSettings(QIODevice &device, QSettings::SettingsMap &map)
 {
+	Q_UNUSED(device)
 	map = DatabaseController::instance()->readSettings();
 	return true;
 }
 
 static bool writeDbSettings(QIODevice &device, const QSettings::SettingsMap &map)
 {
+	Q_UNUSED(device)
 	DatabaseController::instance()->writeSettings(map);
 	return true;
 }

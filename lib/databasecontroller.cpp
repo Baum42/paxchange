@@ -22,8 +22,10 @@ DatabaseController::DatabaseController(QObject *parent) :
 	_settings->beginGroup(QStringLiteral("lib/dbcontroller"));
 
 	try {
-		if(_settings->contains(QStringLiteral("path")))
+		if(_settings->contains(QStringLiteral("path"))) {
 			loadDb(_settings->value(QStringLiteral("path")).toString());
+			sync();
+		}
 	} catch(QException &e) {
 		qCritical() << e.what();
 		cleanUp();
@@ -49,7 +51,7 @@ QString DatabaseController::currentPath() const
 }
 
 void DatabaseController::createDb(const QString &path, const QStringList &packages)
-{//TODO Exceptioon
+{
 	PackageDatabase p;
 	foreach (auto package, packages)
 		p.packages[package] = {package, false};
@@ -61,7 +63,7 @@ void DatabaseController::createDb(const QString &path, const QStringList &packag
 	if(!file.open(QIODevice::WriteOnly))
 		throw DatabaseException(file.errorString());
 
-	p.parseHarderToJson(_js);//TODO use QHash later
+	p.parseHarderToJson(_js);
 	_js->serializeTo<PackageDatabase>(&file, p);
 	file.close();
 	lock.unlock();
@@ -70,7 +72,7 @@ void DatabaseController::createDb(const QString &path, const QStringList &packag
 }
 
 void DatabaseController::loadDb(const QString &path)
-{//TODO Exceptioon
+{
 	cleanUp();
 
 	_settings->setValue(QStringLiteral("path"), path);
@@ -94,12 +96,12 @@ bool DatabaseController::isLoaded() const
 
 QSettings::SettingsMap DatabaseController::readSettings() const
 {
-	Q_UNIMPLEMENTED();//TODO implement
+	return QJsonValue(_packageDatabase.settings).toVariant().toMap();
 }
 
 void DatabaseController::writeSettings(const QSettings::SettingsMap &map)
 {
-	Q_UNIMPLEMENTED();//TODO implement
+	_packageDatabase.settings = QJsonValue::fromVariant(map).toObject();
 }
 
 void DatabaseController::updateDb(const QStringList &packages)
@@ -123,7 +125,7 @@ void DatabaseController::updateDb(const QStringList &packages)
 	if(!_dbFile->open(QIODevice::WriteOnly))
 		throw DatabaseException(_dbFile->errorString());
 
-	_packageDatabase.parseHarderToJson(_js);//TODO use QHash later
+	_packageDatabase.parseHarderToJson(_js);
 	_js->serializeTo<PackageDatabase>(_dbFile, _packageDatabase);
 	_dbFile->close();
 	lock.unlock();
@@ -178,7 +180,7 @@ void DatabaseController::readFile()
 	_dbFile->close();
 	lock.unlock();
 
-	pdb.parseHarderFromJson(_js);	//TODO use QHash later
+	pdb.parseHarderFromJson(_js);
 	_packageDatabase = pdb;
 }
 
