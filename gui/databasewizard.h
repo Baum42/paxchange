@@ -14,6 +14,9 @@ public:
 
 public slots:
 	void accept() override;
+
+private:
+	int _packagePageId;
 };
 
 #endif // DATABASEWIZARD_H

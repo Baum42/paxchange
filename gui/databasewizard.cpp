@@ -9,7 +9,8 @@
 #include "dbpackagespage.h"
 
 DatabaseWizard::DatabaseWizard(QWidget *parent) :
-	QWizard(parent)
+	QWizard(parent),
+	_packagePageId(-1)
 {
 	DialogMaster::masterDialog(this);
 	setOptions(QWizard::NoBackButtonOnStartPage);
@@ -20,7 +21,7 @@ DatabaseWizard::DatabaseWizard(QWidget *parent) :
 
 	addPage(new DbSelectionPage(this));
 	addPage(new DbPathPage(this));
-	addPage(new DbPackagesPage(this));
+	_packagePageId = addPage(new DbPackagesPage(this));
 
 	QSettings settings;
 	restoreGeometry(settings.value(QStringLiteral("gui/wizard")).toByteArray());
@@ -46,7 +47,8 @@ void DatabaseWizard::accept()
 			ctr->createDb(field(QStringLiteral("path")).toString(),
 						  field(QStringLiteral("packages")).toStringList());
 		} else if(field(QStringLiteral("isLoad")).toBool()) {
-			ctr->updateDb(field(QStringLiteral("packages")).toStringList());
+			if(hasVisitedPage(_packagePageId))
+				ctr->updateDb(field(QStringLiteral("packages")).toStringList());
 		}
 		ctr->sync();
 		QWizard::accept();
