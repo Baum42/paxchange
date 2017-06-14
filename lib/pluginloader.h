@@ -1,21 +1,15 @@
 #ifndef PLUGINLOADER_H
 #define PLUGINLOADER_H
 
+#include "libpacsync_global.h"
 #include <QObject>
 #include <QPluginLoader>
 #include "exception.h"
 #include "packagemanagerplugin.h"
 
-class PluginLoadException : public Exception
-{
-public:
-	PluginLoadException(const QString &what);
+DEF_EXC(PluginLoadException)
 
-	void raise() const final;
-	QException *clone() const final;
-};
-
-class PluginLoader : public QObject
+class LIBPACSYNC_SHARED_EXPORT PluginLoader : public QObject
 {
 	Q_OBJECT
 

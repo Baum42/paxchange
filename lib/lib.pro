@@ -13,11 +13,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
 	packagemanagerplugin.h \
-	lib_global.h \
 	pluginloader.h \
 	exception.h \
     databasecontroller.h \
-    packagedatabase.h
+    packagedatabase.h \
+    libpacsync_global.h
 
 SOURCES += \
 	packagemanagerplugin.cpp \

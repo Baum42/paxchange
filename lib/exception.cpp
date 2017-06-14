@@ -1,10 +1,10 @@
 #include "exception.h"
 
-Exception::Exception(const QString &what) :
+ExceptionBase::ExceptionBase(const QString &what) :
 	_what(what.toUtf8())
 {}
 
-const char *Exception::what() const noexcept
+const char *ExceptionBase::what() const noexcept
 {
 	return _what.constData();
 }

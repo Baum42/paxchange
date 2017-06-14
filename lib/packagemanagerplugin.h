@@ -1,13 +1,13 @@
 #ifndef PACKAGEMANAGERPLUGIN_H
 #define PACKAGEMANAGERPLUGIN_H
 
-#include "lib_global.h"
+#include "libpacsync_global.h"
 
 #include <QObject>
 
 #define PackageManagerPlugin_iid "de.baum42.pacsync.PackageManagerPlugin"
 
-class LIBSHARED_EXPORT PackageManagerPlugin : public QObject
+class LIBPACSYNC_SHARED_EXPORT PackageManagerPlugin : public QObject
 {
 	Q_OBJECT
 
