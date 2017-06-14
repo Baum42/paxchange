@@ -10,7 +10,7 @@
 
 TrayControl::TrayControl(QObject *parent) :
 	QObject(parent),
-	_tray(new QSystemTrayIcon(QIcon(QStringLiteral(":/icons/tray.ico")), this)),
+	_tray(new QSystemTrayIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")), this)),
 	_trayMenu(new QMenu())
 {
 	_trayMenu->addAction(QIcon::fromTheme("package-new"), tr("Change Database"), this, &TrayControl::changeDatabase);
