@@ -87,7 +87,7 @@ void DatabaseController::loadDb(const QString &path)
 
 void DatabaseController::reloadDb()
 {
-	Q_UNIMPLEMENTED();
+	readFile();
 }
 
 bool DatabaseController::isLoaded() const
