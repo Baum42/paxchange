@@ -20,8 +20,8 @@ public:
 	QList<FilterInfo> extraFilters() override;
 	QStringList listAllPackages() override;
 	QStringList listPackages(QList<bool> extraFilters) override;
-	void startInstallation(const QStringList &packages, bool noConfirm) override;
-	void startUninstallation(const QStringList &packages, bool noConfirm) override;
+	void startInstallation(const QStringList &packages) override;
+	void startUninstallation(const QStringList &packages) override;
 
 private:
 	QList<PacState> _pacList;

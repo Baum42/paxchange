@@ -4,6 +4,8 @@
 #include "libpacsync_global.h"
 #include <QObject>
 #include <QQueue>
+#include "packagemanagerplugin.h"
+class DatabaseController;
 
 class LIBPACSYNC_SHARED_EXPORT OperationQueue : public QObject
 {
@@ -21,19 +23,28 @@ public:
 	Q_DECLARE_FLAGS(OpertionsFlags, OpertionsFlag)
 	Q_FLAG(OpertionsFlags)
 
-	explicit OperationQueue(QObject *parent = nullptr);
+	explicit OperationQueue(DatabaseController *parent = nullptr);
 
 	OpertionsFlags operations() const;
 
 public slots:
-	void addOperations(const QStringList &install, const QStringList &uninstall);
+	void setOperations(const QStringList &install, const QStringList &uninstall);
+	void startOperation();
 
 signals:
 	void operationsChanged(OpertionsFlags operations);
 
+private slots:
+	void pluginOpDone();
+
 private:
 	QStringList _nextOp;
+	OpertionsFlag _nextOpFlag;
 	OpertionsFlags _opFlags;
+	bool _operating;
+
+	DatabaseController *_controller;
+	PackageManagerPlugin *_plugin;
 };
 
 #endif // OPERATIONQUEUE_H

@@ -1,4 +1,5 @@
 #include "databasecontroller.h"
+#include "dbsettings.h"
 
 #include <QCoreApplication>
 #include <QFileInfo>
@@ -13,6 +14,7 @@ Q_COREAPP_STARTUP_FUNCTION(setupDatabaseController)
 DatabaseController::DatabaseController(QObject *parent) :
 	QObject(parent),
 	_settings(new QSettings()),
+	_opQueue(new OperationQueue(this)),
 	_dbPath(),
 	_js(new QJsonSerializer(this)),
 	_packageDatabase(),
@@ -20,6 +22,9 @@ DatabaseController::DatabaseController(QObject *parent) :
 	_loaded(false)
 {
 	_settings->beginGroup(QStringLiteral("lib/dbcontroller"));
+
+	connect(this, &DatabaseController::operationsRequired,
+			_opQueue, &OperationQueue::setOperations);
 
 	try {
 		if(_settings->contains(QStringLiteral("path"))) {
@@ -38,6 +43,11 @@ DatabaseController::DatabaseController(QObject *parent) :
 DatabaseController *DatabaseController::instance()
 {
 	return _instance;
+}
+
+OperationQueue *DatabaseController::operationQueue() const
+{
+	return _opQueue;
 }
 
 QStringList DatabaseController::listPackages() const
@@ -73,6 +83,11 @@ void DatabaseController::loadDb(const QString &path)
 
 	_watcher->addPath(_dbPath);
 	_loaded = true;
+}
+
+void DatabaseController::reloadDb()
+{
+	Q_UNIMPLEMENTED();
 }
 
 bool DatabaseController::isLoaded() const
@@ -135,7 +150,7 @@ void DatabaseController::sync()
 			pUI.append(it->name);
 	}
 
-	operationsRequiered(pI, pUI);
+	emit operationsRequired(pI, pUI);
 }
 
 void DatabaseController::fileChanged()
@@ -191,6 +206,8 @@ QString DatabaseController::lockPath(const QString &path)
 	return info.absolutePath() + "." + info.fileName() + ".lock";
 }
 
-static void setupDatabaseController(){
+static void setupDatabaseController()
+{
 	QJsonSerializer::registerListConverters<PackageInfo>();
+	DbSettings::registerSettings();
 }

@@ -31,8 +31,11 @@ QList<PacDummyPlugin::FilterInfo> PacDummyPlugin::extraFilters()
 QStringList PacDummyPlugin::listAllPackages()
 {
 	QStringList list;
-	foreach (auto pacState, _pacList)
+	foreach (auto pacState, _pacList) {
+		if(!pacState.installed)
+			continue;
 		list.append(pacState.name);
+	}
 
 	return list;
 }
@@ -55,10 +58,8 @@ QStringList PacDummyPlugin::listPackages(QList<bool> extraFilters)
 	return list;
 }
 
-void PacDummyPlugin::startInstallation(const QStringList &packages, bool noConfirm)
+void PacDummyPlugin::startInstallation(const QStringList &packages)
 {
-	Q_UNUSED(noConfirm);
-
 	_process->start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
 
 	bool stateChanged = false;
@@ -80,10 +81,8 @@ void PacDummyPlugin::startInstallation(const QStringList &packages, bool noConfi
 	emit operationCompleted();
 }
 
-void PacDummyPlugin::startUninstallation(const QStringList &packages, bool noConfirm)
+void PacDummyPlugin::startUninstallation(const QStringList &packages)
 {
-	Q_UNUSED(noConfirm);
-
 	_process->start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
 
 	bool stateChanged = false;
