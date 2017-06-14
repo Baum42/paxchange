@@ -52,7 +52,8 @@ private:
 	QString _dbPath;
 	QJsonSerializer *_js;
 	PackageDatabase _packageDatabase;
-	QFileSystemWatcher *_watcher;//TODO writeSettings --> skipNext
+	QFileSystemWatcher *_watcher;
+	bool _watcherSkipNext;
 	bool _loaded;
 
 	void cleanUp();
