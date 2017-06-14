@@ -150,7 +150,8 @@ void DatabaseController::sync()
 			pUI.append(it->name);
 	}
 
-	emit operationsRequired(pI, pUI);
+	if(!(pI.isEmpty() && pUI.isEmpty()))
+		emit operationsRequired(pI, pUI);
 }
 
 void DatabaseController::fileChanged()
@@ -161,6 +162,8 @@ void DatabaseController::fileChanged()
 	} catch(QException &e){
 		qWarning() << "Failed to reload changed file:" << e.what();
 	}
+
+	_watcher->addPath(_dbPath);
 }
 
 void DatabaseController::cleanUp()
