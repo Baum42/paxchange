@@ -82,6 +82,11 @@ void DatabaseController::loadDb(const QString &path)
 	_loaded = true;
 }
 
+void DatabaseController::reloadDb()
+{
+	Q_UNIMPLEMENTED();
+}
+
 bool DatabaseController::isLoaded() const
 {
 	return _loaded;

@@ -26,6 +26,7 @@ public:
 	QString currentPath() const;
 	void createDb(const QString &path, const QStringList &packages);
 	void loadDb(const QString &path);
+	void reloadDb();
 	bool isLoaded() const;
 
 	QSettings::SettingsMap readSettings() const;

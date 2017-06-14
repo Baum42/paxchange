@@ -4,6 +4,7 @@
 #include "libpacsync_global.h"
 #include <QObject>
 #include <QQueue>
+#include "packagemanagerplugin.h"
 
 class LIBPACSYNC_SHARED_EXPORT OperationQueue : public QObject
 {
@@ -27,13 +28,21 @@ public:
 
 public slots:
 	void addOperations(const QStringList &install, const QStringList &uninstall);
+	void startOperation();
 
 signals:
 	void operationsChanged(OpertionsFlags operations);
 
+private slots:
+	void pluginOpDone();
+
 private:
 	QStringList _nextOp;
+	OpertionsFlag _nextOpFlag;
 	OpertionsFlags _opFlags;
+	bool _operating;
+
+	PackageManagerPlugin *_plugin;
 };
 
 #endif // OPERATIONQUEUE_H

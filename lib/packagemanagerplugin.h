@@ -24,8 +24,8 @@ public:
 
 	virtual QStringList listAllPackages() = 0;
 	virtual QStringList listPackages(QList<bool> extraFilters) = 0;//TODO QVector
-	virtual void startInstallation(const QStringList &packages, bool noConfirm) = 0;
-	virtual void startUninstallation(const QStringList &packages, bool noConfirm) = 0;
+	virtual void startInstallation(const QStringList &packages) = 0;
+	virtual void startUninstallation(const QStringList &packages) = 0;
 
 	//TODO add "settings" (e.g. no confirm)
 
