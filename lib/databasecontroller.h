@@ -28,6 +28,9 @@ public:
 	void loadDb(const QString &path);
 	bool isLoaded() const;
 
+	QSettings::SettingsMap readSettings() const;
+	void writeSettings(const QSettings::SettingsMap &map);
+
 public slots:
 	void updateDb(const QStringList &packages);
 	void sync();
