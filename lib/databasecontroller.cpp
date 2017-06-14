@@ -203,7 +203,7 @@ void DatabaseController::writeFile(PackageDatabase p, const QString &path)
 QString DatabaseController::lockPath(const QString &path)
 {
 	QFileInfo info(path);
-	return info.absolutePath() + "." + info.fileName() + ".lock";
+	return info.absolutePath() + "/." + info.fileName() + ".lock";
 }
 
 static void setupDatabaseController()
