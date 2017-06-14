@@ -66,7 +66,6 @@ QString DatabaseController::currentPath() const
 	return _dbPath;
 }
 
-
 void DatabaseController::createDb(const QString &path, const QStringList &packages)
 {
 	PackageDatabase p;
@@ -156,12 +155,13 @@ void DatabaseController::fileChanged()
 		try {
 			readFile();
 			sync();
+			DbSettings::triggerChange();
 		} catch(QException &e){
 			qWarning() << "Failed to reload changed file:" << e.what();
 		}
 	}
-
 	_watcherSkipNext = false;
+
 	_watcher->addPath(_dbPath);
 }
 
