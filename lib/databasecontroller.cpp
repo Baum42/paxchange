@@ -22,8 +22,10 @@ DatabaseController::DatabaseController(QObject *parent) :
 	_settings->beginGroup(QStringLiteral("lib/dbcontroller"));
 
 	try {
-		if(_settings->contains(QStringLiteral("path")))
+		if(_settings->contains(QStringLiteral("path"))) {
 			loadDb(_settings->value(QStringLiteral("path")).toString());
+			sync();
+		}
 	} catch(QException &e) {
 		qCritical() << e.what();
 		cleanUp();
