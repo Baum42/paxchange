@@ -3,12 +3,15 @@
 
 #include "libpacsync_global.h"
 #include "packagedatabase.h"
+#include "pluginloader.h"
 
 #include <QFile>
 #include <QObject>
 #include <QSettings>
 #include <QtJsonSerializer/QJsonSerializer>
 #include <QFileSystemWatcher>
+
+DEF_EXC(DatabaseException)
 
 class LIBPACSYNC_SHARED_EXPORT DatabaseController : public QObject
 {
@@ -19,7 +22,7 @@ public:
 
 	static DatabaseController *instance();
 
-	QStringList listPackages() const;
+	QStringList listPackages() const;//TODO all data (color code)
 	QString currentPath() const;
 	void createDb(const QString &path, const QStringList &packages);
 	void loadDb(const QString &path);
@@ -33,7 +36,7 @@ public slots:
 	void sync();
 
 signals:
-	void syncCheck(const QStringList &packages);
+	void operationsRequiered(const QStringList &packagesInstall, const QStringList &packagesUninstall);
 
 private slots:
 	void fileChanged();
@@ -48,6 +51,7 @@ private:
 
 	void cleanUp();
 	void readFile();
+	QString lockPath(const QString &path);
 };
 
 #endif // DATABASECONTROLLER_H

@@ -11,17 +11,17 @@ class LIBPACSYNC_SHARED_EXPORT PackageInfo
 	Q_GADGET
 
 	Q_PROPERTY(QString name MEMBER name)
-	Q_PROPERTY(bool conflict MEMBER conflict)
+	Q_PROPERTY(bool removed MEMBER removed)
 
 public:
-	PackageInfo(QString name = "", bool conflict = false);
+	PackageInfo(QString name = "", bool removed = false);
 	QString name;
-	bool conflict;
+	bool removed;
 
 	bool operator ==(const PackageInfo &other) const;
 };
 
-class PackageDatabase
+class LIBPACSYNC_SHARED_EXPORT PackageDatabase
 {
 	Q_GADGET
 

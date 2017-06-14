@@ -18,6 +18,7 @@ public:
 	PacDummyPlugin(QObject *parent = nullptr);
 
 	QList<FilterInfo> extraFilters() override;
+	QStringList listAllPackages() override;
 	QStringList listPackages(QList<bool> extraFilters) override;
 	void startInstallation(const QStringList &packages, bool noConfirm) override;
 	void startUninstallation(const QStringList &packages, bool noConfirm) override;
