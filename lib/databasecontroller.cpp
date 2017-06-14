@@ -87,7 +87,7 @@ void DatabaseController::loadDb(const QString &path)
 
 void DatabaseController::reloadDb()
 {
-	Q_UNIMPLEMENTED();
+	readFile();
 }
 
 bool DatabaseController::isLoaded() const
@@ -203,7 +203,7 @@ void DatabaseController::writeFile(PackageDatabase p, const QString &path)
 QString DatabaseController::lockPath(const QString &path)
 {
 	QFileInfo info(path);
-	return info.absolutePath() + "." + info.fileName() + ".lock";
+	return info.absolutePath() + "/." + info.fileName() + ".lock";
 }
 
 static void setupDatabaseController()
