@@ -3,19 +3,20 @@
 #include "pluginloader.h"
 #include "databasecontroller.h"
 
-OperationQueue::OperationQueue(QObject *parent) :
+OperationQueue::OperationQueue(DatabaseController *parent) :
 	QObject(parent),
 	_nextOp(),
-	_opFlags(None),
 	_nextOpFlag(None),
+	_opFlags(None),
 	_operating(false),
+	_controller(parent),
 	_plugin(PluginLoader::plugin())
 {
 	connect(_plugin, &PackageManagerPlugin::operationCompleted,
 			this, &OperationQueue::pluginOpDone);
 }
 
-void OperationQueue::addOperations(const QStringList &install, const QStringList &uninstall)
+void OperationQueue::setOperations(const QStringList &install, const QStringList &uninstall)
 {
 	auto settings = DbSettings::create();
 	auto uninstallFirst = settings->value(QStringLiteral("operations/uninstall_first"), false).toBool();
@@ -64,7 +65,7 @@ void OperationQueue::startOperation()
 void OperationQueue::pluginOpDone()
 {
 	_operating = false;
-	DatabaseController::instance()->reloadDb();
+	_controller->reloadDb();
 }
 
 OperationQueue::OpertionsFlags OperationQueue::operations() const

@@ -31,8 +31,11 @@ QList<PacDummyPlugin::FilterInfo> PacDummyPlugin::extraFilters()
 QStringList PacDummyPlugin::listAllPackages()
 {
 	QStringList list;
-	foreach (auto pacState, _pacList)
+	foreach (auto pacState, _pacList) {
+		if(!pacState.installed)
+			continue;
 		list.append(pacState.name);
+	}
 
 	return list;
 }

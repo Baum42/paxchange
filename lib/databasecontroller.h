@@ -4,6 +4,7 @@
 #include "libpacsync_global.h"
 #include "packagedatabase.h"
 #include "pluginloader.h"
+#include "operationqueue.h"
 
 #include <QFile>
 #include <QObject>
@@ -22,6 +23,8 @@ public:
 
 	static DatabaseController *instance();
 
+	OperationQueue *operationQueue() const;
+
 	QStringList listPackages() const;//TODO all data (color code)
 	QString currentPath() const;
 	void createDb(const QString &path, const QStringList &packages);
@@ -37,13 +40,14 @@ public slots:
 	void sync();
 
 signals:
-	void operationsRequiered(const QStringList &packagesInstall, const QStringList &packagesUninstall);
+	void operationsRequired(const QStringList &packagesInstall, const QStringList &packagesUninstall);
 
 private slots:
 	void fileChanged();
 
 private:
 	QSettings *_settings;
+	OperationQueue *_opQueue;
 	QFile *_dbFile;
 	QJsonSerializer *_js;
 	PackageDatabase _packageDatabase;
