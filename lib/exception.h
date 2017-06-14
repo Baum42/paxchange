@@ -1,10 +1,11 @@
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
+#include "libpacsync_global.h"
 #include <QString>
 #include <QException>
 
-class ExceptionBase : public QException
+class LIBPACSYNC_SHARED_EXPORT ExceptionBase : public QException
 {
 public:
 	ExceptionBase(const QString &what = QString());

@@ -1,6 +1,7 @@
 #ifndef DATABASECONTROLLER_H
 #define DATABASECONTROLLER_H
 
+#include "libpacsync_global.h"
 #include "packagedatabase.h"
 
 #include <QFile>
@@ -9,7 +10,7 @@
 #include <QtJsonSerializer/QJsonSerializer>
 #include <QFileSystemWatcher>
 
-class DatabaseController : public QObject
+class LIBPACSYNC_SHARED_EXPORT DatabaseController : public QObject
 {
 	Q_OBJECT
 

@@ -1,11 +1,12 @@
 #ifndef PACKAGEDATABASE_H
 #define PACKAGEDATABASE_H
 
+#include "libpacsync_global.h"
 #include <QtJsonSerializer/QJsonSerializer>
 #include <QObject>
 
 
-class PackageInfo
+class LIBPACSYNC_SHARED_EXPORT PackageInfo
 {
 	Q_GADGET
 
