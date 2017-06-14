@@ -19,6 +19,7 @@ DatabaseController::DatabaseController(QObject *parent) :
 	_js(new QJsonSerializer(this)),
 	_packageDatabase(),
 	_watcher(new QFileSystemWatcher(this)),
+	_watcherSkipNext(false),
 	_loaded(false)
 {
 	_settings->beginGroup(QStringLiteral("lib/dbcontroller"));
@@ -122,17 +123,7 @@ void DatabaseController::updateDb(const QStringList &packages)
 	foreach (auto package, set)
 		_packageDatabase.packages[package] = {package};
 
-	QLockFile lock(lockPath(_dbPath));
-	QFile file(_dbPath);
-	if(!lock.lock())
-		throw DatabaseException("Lock failed");
-	if(!file.open(QIODevice::WriteOnly))
-		throw DatabaseException(file.errorString());
-
-	_packageDatabase.parseHarderToJson(_js);
-	_js->serializeTo<PackageDatabase>(&file, _packageDatabase);
-	file.close();
-	lock.unlock();
+	writeFile(_packageDatabase, _dbPath);
 }
 
 void DatabaseController::sync()
@@ -156,13 +147,16 @@ void DatabaseController::sync()
 
 void DatabaseController::fileChanged()
 {
-	try {
-		readFile();
-		sync();
-	} catch(QException &e){
-		qWarning() << "Failed to reload changed file:" << e.what();
+	if(!_watcherSkipNext) {
+		try {
+			readFile();
+			sync();
+		} catch(QException &e){
+			qWarning() << "Failed to reload changed file:" << e.what();
+		}
 	}
 
+	_watcherSkipNext = false;
 	_watcher->addPath(_dbPath);
 }
 
@@ -201,6 +195,8 @@ void DatabaseController::writeFile(PackageDatabase p, const QString &path)
 	_js->serializeTo<PackageDatabase>(&file, p);
 	file.close();
 	lock.unlock();
+
+	_watcherSkipNext = true;
 }
 
 QString DatabaseController::lockPath(const QString &path)
