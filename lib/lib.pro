@@ -17,6 +17,7 @@ HEADERS += \
 	exception.h \
     databasecontroller.h \
     packagedatabase.h \
+    operationqueue.h \
     libpacsync_global.h
 
 SOURCES += \
@@ -24,7 +25,8 @@ SOURCES += \
 	pluginloader.cpp \
 	exception.cpp \
     databasecontroller.cpp \
-    packagedatabase.cpp
+    packagedatabase.cpp \
+    operationqueue.cpp
 
 unix {
 	target.path = $$[QT_INSTALL_LIBS]

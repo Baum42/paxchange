@@ -27,7 +27,7 @@ public:
 };
 
 #define DEF_EXC(Type) \
-	class Type : public Exception<Type> { \
+	class LIBPACSYNC_SHARED_EXPORT Type : public Exception<Type> { \
 	public: \
 		inline Type(const QString &what) : \
 			Exception(what) \

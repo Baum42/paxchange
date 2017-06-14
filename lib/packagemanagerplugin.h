@@ -26,6 +26,8 @@ public:
 	virtual void startInstallation(const QStringList &packages, bool noConfirm) = 0;
 	virtual void startUninstallation(const QStringList &packages, bool noConfirm) = 0;
 
+	//TODO add "settings" (e.g. no confirm)
+
 signals:
 	void operationCompleted();
 	void packagesChanged(const QStringList &added, const QStringList &removed);
