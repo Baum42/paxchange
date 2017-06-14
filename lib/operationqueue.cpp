@@ -39,6 +39,7 @@ void OperationQueue::setOperations(const QStringList &install, const QStringList
 	}
 
 	emit operationsChanged(_opFlags);
+	qDebug() << _nextOp;
 }
 
 void OperationQueue::startOperation()
