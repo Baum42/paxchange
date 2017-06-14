@@ -21,7 +21,7 @@ public:
 	bool operator ==(const PackageInfo &other) const;
 };
 
-class PackageDatabase
+class LIBPACSYNC_SHARED_EXPORT PackageDatabase
 {
 	Q_GADGET
 

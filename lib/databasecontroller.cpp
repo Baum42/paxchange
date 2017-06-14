@@ -1,8 +1,9 @@
 #include "databasecontroller.h"
-#include "pluginloader.h"
 
 #include <QCoreApplication>
+#include <QFileInfo>
 #include <QGlobalStatic>
+#include <QLockFile>
 
 Q_GLOBAL_STATIC(DatabaseController, _instance)
 
@@ -53,13 +54,17 @@ void DatabaseController::createDb(const QString &path, const QStringList &packag
 	foreach (auto package, packages)
 		p.packages[package] = {package, false};
 
+	QLockFile lock(lockPath(path));
+	if(!lock.lock())
+		throw DatabaseException("Lock failed");
 	QFile file(path);
 	if(!file.open(QIODevice::WriteOnly))
-		;//throw ..
+		throw DatabaseException(file.errorString());
 
 	p.parseHarderToJson(_js);//TODO use QHash later
 	_js->serializeTo<PackageDatabase>(&file, p);
 	file.close();
+	lock.unlock();
 
 	loadDb(path);
 }
@@ -97,12 +102,16 @@ void DatabaseController::updateDb(const QStringList &packages)
 	foreach (auto package, set)
 		_packageDatabase.packages[package] = {package};
 
+	QLockFile lock(lockPath(_dbFile->fileName()));
+	if(!lock.lock())
+		throw DatabaseException("Lock failed");
 	if(!_dbFile->open(QIODevice::WriteOnly))
-		;//throw ..
+		throw DatabaseException(_dbFile->errorString());
 
 	_packageDatabase.parseHarderToJson(_js);//TODO use QHash later
 	_js->serializeTo<PackageDatabase>(_dbFile, _packageDatabase);
 	_dbFile->close();
+	lock.unlock();
 }
 
 void DatabaseController::sync()
@@ -145,11 +154,23 @@ void DatabaseController::cleanUp()
 
 void DatabaseController::readFile()
 {
+	QLockFile lock(lockPath(_dbFile->fileName()));
+	if(!lock.lock())
+		throw DatabaseException("Lock failed");
+
 	_dbFile->open(QIODevice::ReadOnly);
 	auto pdb = _js->deserializeFrom<PackageDatabase>(_dbFile);
 	_dbFile->close();
+	lock.unlock();
+
 	pdb.parseHarderFromJson(_js);	//TODO use QHash later
 	_packageDatabase = pdb;
+}
+
+QString DatabaseController::lockPath(const QString &path)
+{
+	QFileInfo info(path);
+	return info.absolutePath() + "." + info.fileName() + ".lock";
 }
 
 static void setupDatabaseController(){
