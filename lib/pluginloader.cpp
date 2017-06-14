@@ -81,21 +81,3 @@ QString PluginLoader::defaultPlugin() const
 	else
 		throw PluginLoadException("No default plugin is defined or available");
 }
-
-
-
-PluginLoadException::PluginLoadException(const QString &what) :
-	Exception(what)
-{}
-
-void PluginLoadException::raise() const
-{
-	throw *this;
-}
-
-QException *PluginLoadException::clone() const
-{
-	auto e = new PluginLoadException(QString());
-	e->_what = _what;
-	return e;
-}

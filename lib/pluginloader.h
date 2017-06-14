@@ -6,14 +6,7 @@
 #include "exception.h"
 #include "packagemanagerplugin.h"
 
-class PluginLoadException : public Exception
-{
-public:
-	PluginLoadException(const QString &what);
-
-	void raise() const final;
-	QException *clone() const final;
-};
+DEF_EXC(PluginLoadException)
 
 class PluginLoader : public QObject
 {
