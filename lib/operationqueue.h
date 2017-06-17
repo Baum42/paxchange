@@ -26,6 +26,7 @@ public:
 	explicit OperationQueue(DatabaseController *parent = nullptr);
 
 	OpertionsFlags operations() const;
+	OpertionsFlag nextOperation() const;
 
 public slots:
 	void setOperations(const QStringList &install, const QStringList &uninstall);
@@ -46,5 +47,7 @@ private:
 	DatabaseController *_controller;
 	PackageManagerPlugin *_plugin;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OperationQueue::OpertionsFlags)
 
 #endif // OPERATIONQUEUE_H

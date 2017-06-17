@@ -30,7 +30,7 @@ DatabaseController::DatabaseController(QObject *parent) :
 	try {
 		if(_settings->contains(QStringLiteral("path"))) {
 			loadDb(_settings->value(QStringLiteral("path")).toString());
-			sync();
+			QMetaObject::invokeMethod(this, "sync", Qt::QueuedConnection);
 		}
 	} catch(QException &e) {
 		qCritical() << e.what();
@@ -138,7 +138,7 @@ void DatabaseController::sync()
 
 	for(auto it = targetP.constBegin(); it != targetP.constEnd(); it++){
 		auto contains = installedP.contains(it->name);
-		if(!contains)
+		if(!contains && !it->removed)
 			pI.append(it->name);
 
 		if(it->removed && contains)

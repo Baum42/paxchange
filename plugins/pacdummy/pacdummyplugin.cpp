@@ -78,7 +78,8 @@ void PacDummyPlugin::startInstallation(const QStringList &packages)
 		_file->close();
 	}
 
-	emit operationCompleted();
+	_process->waitForFinished();
+	QMetaObject::invokeMethod(this, "operationCompleted", Qt::QueuedConnection);
 }
 
 void PacDummyPlugin::startUninstallation(const QStringList &packages)
@@ -101,5 +102,6 @@ void PacDummyPlugin::startUninstallation(const QStringList &packages)
 		_file->close();
 	}
 
-	emit operationCompleted();
+	_process->waitForFinished();
+	QMetaObject::invokeMethod(this, "operationCompleted", Qt::QueuedConnection);
 }

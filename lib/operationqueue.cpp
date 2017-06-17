@@ -39,7 +39,6 @@ void OperationQueue::setOperations(const QStringList &install, const QStringList
 	}
 
 	emit operationsChanged(_opFlags);
-	qDebug() << _nextOp;
 }
 
 void OperationQueue::startOperation()
@@ -67,9 +66,15 @@ void OperationQueue::pluginOpDone()
 {
 	_operating = false;
 	_controller->reloadDb();
+	_controller->sync();
 }
 
 OperationQueue::OpertionsFlags OperationQueue::operations() const
 {
 	return _opFlags;
+}
+
+OperationQueue::OpertionsFlag OperationQueue::nextOperation() const
+{
+	return _nextOpFlag;
 }
