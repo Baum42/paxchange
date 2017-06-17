@@ -179,12 +179,9 @@ void DatabaseController::readFile()
 
 	QFile file(_dbPath);
 	file.open(QIODevice::ReadOnly);
-	auto pdb = _js->deserializeFrom<PackageDatabase>(&file);
+	_packageDatabase = _js->deserializeFrom<PackageDatabase>(&file);
 	file.close();
 	lock.unlock();
-
-	pdb.parseHarderFromJson(_js);
-	_packageDatabase = pdb;
 }
 
 void DatabaseController::writeFile(PackageDatabase p, const QString &path)
@@ -196,7 +193,6 @@ void DatabaseController::writeFile(PackageDatabase p, const QString &path)
 	if(!file.open(QIODevice::WriteOnly))
 		throw DatabaseException(file.errorString());
 
-	p.parseHarderToJson(_js);
 	_js->serializeTo<PackageDatabase>(&file, p);
 	file.close();
 	lock.unlock();
@@ -212,6 +208,6 @@ QString DatabaseController::lockPath(const QString &path)
 
 static void setupDatabaseController()
 {
-	QJsonSerializer::registerListConverters<PackageInfo>();
+	QJsonSerializer::registerAllConverters<PackageInfo>();
 	DbSettings::registerSettings();
 }

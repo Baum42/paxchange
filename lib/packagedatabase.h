@@ -28,7 +28,7 @@ class LIBPACSYNC_SHARED_EXPORT PackageDatabase
 	Q_GADGET
 
 	Q_PROPERTY(Mode mode MEMBER mode)
-	Q_PROPERTY(QJsonObject packages MEMBER _pkg)
+	Q_PROPERTY(QMap<QString, PackageInfo> packages MEMBER packages)
 	Q_PROPERTY(QJsonObject settings MEMBER settings)
 
 public:
@@ -40,15 +40,9 @@ public:
 
 	PackageDatabase();
 	Mode mode;
-	QHash<QString, PackageInfo> packages;
+	QMap<QString, PackageInfo> packages;
 
 	QJsonObject settings;
-
-	void parseHarderFromJson(QJsonSerializer *s);//TODO use QHash later
-	void parseHarderToJson(QJsonSerializer *s);//TODO use QHash later
-
-private:
-	QJsonObject _pkg;
 };
 
 #endif // PACKAGEDATABASE_H
