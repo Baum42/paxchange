@@ -60,7 +60,8 @@ QStringList PacDummyPlugin::listPackages(QList<bool> extraFilters)
 
 void PacDummyPlugin::startInstallation(const QStringList &packages)
 {
-	_process->start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
+	//_process->start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
+	_process->start("kdialog", {"--msgbox", "Installation completed!"});
 
 	bool stateChanged = false;
 	foreach (auto package, packages) {
@@ -84,7 +85,8 @@ void PacDummyPlugin::startInstallation(const QStringList &packages)
 
 void PacDummyPlugin::startUninstallation(const QStringList &packages)
 {
-	_process->start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
+	//_process->start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
+	_process->start("kdialog", {"--msgbox", "Uninstallation completed!"});
 
 	bool stateChanged = false;
 	foreach (auto package, packages) {
