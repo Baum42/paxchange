@@ -13,20 +13,21 @@ CONFIG += plugin
 DESTDIR = $$OUT_PWD/../../pacsync
 
 DEFINES += QT_DEPRECATED_WARNINGS \
-    SRCDIR=\\\"$$PWD/\\\"
+#	QT_ASCII_CAST_WARNINGS \
+	SRCDIR=\\\"$$PWD/\\\"
 
 SOURCES += \
-    pacdummyplugin.cpp \
-    pacstate.cpp
+	pacdummyplugin.cpp \
+	pacstate.cpp
 
 HEADERS += \
-    pacdummyplugin.h \
-    pacstate.h
-DISTFILES += pacdummy.json 
+	pacdummyplugin.h \
+	pacstate.h
+DISTFILES += pacdummy.json
 
 unix {
-    target.path = $$[QT_INSTALL_PLUGINS]/pacsync
-    INSTALLS += target
+	target.path = $$[QT_INSTALL_PLUGINS]/pacsync
+	INSTALLS += target
 }
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../lib/release/ -lpacsync
@@ -37,4 +38,4 @@ INCLUDEPATH += $$PWD/../../lib
 DEPENDPATH += $$PWD/../../lib
 
 RESOURCES += \
-    pacdummy.qrc
+	pacdummy.qrc

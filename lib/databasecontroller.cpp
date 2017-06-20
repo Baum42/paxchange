@@ -175,7 +175,7 @@ void DatabaseController::readFile()
 {
 	QLockFile lock(lockPath(_dbPath));
 	if(!lock.lock())
-		throw DatabaseException("Lock failed");
+		throw DatabaseException(QStringLiteral("Lock failed"));
 
 	QFile file(_dbPath);
 	file.open(QIODevice::ReadOnly);
@@ -188,7 +188,7 @@ void DatabaseController::writeFile(PackageDatabase p, const QString &path)
 {
 	QLockFile lock(lockPath(path));
 	if(!lock.lock())
-		throw DatabaseException("Lock failed");
+		throw DatabaseException(QStringLiteral("Lock failed"));
 	QFile file(path);
 	if(!file.open(QIODevice::WriteOnly))
 		throw DatabaseException(file.errorString());
@@ -203,7 +203,10 @@ void DatabaseController::writeFile(PackageDatabase p, const QString &path)
 QString DatabaseController::lockPath(const QString &path)
 {
 	QFileInfo info(path);
-	return info.absolutePath() + "/." + info.fileName() + ".lock";
+	return info.absolutePath() +
+			QStringLiteral("/.") +
+			info.fileName() +
+			QStringLiteral(".lock");
 }
 
 static void setupDatabaseController()

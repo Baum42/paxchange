@@ -21,14 +21,24 @@ TrayControl::TrayControl(QObject *parent) :
 	_operateAction->setVisible(false);
 
 	_trayMenu->addSeparator();
-	_trayMenu->addAction(QIcon::fromTheme("package-new"), tr("Change Database"), this, &TrayControl::changeDatabase);
+	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("package-new")),
+						 tr("Change Database"),
+						 this, &TrayControl::changeDatabase);
 	_trayMenu->addSeparator();
-	_trayMenu->addAction(QIcon::fromTheme("package-upgrade"), tr("Edit Packages"), this, &TrayControl::editPackages);
+	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("package-upgrade")),
+						 tr("Edit Packages"),
+						 this, &TrayControl::editPackages);
 	_trayMenu->addSeparator();
-	_trayMenu->addAction(QIcon::fromTheme("help-about"), tr("About"), this, &TrayControl::about);
-	_trayMenu->addAction(QIcon::fromTheme("qt-logo"), tr("About Qt"), qApp, &QApplication::aboutQt);
+	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("help-about")),
+						 tr("About"),
+						 this, &TrayControl::about);
+	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("qt-logo")),
+						 tr("About Qt"),
+						 qApp, &QApplication::aboutQt);
 	_trayMenu->addSeparator();
-	_trayMenu->addAction(QIcon::fromTheme("gtk-quit"), tr("Quit"), qApp, &QApplication::quit);
+	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("gtk-quit")),
+						 tr("Quit"),
+						 qApp, &QApplication::quit);
 
 	auto db = DatabaseController::instance();
 	connect(db->operationQueue(), &OperationQueue::operationsChanged,
@@ -108,11 +118,11 @@ void TrayControl::operationsChanged(OperationQueue::OpertionsFlags operations)
 		auto message = tr("The package database has changed. Packages have to be %1.");
 		if(op->nextOperation() == OperationQueue::Install) {
 			message = message.arg(tr("installed"));
-			_operateAction->setIcon(QIcon::fromTheme("package-install"));
+			_operateAction->setIcon(QIcon::fromTheme(QStringLiteral("package-install")));
 			_operateAction->setText(tr("Install new packages"));
 		} else if(op->nextOperation() == OperationQueue::Uninstall) {
 			message = message.arg(tr("uninstalled"));
-			_operateAction->setIcon(QIcon::fromTheme("package-remove"));
+			_operateAction->setIcon(QIcon::fromTheme(QStringLiteral("package-remove")));
 			_operateAction->setText(tr("Uninstall old packages"));
 		}
 		_operateAction->setVisible(true);

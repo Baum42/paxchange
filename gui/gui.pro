@@ -20,7 +20,7 @@ DEFINES += "COMPANY=\"\\\"$$QMAKE_TARGET_COMPANY\\\"\""
 DEFINES += "DISPLAY_NAME=\"\\\"$$QMAKE_TARGET_DESCRIPTION\\\"\""
 DEFINES += "BUNDLE=\"\\\"$$QMAKE_TARGET_BUNDLE_PREFIX\\\"\""
 
-DEFINES += QT_DEPRECATED_WARNINGS
+DEFINES += QT_DEPRECATED_WARNINGS QT_ASCII_CAST_WARNINGS
 
 include(vendor/vendor.pri)
 
@@ -32,7 +32,7 @@ HEADERS += \
 	dbselectionpage.h \
 	dbpathpage.h \
 	dbpackagespage.h \
-    packagemodel.h
+	packagemodel.h
 
 SOURCES += \
 		main.cpp \
@@ -43,7 +43,7 @@ SOURCES += \
 	dbselectionpage.cpp \
 	dbpathpage.cpp \
 	dbpackagespage.cpp \
-    packagemodel.cpp
+	packagemodel.cpp
 
 FORMS += \
 	editpackageswidget.ui \

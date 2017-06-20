@@ -13,7 +13,7 @@ DbPackagesPage::DbPackagesPage(QWidget *parent) :
 	setSubTitle(tr("Select the packages you want to add to the database. "
 				   "Those packages will be synchronized across your machines."));
 
-	registerField("packages", _widget, "packages");
+	registerField(QStringLiteral("packages"), _widget, "packages");
 }
 
 void DbPackagesPage::initializePage()

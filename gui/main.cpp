@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 	parser.process(a);
 
 	try {
-		PluginLoader::loadPlugin(parser.value("p"));
+		PluginLoader::loadPlugin(parser.value(QStringLiteral("p")));
 	} catch(PluginLoadException &e) {
 		qCritical() << e.what();
 		return EXIT_FAILURE;
@@ -45,8 +45,8 @@ static void setupParser(QCommandLineParser &parser)
 	parser.addHelpOption();
 
 	parser.addOption({
-						 {"p", "pacin"},
-						 "Explicitly select the plugin to be loaded",
-						 "plugin"
+						 {QStringLiteral("p"), QStringLiteral("pacin")},
+						 QCoreApplication::translate("GLOBAL", "Explicitly select the plugin to be loaded"),
+						 QStringLiteral("plugin")
 					 });
 }

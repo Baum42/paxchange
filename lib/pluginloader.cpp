@@ -29,8 +29,8 @@ PluginLoader::PluginLoader(QObject *parent) :
 	foreach (auto plg, plugDir.entryList()) {
 		auto loader = new QPluginLoader(plugDir.absoluteFilePath(plg), this);
 		auto meta = loader->metaData();
-		if(meta["IID"].toString() == PackageManagerPlugin_iid) {
-			auto keys = meta["MetaData"].toObject()["Keys"].toArray();
+		if(meta[QStringLiteral("IID")].toString() == QStringLiteral(PackageManagerPlugin_iid)) {
+			auto keys = meta[QStringLiteral("MetaData")].toObject()[QStringLiteral("Keys")].toArray();
 			if(!keys.isEmpty()) {
 				foreach (auto key, keys) {
 					qDebug() << "Found plugin for key" << key.toString();
@@ -76,8 +76,8 @@ PackageManagerPlugin *PluginLoader::plugin()
 
 QString PluginLoader::defaultPlugin() const
 {
-	if(_availablePlugins.contains(PS_STD_PLG))
-		return PS_STD_PLG;
+	if(_availablePlugins.contains(QStringLiteral(PS_STD_PLG)))
+		return QStringLiteral(PS_STD_PLG);
 	else
-		throw PluginLoadException("No default plugin is defined or available");
+		throw PluginLoadException(QStringLiteral("No default plugin is defined or available"));
 }
