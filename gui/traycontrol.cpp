@@ -1,4 +1,5 @@
 #include "databasewizard.h"
+#include "settingsdialog.h"
 #include "traycontrol.h"
 
 #include <QApplication>
@@ -28,6 +29,9 @@ TrayControl::TrayControl(QObject *parent) :
 	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("package-upgrade")),
 						 tr("Edit Packages"),
 						 this, &TrayControl::editPackages);
+	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("gtk-preferences")),
+						 tr("Settings"),
+						 this, &TrayControl::openSettings);
 	_trayMenu->addSeparator();
 	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("help-about")),
 						 tr("About"),
@@ -97,6 +101,11 @@ void TrayControl::editPackages()
 																			&ok);
 	if(ok)
 		ctr->updateDb(packages);
+}
+
+void TrayControl::openSettings()
+{
+	SettingsDialog::showSettings();
 }
 
 void TrayControl::about()

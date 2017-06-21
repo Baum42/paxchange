@@ -30,7 +30,8 @@ HEADERS += \
 	dbselectionpage.h \
 	dbpathpage.h \
 	dbpackagespage.h \
-	packagemodel.h
+	packagemodel.h \
+    settingsdialog.h
 
 SOURCES += \
 		main.cpp \
@@ -41,12 +42,14 @@ SOURCES += \
 	dbselectionpage.cpp \
 	dbpathpage.cpp \
 	dbpackagespage.cpp \
-	packagemodel.cpp
+	packagemodel.cpp \
+    settingsdialog.cpp
 
 FORMS += \
 	editpackageswidget.ui \
 	dbselectionpage.ui \
-	dbpathpage.ui
+	dbpathpage.ui \
+    settingsdialog.ui
 
 RESOURCES += \
 	pacsync_gui.qrc
