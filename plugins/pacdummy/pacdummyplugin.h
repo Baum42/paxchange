@@ -21,7 +21,7 @@ public:
 
 	QList<FilterInfo> extraFilters() override;
 	QStringList listAllPackages() override;
-	QStringList listPackages(QList<bool> extraFilters) override;
+	QStringList listPackages(QVector<bool> extraFilters) override;
 	QString installationCmd(const QStringList &packages) override;
 	QString uninstallationCmd(const QStringList &packages) override;
 

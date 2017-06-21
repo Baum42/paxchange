@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QSettings>
 #include <QVariant>
+#include <QVector>
 
 #define PackageManagerPlugin_iid "de.baum42.pacsync.PackageManagerPlugin"
 
@@ -38,15 +39,16 @@ public:
 	virtual QList<FilterInfo> extraFilters() = 0;
 
 	virtual QStringList listAllPackages() = 0;
-	virtual QStringList listPackages(QList<bool> extraFilters) = 0;//TODO QVector
+	virtual QStringList listPackages(QVector<bool> extraFilters) = 0;
 	virtual QString installationCmd(const QStringList &packages) = 0;
 	virtual QString uninstallationCmd(const QStringList &packages) = 0;
 	virtual bool startGuiInstall(const QStringList &packages);
 	virtual bool startGuiUninstall(const QStringList &packages);
 
-	QSettings *createPluginSettings(QObject *parent) const;//TODO synced & local settings
+	QSettings *createSyncedSettings(QObject *parent) const;
+	QSettings *createLocalSettings(QObject *parent) const;
 	virtual QList<SettingsInfo> listSettings() = 0;
-	virtual void settingsChanged();//TODO call
+	virtual void settingsChanged();
 
 signals:
 	void guiFinished();

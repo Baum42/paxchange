@@ -47,7 +47,7 @@ void OperationQueue::startOperation()
 
 	if(_nextOpFlag == None) {
 		emit operationsChanged(None);
-		return; //TODO signal?
+		return;
 	}
 
 	auto settings = DbSettings::create();
