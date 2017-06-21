@@ -24,7 +24,6 @@ private:
 
 	Ui::SettingsDialog *_ui;
 	QHash<QString, SInfo> _settingsWidgets;
-	QSettings *_localSettings;
 
 	explicit SettingsDialog(QWidget *parent = nullptr);
 	~SettingsDialog();

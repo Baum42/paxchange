@@ -11,12 +11,12 @@
 #include <QLabel>
 #include <comboboxconfig.h>
 #include <QComboBox>
+#include <dbsettings.h>
 
 SettingsDialog::SettingsDialog(QWidget *parent) :
 	QDialog(parent),
 	_ui(new Ui::SettingsDialog),
-	_settingsWidgets(),
-	_localSettings(new QSettings(this))
+	_settingsWidgets()
 {
 	_ui->setupUi(this);
 	DialogMaster::masterDialog(this);
@@ -26,9 +26,10 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	_ui->generalScrollArea->setPalette(pal);
 	_ui->pluginScrollArea->setPalette(pal);
 
+	auto libSettings = DbSettings::create(this);
 	createWidgets(_ui->generalScrollAreaContents,
 				  _ui->generalFormLayout,
-				  _localSettings,
+				  libSettings,
 				  {
 					  {
 						  tr("Use &GUI Installer"),
@@ -63,12 +64,12 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 				  settings,
 				  plugin->listSettings());
 
-	restoreGeometry(_localSettings->value(QStringLiteral("gui/settings/geom")).toByteArray());
+	restoreGeometry(QSettings().value(QStringLiteral("gui/settings/geom")).toByteArray());
 }
 
 SettingsDialog::~SettingsDialog()
 {
-	_localSettings->setValue(QStringLiteral("gui/settings/geom"), saveGeometry());
+	QSettings().setValue(QStringLiteral("gui/settings/geom"), saveGeometry());
 	delete _ui;
 }
 
@@ -83,9 +84,14 @@ void SettingsDialog::accept()
 	QSet<QSettings*> syncable;
 
 	for(auto it = _settingsWidgets.constBegin(); it != _settingsWidgets.constEnd(); ++it) {
-		auto userProp = it->second->metaObject()->userProperty();
-		it->first->setValue(it.key(), userProp.read(it->second));
-		syncable.insert(it->first);
+		auto cBox = qobject_cast<QComboBox*>(it->second);
+		if(cBox)
+			it->first->setValue(it.key(), cBox->currentData());
+		else {
+			auto userProp = it->second->metaObject()->userProperty();
+			it->first->setValue(it.key(), userProp.read(it->second));
+			syncable.insert(it->first);
+		}
 	}
 
 	foreach(auto settings, syncable)
@@ -115,7 +121,7 @@ void SettingsDialog::createWidgets(QWidget *parent, QFormLayout *layout, QSettin
 				auto cbox = new QComboBox(parent);
 				for(auto i = 0; i < config.displayNames.size() && i < config.values.size(); i++)
 					cbox->addItem(config.displayNames[i], config.values[i]);
-				cbox->setCurrentIndex(qMax(0, config.values.indexOf(config.defaultValue)));
+				cbox->setCurrentIndex(qMax(0, config.values.indexOf(settings->value(info.settingsKeys, info.defaultValue))));
 				widget = cbox;
 			} else {
 				switch (info.type) {
