@@ -39,12 +39,15 @@ public:
 	virtual QStringList listPackages(QList<bool> extraFilters) = 0;//TODO QVector
 	virtual QString installationCmd(const QStringList &packages) = 0;
 	virtual QString uninstallationCmd(const QStringList &packages) = 0;
+	virtual bool startGuiInstall(const QStringList &packages);
+	virtual bool startGuiUninstall(const QStringList &packages);
 
-	QSettings *createPluginSettings(QObject *parent) const;
+	QSettings *createPluginSettings(QObject *parent) const;//TODO synced & local settings
 	virtual QList<SettingsInfo> listSettings() = 0;
 	virtual void settingsChanged();//TODO call
 
 signals:
+	void guiFinished();
 	void packagesChanged(const QStringList &added, const QStringList &removed);
 };
 

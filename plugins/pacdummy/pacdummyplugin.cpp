@@ -8,9 +8,13 @@ PacDummyPlugin::PacDummyPlugin(QObject *parent) :
 	PackageManagerPlugin(parent),
 	_js(new QJsonSerializer(this)),
 	_process(new QProcess(this)),
-	_file(new QFile(QCoreApplication::applicationDirPath() + QStringLiteral("/fakeman.json"), this))
+	_file(new QFile(QCoreApplication::applicationDirPath() + QStringLiteral("/fakeman.json"), this)),
+	_settings(createPluginSettings(this))
 {
 	QJsonSerializer::registerListConverters<PacState>();
+
+	if(_settings->value(QStringLiteral("delFakeman")).toBool())
+		_file->remove();
 
 	if(QFile::copy(QStringLiteral(":/fakeman.json"), _file->fileName()))
 		_file->setPermissions(QFile::ReadOwner | QFile::WriteOwner);
@@ -66,8 +70,12 @@ QString PacDummyPlugin::installationCmd(const QStringList &packages)
 	tmp.open();
 
 	QTextStream stream(&tmp);
-	stream << QStringLiteral("#!/bin/sh\n")
-		   << QStringLiteral("echo installing the following packages:\n")
+	stream << QStringLiteral("#!/bin/sh\n");
+
+	if(_settings->value(QStringLiteral("secret")).toInt() == 42)
+		stream << "Baum!\n";
+
+	stream << QStringLiteral("echo installing the following packages:\n")
 		   << packages.join(QStringLiteral(" ")) << QStringLiteral("\n")
 		   << QStringLiteral("read -p \"Press enter to continue\"\n");
 
@@ -101,8 +109,12 @@ QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
 	tmp.open();
 
 	QTextStream stream(&tmp);
-	stream << QStringLiteral("#!/bin/sh\n")
-		   << QStringLiteral("echo uninstalling the following packages:\n")
+	stream << QStringLiteral("#!/bin/sh\n");
+
+	if(_settings->value(QStringLiteral("secret")).toInt() == 42)
+		stream << "Baum!\n";
+
+	stream << QStringLiteral("echo uninstalling the following packages:\n")
 		   << packages.join(QStringLiteral(" ")) << QStringLiteral("\n")
 		   << QStringLiteral("read -p \"Press enter to continue\"\n");
 

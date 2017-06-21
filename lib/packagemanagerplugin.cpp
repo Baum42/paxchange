@@ -5,6 +5,16 @@ PackageManagerPlugin::PackageManagerPlugin(QObject *parent) :
 	QObject(parent)
 {}
 
+bool PackageManagerPlugin::startGuiInstall(const QStringList &packages)
+{
+	return false;
+}
+
+bool PackageManagerPlugin::startGuiUninstall(const QStringList &packages)
+{
+	return false;
+}
+
 QSettings *PackageManagerPlugin::createPluginSettings(QObject *parent) const
 {
 	auto settings = DbSettings::create(parent);

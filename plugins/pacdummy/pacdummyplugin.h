@@ -30,6 +30,7 @@ private:
 	QJsonSerializer *_js;
 	QProcess *_process;
 	QFile *_file;
+	QSettings *_settings;
 };
 
 #endif // PACDUMMYPLUGIN_H
