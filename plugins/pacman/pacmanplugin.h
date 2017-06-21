@@ -1,16 +1,16 @@
-#ifndef PACMAN_H
-#define PACMAN_H
+#ifndef PACMANPLUGIN_H
+#define PACMANPLUGIN_H
 
 #include <packagemanagerplugin.h>
 
-class Pacman : public PackageManagerPlugin
+class PacmanPlugin : public PackageManagerPlugin
 {
 	Q_OBJECT
 
 	Q_PLUGIN_METADATA(IID PackageManagerPlugin_iid FILE "pacman.json")
 
 public:
-	Pacman(QObject *parent = nullptr);
+	PacmanPlugin(QObject *parent = nullptr);
 
 public:
 	void initialize() override;
@@ -24,4 +24,4 @@ public:
 	QList<SettingsInfo> listSettings() override;
 };
 
-#endif // PACMAN_H
+#endif // PACMANPLUGIN_H

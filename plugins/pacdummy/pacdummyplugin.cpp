@@ -31,7 +31,7 @@ void PacDummyPlugin::initialize()
 QList<PacDummyPlugin::FilterInfo> PacDummyPlugin::extraFilters()
 {
 	QList<PacDummyPlugin::FilterInfo> list;
-	list.append({QStringLiteral("&baum"), QStringLiteral("baum is importand"), true});
+	list.append({QStringLiteral("&baum"), QStringLiteral("baum is important"), true});
 	list.append({QStringLiteral("42"), QString(), false});
 	return list;
 }
