@@ -18,7 +18,7 @@ OperationQueue::OperationQueue(DatabaseController *parent) :
 void OperationQueue::setOperations(const QStringList &install, const QStringList &uninstall)
 {
 	auto settings = DbSettings::create();
-	auto uninstallFirst = settings->value(QStringLiteral("lib/operations/uninstall_first")).toBool();
+	auto uninstallFirst = settings->value(QStringLiteral("lib/operations/uninstall_first"), true).toBool();
 
 	for(auto i = 0; i < 2; i++) {
 		if(uninstallFirst) {

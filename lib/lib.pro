@@ -18,7 +18,8 @@ HEADERS += \
 	packagedatabase.h \
 	operationqueue.h \
 	libpacsync_global.h \
-	dbsettings.h
+	dbsettings.h \
+    comboboxconfig.h
 
 SOURCES += \
 	packagemanagerplugin.cpp \
@@ -27,7 +28,8 @@ SOURCES += \
 	databasecontroller.cpp \
 	packagedatabase.cpp \
 	operationqueue.cpp \
-	dbsettings.cpp
+	dbsettings.cpp \
+    comboboxconfig.cpp
 
 unix {
 	target.path = $$[QT_INSTALL_LIBS]
