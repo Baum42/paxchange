@@ -24,8 +24,8 @@ PacDummyPlugin::PacDummyPlugin(QObject *parent) :
 QList<PacDummyPlugin::FilterInfo> PacDummyPlugin::extraFilters()
 {
 	QList<PacDummyPlugin::FilterInfo> list;
-	list.append({"&baum", "baum is importand", true});
-	list.append({"42", QString(), false});
+	list.append({QStringLiteral("&baum"), QStringLiteral("baum is importand"), true});
+	list.append({QStringLiteral("42"), QString(), false});
 	return list;
 }
 
@@ -62,6 +62,17 @@ QStringList PacDummyPlugin::listPackages(QList<bool> extraFilters)
 QString PacDummyPlugin::installationCmd(const QStringList &packages)
 {
 	QTemporaryFile tmp;
+	tmp.setAutoRemove(false);
+	tmp.open();
+
+	QTextStream stream(&tmp);
+	stream << QStringLiteral("#!/bin/sh\n")
+		   << QStringLiteral("echo installing the following packages:\n")
+		   << packages.join(QStringLiteral(" ")) << QStringLiteral("\n")
+		   << QStringLiteral("read -p \"Press enter to continue\"\n");
+
+	stream.flush();
+	tmp.close();
 	tmp.setPermissions(tmp.permissions() | QFileDevice::ExeUser);
 
 	bool stateChanged = false;
@@ -80,12 +91,23 @@ QString PacDummyPlugin::installationCmd(const QStringList &packages)
 		_file->close();
 	}
 
-	return QString("./%1").arg(tmp.fileName());
+	return QStringLiteral("./%1").arg(tmp.fileName());
 }
 
 QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
 {
 	QTemporaryFile tmp;
+	tmp.setAutoRemove(false);
+	tmp.open();
+
+	QTextStream stream(&tmp);
+	stream << QStringLiteral("#!/bin/sh\n")
+		   << QStringLiteral("echo uninstalling the following packages:\n")
+		   << packages.join(QStringLiteral(" ")) << QStringLiteral("\n")
+		   << QStringLiteral("read -p \"Press enter to continue\"\n");
+
+	stream.flush();
+	tmp.close();
 	tmp.setPermissions(tmp.permissions() | QFileDevice::ExeUser);
 
 	bool stateChanged = false;
@@ -104,7 +126,7 @@ QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
 		_file->close();
 	}
 
-	return QString("./%1").arg(tmp.fileName());
+	return QStringLiteral("./%1").arg(tmp.fileName());
 }
 
 QList<PackageManagerPlugin::SettingsInfo> PacDummyPlugin::listSettings()
