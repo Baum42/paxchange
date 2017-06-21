@@ -18,7 +18,7 @@ OperationQueue::OperationQueue(DatabaseController *parent) :
 void OperationQueue::setOperations(const QStringList &install, const QStringList &uninstall)
 {
 	auto settings = DbSettings::create();
-	auto uninstallFirst = settings->value(QStringLiteral("operations/uninstall_first"), false).toBool();
+	auto uninstallFirst = settings->value(QStringLiteral("lib/operations/uninstall_first")).toBool();
 
 	for(auto i = 0; i < 2; i++) {
 		if(uninstallFirst) {
@@ -50,18 +50,28 @@ void OperationQueue::startOperation()
 		return;
 	}
 
+	auto settings = DbSettings::create();
+	auto useGui = settings->value(QStringLiteral("lib/operations/usegui")).toBool();
+
 	_operating = true;
-	if(_nextOpFlag == Install)
-		_plugin->installationCmd(_nextOp);
-	else if(_nextOpFlag == Uninstall)
-		_plugin->uninstallationCmd(_nextOp);
-	else
+	if(_nextOpFlag == Install){
+		if(useGui)
+			_plugin->startGuiInstall(_nextOp);
+		else
+			emit startCmd(_plugin->installationCmd(_nextOp));
+	}else if(_nextOpFlag == Uninstall){
+		if(useGui)
+			_plugin->startGuiUninstall(_nextOp);
+		else
+			emit startCmd(_plugin->uninstallationCmd(_nextOp));
+	}else
 		Q_UNREACHABLE();
+
 	_nextOp.clear();
 	_nextOpFlag = None;
 }
 
-void OperationQueue::pluginOpDone()
+void OperationQueue::cmdDone()
 {
 	_operating = false;
 	_controller->reloadDb();

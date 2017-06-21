@@ -31,7 +31,8 @@ HEADERS += \
 	dbpathpage.h \
 	dbpackagespage.h \
 	packagemodel.h \
-    settingsdialog.h
+    settingsdialog.h \
+    consoleoperator.h
 
 SOURCES += \
 		main.cpp \
@@ -43,7 +44,8 @@ SOURCES += \
 	dbpathpage.cpp \
 	dbpackagespage.cpp \
 	packagemodel.cpp \
-    settingsdialog.cpp
+    settingsdialog.cpp \
+    consoleoperator.cpp
 
 FORMS += \
 	editpackageswidget.ui \

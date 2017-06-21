@@ -30,7 +30,6 @@ public:
 private:
 	QList<PacState> _pacList;
 	QJsonSerializer *_js;
-	QProcess *_process;
 	QFile *_file;
 	QSettings *_settings;
 };

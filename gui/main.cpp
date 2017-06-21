@@ -5,6 +5,7 @@
 #include "traycontrol.h"
 #include "pluginloader.h"
 #include "databasewizard.h"
+#include "consoleoperator.h"
 
 static void setupParser(QCommandLineParser &parser);
 
@@ -36,6 +37,7 @@ int main(int argc, char *argv[])
 	}
 
 	TrayControl tray;
+	ConsoleOperator co;
 	return a.exec();
 }
 

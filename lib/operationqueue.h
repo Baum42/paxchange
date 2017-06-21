@@ -31,12 +31,11 @@ public:
 public slots:
 	void setOperations(const QStringList &install, const QStringList &uninstall);
 	void startOperation();
+	void cmdDone();
 
 signals:
 	void operationsChanged(OpertionsFlags operations);
-
-private slots:
-	void pluginOpDone();
+	void startCmd(QString cmd);
 
 private:
 	QStringList _nextOp;
