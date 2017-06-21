@@ -23,6 +23,8 @@ public:
 	void startInstallation(const QStringList &packages) override;
 	void startUninstallation(const QStringList &packages) override;
 
+	QList<SettingsInfo> listSettings() override;
+
 private:
 	QList<PacState> _pacList;
 	QJsonSerializer *_js;

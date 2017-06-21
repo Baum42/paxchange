@@ -4,3 +4,5 @@
 PackageManagerPlugin::PackageManagerPlugin(QObject *parent) :
 	QObject(parent)
 {}
+
+void PackageManagerPlugin::settingsChanged() {}

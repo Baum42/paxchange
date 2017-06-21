@@ -12,9 +12,7 @@ CONFIG += plugin
 
 DESTDIR = $$OUT_PWD/../../pacsync
 
-DEFINES += QT_DEPRECATED_WARNINGS \
-#	QT_ASCII_CAST_WARNINGS \
-	SRCDIR=\\\"$$PWD/\\\"
+DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 SOURCES += \
 	pacdummyplugin.cpp \

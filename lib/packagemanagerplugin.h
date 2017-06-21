@@ -4,6 +4,7 @@
 #include "libpacsync_global.h"
 
 #include <QObject>
+#include <QVariant>
 
 #define PackageManagerPlugin_iid "de.baum42.pacsync.PackageManagerPlugin"
 
@@ -18,6 +19,15 @@ public:
 		bool defaultValue;
 	};
 
+	struct SettingsInfo {
+		QString displayName;
+		QString description;
+		QString settingsKeys;
+		int type; //QMetaType::Type
+		QVariant defaultValue;
+		QString widgetClassName;
+	};
+
 	PackageManagerPlugin(QObject *parent = nullptr);
 
 	virtual QList<FilterInfo> extraFilters() = 0;
@@ -27,7 +37,8 @@ public:
 	virtual void startInstallation(const QStringList &packages) = 0;
 	virtual void startUninstallation(const QStringList &packages) = 0;
 
-	//TODO add "settings" (e.g. no confirm)
+	virtual QList<SettingsInfo> listSettings() = 0;
+	virtual void settingsChanged();//TODO call
 
 signals:
 	void operationCompleted();
