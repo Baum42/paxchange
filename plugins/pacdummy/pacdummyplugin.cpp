@@ -76,7 +76,7 @@ QString PacDummyPlugin::installationCmd(const QStringList &packages)
 		stream << "Baum!\n";
 
 	stream << QStringLiteral("echo installing the following packages:\n")
-		   << packages.join(QStringLiteral(" ")) << QStringLiteral("\n")
+		   << QStringLiteral("echo") << packages.join(QStringLiteral(" ")) << QStringLiteral("\n")
 		   << QStringLiteral("read -p \"Press enter to continue\"\n");
 
 	stream.flush();
@@ -115,7 +115,7 @@ QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
 		stream << "Baum!\n";
 
 	stream << QStringLiteral("echo uninstalling the following packages:\n")
-		   << packages.join(QStringLiteral(" ")) << QStringLiteral("\n")
+		   << QStringLiteral("echo") << packages.join(QStringLiteral(" ")) << QStringLiteral("\n")
 		   << QStringLiteral("read -p \"Press enter to continue\"\n");
 
 	stream.flush();
