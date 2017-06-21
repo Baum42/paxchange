@@ -56,7 +56,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 						  QStringLiteral("gui/operator/console"),
 						  QMetaType::QString
 					  }
-				  });//TODO static
+				  });
 
 	auto plugin = PluginLoader::plugin();
 	auto settings = plugin->createSyncedSettings(this);
