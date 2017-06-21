@@ -4,6 +4,7 @@
 #include "libpacsync_global.h"
 
 #include <QObject>
+#include <QSettings>
 #include <QVariant>
 
 #define PackageManagerPlugin_iid "de.baum42.pacsync.PackageManagerPlugin"
@@ -39,6 +40,7 @@ public:
 	virtual QString installationCmd(const QStringList &packages) = 0;
 	virtual QString uninstallationCmd(const QStringList &packages) = 0;
 
+	QSettings *createPluginSettings(QObject *parent) const;
 	virtual QList<SettingsInfo> listSettings() = 0;
 	virtual void settingsChanged();//TODO call
 
