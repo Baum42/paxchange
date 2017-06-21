@@ -35,7 +35,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 						  tr("Use &GUI Installer"),
 						  tr("If supported by the plugin, a GUI will be used instead of a console popup"),
 						  QStringLiteral("lib/operations/usegui"),
-						  QMetaType::Bool
+						  QMetaType::Bool,
+						  true
 					  },
 					  {
 						  tr("Operation &Order"),
