@@ -8,7 +8,7 @@ VERSION = $$PACSYNCVER
 
 DEFINES += PACSYNC_LIBRARY
 
-!custom_standard_plg: DEFINES += PS_STD_PLG=\\\"generic/\\\"
+!custom_standard_plg: DEFINES += PS_STD_PLG=\\\"\\\"
 
 HEADERS += \
 	packagemanagerplugin.h \
@@ -19,7 +19,7 @@ HEADERS += \
 	operationqueue.h \
 	libpacsync_global.h \
 	dbsettings.h \
-    comboboxconfig.h
+	comboboxconfig.h
 
 SOURCES += \
 	packagemanagerplugin.cpp \
@@ -29,7 +29,7 @@ SOURCES += \
 	packagedatabase.cpp \
 	operationqueue.cpp \
 	dbsettings.cpp \
-    comboboxconfig.cpp
+	comboboxconfig.cpp
 
 unix {
 	target.path = $$[QT_INSTALL_LIBS]

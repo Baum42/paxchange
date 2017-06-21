@@ -15,7 +15,8 @@ Q_GLOBAL_STATIC(PluginLoader, pluginLoader)
 PluginLoader::PluginLoader(QObject *parent) :
 	QObject(parent),
 	_availablePlugins(),
-	_plugin(nullptr)
+	_plugin(nullptr),
+	_pluginKey()
 {
 #ifndef QT_NO_DEBUG
 	auto path = QCoreApplication::applicationDirPath() + QStringLiteral("/..");
@@ -49,6 +50,11 @@ QStringList PluginLoader::availablePlugins()
 	return pluginLoader->_availablePlugins.keys();
 }
 
+QString PluginLoader::currentPlugin()
+{
+	return pluginLoader->_pluginKey;
+}
+
 void PluginLoader::loadPlugin(const QString &overwrite)
 {
 	auto name = overwrite;
@@ -64,6 +70,7 @@ void PluginLoader::loadPlugin(const QString &overwrite)
 		pluginLoader->_plugin = qobject_cast<PackageManagerPlugin*>(object);
 		if(!pluginLoader->_plugin)
 			throw PluginLoadException(QStringLiteral("The loaded plugin is not a PackageManagerPlugin"));
+		pluginLoader->_pluginKey = name;
 		pluginLoader->_plugin->initialize();
 	} else
 		throw PluginLoadException(QStringLiteral("Failed to load plugin with error : %1")
@@ -77,8 +84,12 @@ PackageManagerPlugin *PluginLoader::plugin()
 
 QString PluginLoader::defaultPlugin() const
 {
-	if(_availablePlugins.contains(QStringLiteral(PS_STD_PLG)))
-		return QStringLiteral(PS_STD_PLG);
+	QSettings settings;
+	auto preferred = settings.value(QStringLiteral("plugins/preferred"), QStringLiteral(PS_STD_PLG)).toString();
+	if(_availablePlugins.contains(preferred))
+		return preferred;
+	else if(!_availablePlugins.isEmpty())
+		return _availablePlugins.keys().first();
 	else
-		throw PluginLoadException(QStringLiteral("No default plugin is defined or available"));
+		throw PluginLoadException(QStringLiteral("No plugins found"));
 }

@@ -17,6 +17,7 @@ public:
 	explicit PluginLoader(QObject *parent = nullptr);
 
 	static QStringList availablePlugins();
+	static QString currentPlugin();
 	static void loadPlugin(const QString &overwrite);
 
 	static PackageManagerPlugin *plugin();
@@ -24,6 +25,7 @@ public:
 private:
 	QHash<QString, QPluginLoader*> _availablePlugins;
 	PackageManagerPlugin *_plugin;
+	QString _pluginKey;
 
 	QString defaultPlugin() const;
 };
