@@ -26,6 +26,11 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	_ui->generalScrollArea->setPalette(pal);
 	_ui->pluginScrollArea->setPalette(pal);
 
+	QSettings localSettings;
+	_ui->pluginComboBox->addItems(PluginLoader::availablePlugins());
+	_ui->pluginComboBox->setCurrentText(localSettings.value(QStringLiteral("plugins/preferred"),
+															PluginLoader::currentPlugin()).toString());
+
 	auto libSettings = DbSettings::create(this);
 	createWidgets(_ui->generalScrollAreaContents,
 				  _ui->generalFormLayout,
@@ -56,7 +61,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 						  QStringLiteral("gui/operator/console"),
 						  QMetaType::QString
 					  }
-				  });//TODO static
+				  });
 
 	auto plugin = PluginLoader::plugin();
 	auto settings = plugin->createSyncedSettings(this);
@@ -65,7 +70,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 				  settings,
 				  plugin->listSettings());
 
-	restoreGeometry(QSettings().value(QStringLiteral("gui/settings/geom")).toByteArray());
+	restoreGeometry(localSettings.value(QStringLiteral("gui/settings/geom")).toByteArray());
 }
 
 SettingsDialog::~SettingsDialog()
@@ -83,6 +88,9 @@ void SettingsDialog::showSettings(QWidget *parent)
 void SettingsDialog::accept()
 {
 	QSet<QSettings*> syncable;
+
+	QSettings localSettings;
+	localSettings.setValue(QStringLiteral("plugins/preferred"), _ui->pluginComboBox->currentText());
 
 	for(auto it = _settingsWidgets.constBegin(); it != _settingsWidgets.constEnd(); ++it) {
 		auto cBox = qobject_cast<QComboBox*>(it->second);

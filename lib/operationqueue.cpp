@@ -11,9 +11,7 @@ OperationQueue::OperationQueue(DatabaseController *parent) :
 	_operating(false),
 	_controller(parent),
 	_plugin(PluginLoader::plugin())
-{
-
-}
+{}
 
 void OperationQueue::setOperations(const QStringList &install, const QStringList &uninstall)
 {
