@@ -18,12 +18,9 @@ ConsoleOperator::ConsoleOperator(QObject *parent) :
 void ConsoleOperator::startCmd(QString cmd)
 {
 	auto settings = DbSettings::create();
-	settings->beginGroup(QStringLiteral("gui/operator"));
 
-	QString term;
-	if(settings->contains(QStringLiteral("console")))//TODO general settings
-		term = settings->value(QStringLiteral("console")).toString();
-	else
+	auto term = settings->value(QStringLiteral("gui/operator/console")).toString();
+	if(term.isEmpty())
 		term = QString::fromLatin1(qgetenv("TERM"));
 
 	_process->start(term, {QStringLiteral("-e"), cmd});

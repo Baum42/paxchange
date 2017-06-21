@@ -18,7 +18,7 @@ OperationQueue::OperationQueue(DatabaseController *parent) :
 void OperationQueue::setOperations(const QStringList &install, const QStringList &uninstall)
 {
 	auto settings = DbSettings::create();
-	auto uninstallFirst = settings->value(QStringLiteral("lib/operations/uninstall_first"), false).toBool();
+	auto uninstallFirst = settings->value(QStringLiteral("lib/operations/uninstall_first")).toBool();
 
 	for(auto i = 0; i < 2; i++) {
 		if(uninstallFirst) {
@@ -51,10 +51,7 @@ void OperationQueue::startOperation()
 	}
 
 	auto settings = DbSettings::create();
-	settings->beginGroup(QStringLiteral("lib/operations"));
-	bool useGui;
-	if(settings->contains(QStringLiteral("usegui")))//TODO general settings
-		useGui = settings->value(QStringLiteral("usegui")).toBool();
+	auto useGui = settings->value(QStringLiteral("lib/operations/usegui")).toBool();
 
 	_operating = true;
 	if(_nextOpFlag == Install){
