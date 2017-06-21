@@ -24,13 +24,13 @@ DatabaseWizard::DatabaseWizard(QWidget *parent) :
 	_packagePageId = addPage(new DbPackagesPage(this));
 
 	QSettings settings;
-	restoreGeometry(settings.value(QStringLiteral("gui/wizard")).toByteArray());
+	restoreGeometry(settings.value(QStringLiteral("gui/wizard/geom")).toByteArray());
 }
 
 DatabaseWizard::~DatabaseWizard()
 {
 	QSettings settings;
-	settings.setValue(QStringLiteral("gui/wizard"), saveGeometry());
+	settings.setValue(QStringLiteral("gui/wizard/geom"), saveGeometry());
 }
 
 bool DatabaseWizard::run()

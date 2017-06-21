@@ -1,3 +1,4 @@
+#include "comboboxconfig.h"
 #include "databasecontroller.h"
 #include "dbsettings.h"
 
@@ -211,6 +212,7 @@ QString DatabaseController::lockPath(const QString &path)
 
 static void setupDatabaseController()
 {
+	qRegisterMetaType<ComboboxConfig>();
 	QJsonSerializer::registerAllConverters<PackageInfo>();
 	DbSettings::registerSettings();
 }

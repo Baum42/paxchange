@@ -36,8 +36,9 @@ QVariant ContentDialog::execute(QWidget *contentWidget, const QVariant &defaultV
 
 	QSettings settings;
 	settings.beginGroup(QStringLiteral("gui/dialogs"));
-	if(settings.contains(contentWidget->objectName()))
-		dialog.restoreGeometry(settings.value(contentWidget->objectName()).toByteArray());
+	settings.beginGroup(contentWidget->objectName());
+	if(settings.contains(QStringLiteral("geom")))
+		dialog.restoreGeometry(settings.value(QStringLiteral("geom")).toByteArray());
 	else
 		dialog.adjustSize();
 
@@ -45,7 +46,7 @@ QVariant ContentDialog::execute(QWidget *contentWidget, const QVariant &defaultV
 	if(dialog.exec() == QDialog::Accepted)
 		res = prop.read(contentWidget);
 
-	settings.setValue(contentWidget->objectName(), dialog.saveGeometry());
+	settings.setValue(QStringLiteral("geom"), dialog.saveGeometry());
 
 	return res;
 }
