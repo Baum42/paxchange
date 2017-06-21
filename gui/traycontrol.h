@@ -23,6 +23,7 @@ private slots:
 
 	void changeDatabase();
 	void editPackages();
+	void openSettings();
 
 	void about();
 

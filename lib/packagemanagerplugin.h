@@ -26,9 +26,9 @@ public:
 		QString settingsKeys;
 		int type; //QMetaType::Type
 		QVariant defaultValue;
-		QString widgetClassName;
+		QByteArray widgetClassName;
 		SettingsInfo(QString displayName, QString description, QString settingsKeys,
-					 int type = QMetaType::QString, QVariant defaultValue = {}, QString widgetClassName = {});
+					 int type = QMetaType::QString, QVariant defaultValue = {}, QByteArray widgetClassName = {});
 	};
 
 	PackageManagerPlugin(QObject *parent = nullptr);
