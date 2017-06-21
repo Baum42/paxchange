@@ -71,9 +71,9 @@ void EditPackagesWidget::setupFilters()
 
 void EditPackagesWidget::reloadPackages()
 {
-	QList<bool> filters;
-	foreach(auto box, _boxes)
-		filters.append(box->isChecked());
+	QVector<bool> filters(_boxes.size());
+	for(auto i = 0; i < _boxes.size(); i++)
+		filters[i] = _boxes[i]->isChecked();
 	_pkgModel->setStringList(_plugin->listPackages(filters));
 }
 
@@ -82,7 +82,7 @@ void EditPackagesWidget::on_addButton_clicked()
 	auto indexes = _ui->localPackageListView->selectionModel()->selectedIndexes();
 	auto targetList = _dbModel->stringList();
 	foreach(auto filterIndex, indexes) {
-		auto pkgName = _pkgModel->data(_pkgFilter->mapToSource(filterIndex), Qt::DisplayRole).toString();//TODO 5.9
+		auto pkgName = _pkgModel->data(_pkgFilter->mapToSource(filterIndex), Qt::DisplayRole).toString();
 		if(!targetList.contains(pkgName))
 			targetList.append(pkgName);
 	}

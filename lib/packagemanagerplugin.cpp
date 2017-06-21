@@ -22,9 +22,17 @@ bool PackageManagerPlugin::startGuiUninstall(const QStringList &packages)
 	return false;
 }
 
-QSettings *PackageManagerPlugin::createPluginSettings(QObject *parent) const
+QSettings *PackageManagerPlugin::createSyncedSettings(QObject *parent) const
 {
 	auto settings = DbSettings::create(parent);
+	settings->beginGroup(QStringLiteral("plugins/%1")
+						 .arg(QString::fromUtf8(metaObject()->className())));
+	return settings;
+}
+
+QSettings *PackageManagerPlugin::createLocalSettings(QObject *parent) const
+{
+	auto settings = new QSettings(parent);
 	settings->beginGroup(QStringLiteral("plugins/%1")
 						 .arg(QString::fromUtf8(metaObject()->className())));
 	return settings;

@@ -7,6 +7,7 @@
 #include <pluginloader.h>
 #include <QKeySequenceEdit>
 #include <QLineEdit>
+#include <dialogmaster.h>
 
 SettingsDialog::SettingsDialog(QWidget *parent) :
 	QDialog(parent),
@@ -14,8 +15,10 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	_settingsWidgets()
 {
 	_ui->setupUi(this);
-	PackageManagerPlugin* plugin = PluginLoader::plugin();
-	auto settings = plugin->createPluginSettings(this);
+	DialogMaster::masterDialog(this);
+
+	auto plugin = PluginLoader::plugin();
+	auto settings = plugin->createSyncedSettings(this);
 
 	foreach (auto info, plugin->listSettings()) {
 		QWidget *widget = nullptr;
@@ -73,10 +76,16 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	}
 
 	settings->deleteLater();
+
+	QSettings localSettings;
+	restoreGeometry(localSettings.value(QStringLiteral("gui/settings")).toByteArray());
 }
 
 SettingsDialog::~SettingsDialog()
 {
+	QSettings localSettings;
+	localSettings.setValue(QStringLiteral("gui/settings"), saveGeometry());
+
 	delete _ui;
 }
 
@@ -89,7 +98,7 @@ void SettingsDialog::showSettings(QWidget *parent)
 void SettingsDialog::accept()
 {
 	auto plugin = PluginLoader::plugin();
-	auto settings = plugin->createPluginSettings(this);
+	auto settings = plugin->createSyncedSettings(this);
 
 	for(auto it = _settingsWidgets.constBegin(); it != _settingsWidgets.constEnd(); ++it) {
 		auto userProp = it.value()->metaObject()->userProperty();

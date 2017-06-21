@@ -10,11 +10,13 @@ PackageModel::PackageModel(QObject *parent) :
 
 QVariant PackageModel::data(const QModelIndex &index, int role) const
 {
-	switch (role) {//TODO tooltips
+	switch (role) {
 	case Qt::DecorationRole:
 		return info(index).removed ?
 					QVariant(QIcon::fromTheme(QStringLiteral("package-remove"))) :
 					QVariant(QIcon::fromTheme(QStringLiteral("package-available")));
+	case Qt::ToolTipRole:
+		return info(index).name;
 	default:
 		return QStringListModel::data(index, role);
 	}

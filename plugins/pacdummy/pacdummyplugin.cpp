@@ -16,7 +16,7 @@ PacDummyPlugin::PacDummyPlugin(QObject *parent) :
 
 void PacDummyPlugin::initialize()
 {
-	_settings = createPluginSettings(this);
+	_settings = createSyncedSettings(this);
 
 	if(_settings->value(QStringLiteral("delFakeman")).toBool())
 		_file->remove();
@@ -49,7 +49,7 @@ QStringList PacDummyPlugin::listAllPackages()
 	return list;
 }
 
-QStringList PacDummyPlugin::listPackages(QList<bool> extraFilters)
+QStringList PacDummyPlugin::listPackages(QVector<bool> extraFilters)
 {
 	QStringList list;
 	foreach (auto pacState, _pacList) {
