@@ -25,7 +25,7 @@ QList<PacmanPlugin::FilterInfo> PacmanPlugin::extraFilters()
 }
 
 QStringList PacmanPlugin::listAllPackages()
-{//pacman -Qq
+{
 	return  listPackages({false, false, false, false});
 }
 
@@ -39,7 +39,7 @@ QStringList PacmanPlugin::listPackages(QVector<bool> extraFilters)
 	if(extraFilters[0])
 		queryString += QLatin1Char('e');
 	if(extraFilters[1])
-		queryString += QLatin1Char('t');
+		queryString += QStringLiteral("tt");
 	if(extraFilters[2])
 		queryString += QLatin1Char('m');
 	if(extraFilters[3])
