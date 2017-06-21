@@ -106,3 +106,22 @@ QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
 
 	return QString("./%1").arg(tmp.fileName());
 }
+
+QList<PackageManagerPlugin::SettingsInfo> PacDummyPlugin::listSettings()
+{
+	return {
+		{
+			tr("Delete fakeman.json"),
+			tr("Delete the fake installed package database on every program start"),
+			QStringLiteral("delFakeman"),
+			QMetaType::Bool,
+			false
+		},
+		{
+			tr("Baum"),
+			tr("Psst - the secret is the meaning of life"),
+			QStringLiteral("secret"),
+			QMetaType::Int
+		}
+	};
+}
