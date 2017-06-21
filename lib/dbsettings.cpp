@@ -12,7 +12,13 @@ QSettings *DbSettings::create(QObject *parent)
 {
 	if(_format == QSettings::InvalidFormat)
 		throw SettingsException(QStringLiteral("Failed to create psdummy settings format"));
-	return new QSettings(QDir::temp().absoluteFilePath(QStringLiteral("pacsync-settings.psdummy")), _format, parent);
+
+	QFile f(QDir::temp().absoluteFilePath(QStringLiteral("pacsync-settings.psdummy")));
+	f.open(QIODevice::WriteOnly);
+	f.write("psdummy");
+	f.close();
+
+	return new QSettings(f.fileName(), _format, parent);
 }
 
 QSharedPointer<QSettings> DbSettings::create()

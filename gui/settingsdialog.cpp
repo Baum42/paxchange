@@ -64,6 +64,10 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
 		if(widget->toolTip().isNull())
 			widget->setToolTip(info.description);
+
+		auto userProp = widget->metaObject()->userProperty();
+		userProp.write(widget, settings->value(info.settingsKeys, info.defaultValue));
+
 		_settingsWidgets.insert(info.settingsKeys, widget);
 		_ui->pluginFormLayout->addRow(info.displayName + tr(":"), widget);
 	}
