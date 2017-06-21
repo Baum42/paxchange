@@ -1,6 +1,7 @@
 #include "pacdummyplugin.h"
 
 #include <QCoreApplication>
+#include <QTemporaryFile>
 
 
 PacDummyPlugin::PacDummyPlugin(QObject *parent) :
@@ -58,10 +59,10 @@ QStringList PacDummyPlugin::listPackages(QList<bool> extraFilters)
 	return list;
 }
 
-void PacDummyPlugin::startInstallation(const QStringList &packages)
+QString PacDummyPlugin::installationCmd(const QStringList &packages)
 {
-	//_process->start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
-	_process->start("kdialog", {"--msgbox", "Installation completed!"});
+	QTemporaryFile tmp;
+	tmp.setPermissions(tmp.permissions() | QFileDevice::ExeUser);
 
 	bool stateChanged = false;
 	foreach (auto package, packages) {
@@ -79,14 +80,13 @@ void PacDummyPlugin::startInstallation(const QStringList &packages)
 		_file->close();
 	}
 
-	_process->waitForFinished();
-	QMetaObject::invokeMethod(this, "operationCompleted", Qt::QueuedConnection);
+	return QString("./%1").arg(tmp.fileName());
 }
 
-void PacDummyPlugin::startUninstallation(const QStringList &packages)
+QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
 {
-	//_process->start(qgetenv("TERM"), QStringList() << "-e" << "sleep 5");
-	_process->start("kdialog", {"--msgbox", "Uninstallation completed!"});
+	QTemporaryFile tmp;
+	tmp.setPermissions(tmp.permissions() | QFileDevice::ExeUser);
 
 	bool stateChanged = false;
 	foreach (auto package, packages) {
@@ -104,6 +104,5 @@ void PacDummyPlugin::startUninstallation(const QStringList &packages)
 		_file->close();
 	}
 
-	_process->waitForFinished();
-	QMetaObject::invokeMethod(this, "operationCompleted", Qt::QueuedConnection);
+	return QString("./%1").arg(tmp.fileName());
 }

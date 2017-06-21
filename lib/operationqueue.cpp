@@ -12,8 +12,7 @@ OperationQueue::OperationQueue(DatabaseController *parent) :
 	_controller(parent),
 	_plugin(PluginLoader::plugin())
 {
-	connect(_plugin, &PackageManagerPlugin::operationCompleted,
-			this, &OperationQueue::pluginOpDone);
+
 }
 
 void OperationQueue::setOperations(const QStringList &install, const QStringList &uninstall)
@@ -53,9 +52,9 @@ void OperationQueue::startOperation()
 
 	_operating = true;
 	if(_nextOpFlag == Install)
-		_plugin->startInstallation(_nextOp);
+		_plugin->installationCmd(_nextOp);
 	else if(_nextOpFlag == Uninstall)
-		_plugin->startUninstallation(_nextOp);
+		_plugin->uninstallationCmd(_nextOp);
 	else
 		Q_UNREACHABLE();
 	_nextOp.clear();
