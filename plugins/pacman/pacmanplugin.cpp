@@ -19,14 +19,14 @@ QList<PacmanPlugin::FilterInfo> PacmanPlugin::extraFilters()
 	QList<PacmanPlugin::FilterInfo> list;
 	list.append({QStringLiteral("&Explicitly installed"), QStringLiteral("Only explicitly installed packages"), false});
 	list.append({QStringLiteral("&Leaf packages"), QStringLiteral("Only leaf packages"), false});
-	list.append({QStringLiteral("&AUR packages only"), QStringLiteral(""), true});
-	list.append({QStringLiteral("&Native packages only"), QStringLiteral(""), true});
+	list.append({QStringLiteral("&AUR packages only"), QStringLiteral(""), false});
+	list.append({QStringLiteral("&Native packages only"), QStringLiteral(""), false});
 	return list;
 }
 
 QStringList PacmanPlugin::listAllPackages()
 {//pacman -Qq
-
+	return  listPackages({false, false, false, false});
 }
 
 QStringList PacmanPlugin::listPackages(QVector<bool> extraFilters)
