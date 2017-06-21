@@ -76,7 +76,7 @@ QString PacDummyPlugin::installationCmd(const QStringList &packages)
 	stream << QStringLiteral("#!/bin/sh\n");
 
 	if(_settings->value(QStringLiteral("secret")).toInt() == 42)
-		stream << "Baum!\n";
+		stream << QStringLiteral("echo Baum!\n");
 
 	stream << QStringLiteral("echo installing the following packages:\n")
 		   << QStringLiteral("echo ") << packages.join(QStringLiteral(" ")) << QStringLiteral("\n")
@@ -102,7 +102,7 @@ QString PacDummyPlugin::installationCmd(const QStringList &packages)
 		_file->close();
 	}
 
-	return QStringLiteral("./%1").arg(tmp.fileName());
+	return tmp.fileName();
 }
 
 QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
@@ -115,7 +115,7 @@ QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
 	stream << QStringLiteral("#!/bin/sh\n");
 
 	if(_settings->value(QStringLiteral("secret")).toInt() == 42)
-		stream << "Baum!\n";
+		stream << QStringLiteral("echo Baum!\n");
 
 	stream << QStringLiteral("echo uninstalling the following packages:\n")
 		   << QStringLiteral("echo ") << packages.join(QStringLiteral(" ")) << QStringLiteral("\n")
@@ -141,7 +141,7 @@ QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
 		_file->close();
 	}
 
-	return QStringLiteral("./%1").arg(tmp.fileName());
+	return tmp.fileName();
 }
 
 QList<PackageManagerPlugin::SettingsInfo> PacDummyPlugin::listSettings()
