@@ -17,6 +17,8 @@ class PacDummyPlugin : public PackageManagerPlugin
 public:
 	PacDummyPlugin(QObject *parent = nullptr);
 
+	void initialize() override;
+
 	QList<FilterInfo> extraFilters() override;
 	QStringList listAllPackages() override;
 	QStringList listPackages(QList<bool> extraFilters) override;

@@ -9,9 +9,14 @@ PacDummyPlugin::PacDummyPlugin(QObject *parent) :
 	_js(new QJsonSerializer(this)),
 	_process(new QProcess(this)),
 	_file(new QFile(QCoreApplication::applicationDirPath() + QStringLiteral("/fakeman.json"), this)),
-	_settings(createPluginSettings(this))
+	_settings(nullptr)
 {
 	QJsonSerializer::registerListConverters<PacState>();
+}
+
+void PacDummyPlugin::initialize()
+{
+	_settings = createPluginSettings(this);
 
 	if(_settings->value(QStringLiteral("delFakeman")).toBool())
 		_file->remove();
@@ -23,7 +28,6 @@ PacDummyPlugin::PacDummyPlugin(QObject *parent) :
 	_pacList = _js->deserializeFrom<QList<PacState>>(_file);
 	_file->close();
 }
-
 
 QList<PacDummyPlugin::FilterInfo> PacDummyPlugin::extraFilters()
 {

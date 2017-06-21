@@ -5,6 +5,11 @@ PackageManagerPlugin::PackageManagerPlugin(QObject *parent) :
 	QObject(parent)
 {}
 
+void PackageManagerPlugin::initialize()
+{
+
+}
+
 bool PackageManagerPlugin::startGuiInstall(const QStringList &packages)
 {
 	Q_UNUSED(packages);

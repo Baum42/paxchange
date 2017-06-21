@@ -64,6 +64,7 @@ void PluginLoader::loadPlugin(const QString &overwrite)
 		pluginLoader->_plugin = qobject_cast<PackageManagerPlugin*>(object);
 		if(!pluginLoader->_plugin)
 			throw PluginLoadException(QStringLiteral("The loaded plugin is not a PackageManagerPlugin"));
+		pluginLoader->_plugin->initialize();
 	} else
 		throw PluginLoadException(QStringLiteral("Failed to load plugin with error : %1")
 								  .arg(loader->errorString()));

@@ -33,6 +33,8 @@ public:
 
 	PackageManagerPlugin(QObject *parent = nullptr);
 
+	virtual void initialize();
+
 	virtual QList<FilterInfo> extraFilters() = 0;
 
 	virtual QStringList listAllPackages() = 0;
