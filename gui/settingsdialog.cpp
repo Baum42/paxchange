@@ -94,9 +94,12 @@ void SettingsDialog::accept()
 
 	for(auto it = _settingsWidgets.constBegin(); it != _settingsWidgets.constEnd(); ++it) {
 		auto cBox = qobject_cast<QComboBox*>(it->second);
-		if(cBox)
-			it->first->setValue(it.key(), cBox->currentData());
-		else {
+		if(cBox) {
+			auto data = cBox->currentData();
+			if(!data.isValid())
+				data = cBox->currentText();
+			it->first->setValue(it.key(), data);
+		} else {
 			auto userProp = it->second->metaObject()->userProperty();
 			it->first->setValue(it.key(), userProp.read(it->second));
 			syncable.insert(it->first);
@@ -131,6 +134,7 @@ void SettingsDialog::createWidgets(QWidget *parent, QFormLayout *layout, QSettin
 				for(auto i = 0; i < config.displayNames.size() && i < config.values.size(); i++)
 					cbox->addItem(config.displayNames[i], config.values[i]);
 				cbox->setCurrentIndex(qMax(0, config.values.indexOf(settings->value(info.settingsKeys, info.defaultValue))));
+				cbox->setEditable(config.editable);
 				widget = cbox;
 			} else {
 				switch (info.type) {
@@ -162,14 +166,14 @@ void SettingsDialog::createWidgets(QWidget *parent, QFormLayout *layout, QSettin
 					widget = new QLineEdit(parent);
 					break;
 				}
+
+				auto userProp = widget->metaObject()->userProperty();
+				userProp.write(widget, settings->value(info.settingsKeys, info.defaultValue));
 			}
 		}
 
 		if(widget->toolTip().isNull())
 			widget->setToolTip(info.description);
-
-		auto userProp = widget->metaObject()->userProperty();
-		userProp.write(widget, settings->value(info.settingsKeys, info.defaultValue));
 
 		_settingsWidgets.insert(info.settingsKeys, {settings, widget});
 

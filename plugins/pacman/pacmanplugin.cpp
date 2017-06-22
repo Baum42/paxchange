@@ -12,6 +12,7 @@ PacmanPlugin::PacmanPlugin(QObject *parent) :
 
 void PacmanPlugin::initialize()
 {
+	//TODO remove if empty
 }
 
 QList<PacmanPlugin::FilterInfo> PacmanPlugin::extraFilters()
@@ -57,20 +58,15 @@ QStringList PacmanPlugin::listPackages(QVector<bool> extraFilters)
 
 QString PacmanPlugin::installationCmd(const QStringList &packages)
 {
+	return {};
 }
 
 QString PacmanPlugin::uninstallationCmd(const QStringList &packages)
 {
-}
-
-bool PacmanPlugin::startGuiInstall(const QStringList &packages)
-{
-}
-
-bool PacmanPlugin::startGuiUninstall(const QStringList &packages)
-{
+	return {};
 }
 
 QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings()
 {
+	return {};
 }

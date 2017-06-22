@@ -19,8 +19,6 @@ public:
 	QStringList listPackages(QVector<bool> extraFilters) override;
 	QString installationCmd(const QStringList &packages) override;
 	QString uninstallationCmd(const QStringList &packages) override;
-	bool startGuiInstall(const QStringList &packages) override;
-	bool startGuiUninstall(const QStringList &packages) override;
 	QList<SettingsInfo> listSettings() override;
 };
 

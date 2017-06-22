@@ -1,9 +1,10 @@
 #include "comboboxconfig.h"
 
-ComboboxConfig::ComboboxConfig(QStringList displayNames, QList<QVariant> values, QVariant defaultValue) :
+ComboboxConfig::ComboboxConfig(QStringList displayNames, QList<QVariant> values, QVariant defaultValue, bool editable) :
 	displayNames(displayNames),
 	values(values),
-	defaultValue(defaultValue)
+	defaultValue(defaultValue),
+	editable(editable)
 {}
 
 QVariant ComboboxConfig::getValue(const QString &key) const

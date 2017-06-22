@@ -11,10 +11,12 @@ public:
 	QStringList displayNames;
 	QList<QVariant> values;
 	QVariant defaultValue;
+	bool editable;
 
 	ComboboxConfig(QStringList displayNames = {},
 				   QList<QVariant> values = {},
-				   QVariant defaultValue = {});
+				   QVariant defaultValue = {},
+				   bool editable = false);
 
 	QVariant getValue(const QString &key) const;
 	QString getKey(const QVariant &value) const;
