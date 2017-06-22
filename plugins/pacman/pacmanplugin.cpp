@@ -19,8 +19,8 @@ QList<PacmanPlugin::FilterInfo> PacmanPlugin::extraFilters()
 	QList<PacmanPlugin::FilterInfo> list;
 	list.append({QStringLiteral("&Explicitly installed"), QStringLiteral("Only explicitly installed packages"), false});
 	list.append({QStringLiteral("&Leaf packages"), QStringLiteral("Only leaf packages"), false});
-	list.append({QStringLiteral("&AUR packages only"), QStringLiteral(""), false});
-	list.append({QStringLiteral("&Native packages only"), QStringLiteral(""), false});
+	list.append({QStringLiteral("&Foreign packages only"), QStringLiteral("Only packages that are not present in any mirror (includes AUR packages)"), false});
+	list.append({QStringLiteral("&Native packages only"), QStringLiteral("Only packages that are present in any mirror (excludes AUR packages)"), false});
 	return list;
 }
 

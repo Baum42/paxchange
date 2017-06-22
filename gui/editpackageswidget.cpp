@@ -87,6 +87,7 @@ void EditPackagesWidget::on_addButton_clicked()
 			targetList.append(pkgName);
 	}
 	_dbModel->setStringList(targetList);
+	_ui->localPackageListView->clearSelection();
 }
 
 void EditPackagesWidget::on_removeButton_clicked()
@@ -97,6 +98,7 @@ void EditPackagesWidget::on_removeButton_clicked()
 		pIndexes.append(_dbFilter->mapToSource(filterIndex));
 	foreach(auto index, pIndexes)
 		_dbModel->removeRow(index.row(), index.parent());
+	_ui->dbPackageListView->clearSelection();
 }
 
 void EditPackagesWidget::on_clearAllButton_clicked()
