@@ -12,11 +12,14 @@ CONFIG += plugin
 
 DESTDIR = $$OUT_PWD/../../pacsync
 
-SOURCES += \
-    pacmanplugin.cpp
+include(vendor/vendor.pri)
 
 HEADERS += \
     pacmanplugin.h
+
+SOURCES += \
+    pacmanplugin.cpp
+
 DISTFILES += pacman.json 
 
 unix {
