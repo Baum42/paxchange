@@ -10,6 +10,8 @@ DEFINES += PACSYNC_LIBRARY
 
 !custom_standard_plg: DEFINES += PS_STD_PLG=\\\"\\\"
 
+include(vendor/vendor.pri)
+
 HEADERS += \
 	packagemanagerplugin.h \
 	pluginloader.h \
