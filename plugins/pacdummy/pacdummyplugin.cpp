@@ -17,7 +17,7 @@ void PacDummyPlugin::initialize()
 {
 	_settings = createSyncedSettings(this);
 
-	if(_settings->value(QStringLiteral("delFakeman")).toBool())
+	if(settingsValue(_settings, QStringLiteral("delFakeman")).toBool())
 		_file->remove();
 
 	if(QFile::copy(QStringLiteral(":/fakeman.json"), _file->fileName()))
@@ -75,7 +75,7 @@ QString PacDummyPlugin::installationCmd(const QStringList &packages)
 	QTextStream stream(&tmp);
 	stream << QStringLiteral("#!/bin/sh\n");
 
-	if(_settings->value(QStringLiteral("secret")).toInt() == 42)
+	if(settingsValue(_settings, QStringLiteral("secret")).toInt() == 42)
 		stream << QStringLiteral("echo Baum!\n");
 
 	stream << QStringLiteral("echo installing the following packages:\n")
@@ -114,7 +114,7 @@ QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
 	QTextStream stream(&tmp);
 	stream << QStringLiteral("#!/bin/sh\n");
 
-	if(_settings->value(QStringLiteral("secret")).toInt() == 42)
+	if(settingsValue(_settings, QStringLiteral("secret")).toInt() == 42)
 		stream << QStringLiteral("echo Baum!\n");
 
 	stream << QStringLiteral("echo uninstalling the following packages:\n")
@@ -158,7 +158,8 @@ QList<PackageManagerPlugin::SettingsInfo> PacDummyPlugin::listSettings() const
 			tr("Baum"),
 			tr("Psst - the secret is the meaning of life"),
 			QStringLiteral("secret"),
-			QMetaType::Int
+			QMetaType::Int,
+			0
 		}
 	};
 }

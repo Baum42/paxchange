@@ -52,17 +52,13 @@ void OperationQueue::startOperation()
 	auto useGui = settings->value(QStringLiteral("lib/operations/usegui")).toBool();
 
 	_operating = true;
-	if(_nextOpFlag == Install){
-		if(useGui)
-			_plugin->startGuiInstall(_nextOp);
-		else
+	if(_nextOpFlag == Install) {
+		if(!useGui || !_plugin->startGuiInstall(_nextOp))
 			emit startCmd(_plugin->installationCmd(_nextOp));
-	}else if(_nextOpFlag == Uninstall){
-		if(useGui)
-			_plugin->startGuiUninstall(_nextOp);
-		else
+	} else if(_nextOpFlag == Uninstall) {
+		if(!useGui || !_plugin->startGuiUninstall(_nextOp))
 			emit startCmd(_plugin->uninstallationCmd(_nextOp));
-	}else
+	} else
 		Q_UNREACHABLE();
 
 	_nextOp.clear();
