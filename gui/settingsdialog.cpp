@@ -131,8 +131,15 @@ void SettingsDialog::createWidgets(QWidget *parent, QFormLayout *layout, QSettin
 			if(info.type == qMetaTypeId<ComboboxConfig>()) {
 				auto config = info.defaultValue.value<ComboboxConfig>();
 				auto cbox = new QComboBox(parent);
-				for(auto i = 0; i < config.displayNames.size() && i < config.values.size(); i++)
-					cbox->addItem(config.displayNames[i], config.values[i]);
+				for(auto i = 0; i < config.displayNames.size() && i < config.values.size(); i++) {
+					auto name = config.displayNames[i];
+					QVariant value;
+					if(config.values.isEmpty())
+						value = name;
+					else
+						value = config.values[i];
+					cbox->addItem(name, value);
+				}
 				cbox->setCurrentIndex(qMax(0, config.values.indexOf(settings->value(info.settingsKeys, info.defaultValue))));
 				cbox->setEditable(config.editable);
 				widget = cbox;

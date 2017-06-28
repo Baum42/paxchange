@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include <QProcess>
+#include <comboboxconfig.h>
 
 PacmanPlugin::PacmanPlugin(QObject *parent) :
 	PackageManagerPlugin(parent)
@@ -68,5 +69,35 @@ QString PacmanPlugin::uninstallationCmd(const QStringList &packages)
 
 QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings()
 {
-	return {};
+	return {
+		{
+			tr("Pacman &frontend"),
+			tr("Select a pacman frontend to be used for un/installation"),
+			QStringLiteral("frontend"),
+			qMetaTypeId<ComboboxConfig>(),
+			QVariant::fromValue<ComboboxConfig>({
+				{QStringLiteral("pacaur"), QStringLiteral("yaourt"), QStringLiteral("pacman")},
+				{},
+				QStringLiteral("pacaur")
+			})
+		},
+		{
+			tr("Requires &sudo"),
+			tr("Psst - the secret is the meaning of life"),
+			QStringLiteral("sudo"),
+			QMetaType::Bool
+		},
+		{
+			tr("Extra &install parameters"),
+			tr("Psst - the secret is the meaning of life"),
+			QStringLiteral("instparams"),
+			QMetaType::QString
+		},
+		{
+			tr("Extra & uninstall parameters"),
+			tr("Psst - the secret is the meaning of life"),
+			QStringLiteral("uninstparams"),
+			QMetaType::QString
+		}
+	};
 }

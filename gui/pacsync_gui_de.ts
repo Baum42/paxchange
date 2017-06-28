@@ -227,7 +227,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+121"/>
+        <location line="+128"/>
         <source>:</source>
         <translation type="unfinished"></translation>
     </message>
