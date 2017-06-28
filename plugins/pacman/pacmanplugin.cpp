@@ -53,7 +53,6 @@ QStringList PacmanPlugin::listPackages(QVector<bool> extraFilters)
 		return {};
 
 	auto list = QString::fromUtf8(p.readAll()).split(QStringLiteral("\n"), QString::SkipEmptyParts);
-	qDebug() << list;
 	return list;
 }
 
@@ -78,26 +77,33 @@ QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings()
 			QVariant::fromValue<ComboboxConfig>({
 				{QStringLiteral("pacaur"), QStringLiteral("yaourt"), QStringLiteral("pacman")},
 				{},
-				QStringLiteral("pacaur")
+				QStringLiteral("pacaur"),
+				true
 			})
 		},
 		{
-			tr("Requires &sudo"),
-			tr("Psst - the secret is the meaning of life"),
+			tr("Requires &root"),
+			tr("Specify if the frontend of your choice needs to be run as root"),
 			QStringLiteral("sudo"),
 			QMetaType::Bool
 		},
 		{
-			tr("Extra &install parameters"),
-			tr("Psst - the secret is the meaning of life"),
+			tr("&Install parameters"),
+			tr("The parameters to be used for installation. "
+			   "%p is replaced by the list of packages (space seperated). "
+			   "If missing, the packages are appended to the command line"),
 			QStringLiteral("instparams"),
-			QMetaType::QString
+			QMetaType::QString,
+			QStringLiteral("-S %p")
 		},
 		{
-			tr("Extra & uninstall parameters"),
-			tr("Psst - the secret is the meaning of life"),
+			tr("&Uninstall parameters"),
+			tr("The parameters to be used for uninstallation. "
+			   "%p is replaced by the list of packages (space seperated). "
+			   "If missing, the packages are appended to the command line"),
 			QStringLiteral("uninstparams"),
-			QMetaType::QString
+			QMetaType::QString,
+			QStringLiteral("-R %p")
 		}
 	};
 }
