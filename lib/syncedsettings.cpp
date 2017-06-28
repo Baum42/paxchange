@@ -3,14 +3,12 @@
 #include "pluginloader.h"
 #include "syncedsettings.h"
 
-SyncedSettings::SyncedSettings()
-{
-
-}
+SyncedSettings::SyncedSettings(){}
 
 SyncedSettings::~SyncedSettings()
 {
-	//TODO commit
+	if(!_changes.isEmpty())
+		DatabaseController::instance()->writeSettings(_changes);
 }
 
 QVariant SyncedSettings::value(const QString &key, const QVariant &overwriteDefault) const
