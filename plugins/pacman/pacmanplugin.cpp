@@ -52,9 +52,6 @@ QStringList PacmanPlugin::listPackages(QVector<bool> extraFilters)
 	if(!p.waitForFinished(5000))
 		return {};
 
-	auto list = QString::fromUtf8(p.readAll()).split(QStringLiteral("\n"), QString::SkipEmptyParts);
-	qDebug() << list;
-	return list;
 	return QString::fromUtf8(p.readAll()).split(QStringLiteral("\n"), QString::SkipEmptyParts);
 }
 
