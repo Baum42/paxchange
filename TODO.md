@@ -1,2 +1,3 @@
 - singleton
 - merge databases
+- read default aurhelper/sudo
