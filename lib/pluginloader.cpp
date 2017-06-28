@@ -65,7 +65,7 @@ void PluginLoader::loadPlugin(const QString &overwrite)
 	if(!loader)
 		throw PluginLoadException(QStringLiteral("The given key does not name a plugin"));
 
-	if(loader->load()) {
+	if(loader->load()) {//TODO load translations
 		auto object = loader->instance();
 		pluginLoader->_plugin = qobject_cast<PackageManagerPlugin*>(object);
 		if(!pluginLoader->_plugin)
