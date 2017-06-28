@@ -13,7 +13,7 @@ PacmanPlugin::PacmanPlugin(QObject *parent) :
 
 void PacmanPlugin::initialize()
 {
-	//TODO remove if empty
+	_settings = createSyncedSettings(this);
 }
 
 QList<PacmanPlugin::FilterInfo> PacmanPlugin::extraFilters()
@@ -52,13 +52,15 @@ QStringList PacmanPlugin::listPackages(QVector<bool> extraFilters)
 	if(!p.waitForFinished(5000))
 		return {};
 
-	auto list = QString::fromUtf8(p.readAll()).split(QStringLiteral("\n"), QString::SkipEmptyParts);
-	return list;
+	return QString::fromUtf8(p.readAll()).split(QStringLiteral("\n"), QString::SkipEmptyParts);
 }
 
 QString PacmanPlugin::installationCmd(const QStringList &packages)
 {
-	return {};
+	auto f = _settings->value(QStringLiteral("frontend"), QStringLiteral("pacaur")).toString();
+	auto s = _settings->value(QStringLiteral("sudo")).toBool();
+
+	return ;
 }
 
 QString PacmanPlugin::uninstallationCmd(const QStringList &packages)
