@@ -21,8 +21,6 @@ public:
 	QList<SettingsInfo> listSettings() const override;
 
 private:
-	QSettings *_settings;
-
 	QString createCmd(QString key, QStringList packages);
 };
 

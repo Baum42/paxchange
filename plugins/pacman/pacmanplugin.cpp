@@ -6,14 +6,12 @@
 
 PacmanPlugin::PacmanPlugin(QObject *parent) :
 	PackageManagerPlugin(parent)
-{
-
-}
+{}
 
 
 void PacmanPlugin::initialize()
 {
-	_settings = createSyncedSettings(this);
+	//TODO remove if unused
 }
 
 QList<PacmanPlugin::FilterInfo> PacmanPlugin::extraFilters()
@@ -109,12 +107,14 @@ QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings() const
 
 QString PacmanPlugin::createCmd(QString key, QStringList packages)
 {
+	SyncedSettings settings;
+
 	QString cmd;
-	if(_settings->value(QStringLiteral("sudo")).toBool())
+	if(settings.value(QStringLiteral("sudo")).toBool())
 		cmd = QStringLiteral("sudo ");
 
-	cmd += settingsValue(_settings, QStringLiteral("frontend")).toString()
-		+ QStringLiteral(" ") + settingsValue(_settings, key).toString();
+	cmd += settings.value(QStringLiteral("frontend")).toString()
+		+ QStringLiteral(" ") + settings.value(key).toString();
 
 	if(cmd.contains(QStringLiteral("%p")))
 		cmd.replace(QStringLiteral("%p"), packages.join(QStringLiteral(" ")));
