@@ -1,5 +1,6 @@
 #include "packagemanagerplugin.h"
 #include "dbsettings.h"
+#include "comboboxconfig.h"
 
 PackageManagerPlugin::PackageManagerPlugin(QObject *parent) :
 	QObject(parent)
@@ -44,8 +45,12 @@ QVariant PackageManagerPlugin::settingsValue(QSettings *settings, const QString 
 {
 	if(!settings->contains(key)) {
 		foreach(auto info, listSettings()) {
-			if(info.settingsKeys == key)
-				return info.defaultValue;
+			if(info.settingsKeys == key){
+				if(qMetaTypeId<ComboboxConfig>() == info.defaultValue.userType())
+					return info.defaultValue.value<ComboboxConfig>().defaultValue;
+				else
+					return info.defaultValue;
+			}
 		}
 		return QVariant();
 	} else
