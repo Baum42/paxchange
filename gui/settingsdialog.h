@@ -20,18 +20,17 @@ public slots:
 	void accept() override;
 
 private:
-	typedef QPair<QSettings *, QWidget *> SInfo;
-
 	Ui::SettingsDialog *_ui;
-	QHash<QString, SInfo> _settingsWidgets;
+	QHash<QString, QWidget*> _settingsWidgets;
 
 	explicit SettingsDialog(QWidget *parent = nullptr);
 	~SettingsDialog();
 
 	void createWidgets(QWidget *parent,
 					   QFormLayout *layout,
-					   QSettings *settings,
+					   bool asPlugin,
 					   const QList<PackageManagerPlugin::SettingsInfo> &infos);
+	QVariant value(bool asPlugin, const QString &key, const QVariant &defaultValue);
 };
 
 #endif // SETTINGSDIALOG_H

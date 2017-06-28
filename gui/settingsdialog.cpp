@@ -11,7 +11,7 @@
 #include <QLabel>
 #include <comboboxconfig.h>
 #include <QComboBox>
-#include <dbsettings.h>
+#include <databasecontroller.h>
 
 SettingsDialog::SettingsDialog(QWidget *parent) :
 	QDialog(parent),
@@ -31,10 +31,9 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	_ui->pluginComboBox->setCurrentText(localSettings.value(QStringLiteral("plugins/preferred"),
 															PluginLoader::currentPlugin()).toString());
 
-	auto libSettings = DbSettings::create(this);
 	createWidgets(_ui->generalScrollAreaContents,
 				  _ui->generalFormLayout,
-				  libSettings,
+				  false,
 				  {
 					  {
 						  tr("Use &GUI Installer"),
@@ -64,10 +63,9 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 				  });
 
 	auto plugin = PluginLoader::plugin();
-	auto settings = plugin->createSyncedSettings(this);
 	createWidgets(_ui->pluginScrollAreaContents,
 				  _ui->pluginFormLayout,
-				  settings,
+				  true,
 				  plugin->listSettings());
 
 	restoreGeometry(localSettings.value(QStringLiteral("gui/settings/geom")).toByteArray());
@@ -87,8 +85,6 @@ void SettingsDialog::showSettings(QWidget *parent)
 
 void SettingsDialog::accept()
 {
-	QSet<QSettings*> syncable;
-
 	QSettings localSettings;
 	auto nValue = _ui->pluginComboBox->currentText();
 	if(nValue != localSettings.value((QStringLiteral("plugins/preferred")))) {
@@ -98,29 +94,33 @@ void SettingsDialog::accept()
 								  tr("Plugin changed"));
 	}
 
+	QVariantHash changes;
 	for(auto it = _settingsWidgets.constBegin(); it != _settingsWidgets.constEnd(); ++it) {
-		auto cBox = qobject_cast<QComboBox*>(it->second);
+		auto cBox = qobject_cast<QComboBox*>(it.value());
 		if(cBox) {
 			auto data = cBox->currentData();
 			if(!data.isValid())
 				data = cBox->currentText();
-			it->first->setValue(it.key(), data);
+			changes.insert(it.key(), data);
 		} else {
-			auto userProp = it->second->metaObject()->userProperty();
-			it->first->setValue(it.key(), userProp.read(it->second));
-			syncable.insert(it->first);
+			auto userProp = it.value()->metaObject()->userProperty();
+			changes.insert(it.key(), userProp.read(it.value()));
 		}
 	}
 
-	foreach(auto settings, syncable)
-		settings->sync();
+	DatabaseController::instance()->writeSettings(changes);
 	PluginLoader::plugin()->settingsChanged();
 	QDialog::accept();
 }
 
-void SettingsDialog::createWidgets(QWidget *parent, QFormLayout *layout, QSettings *settings, const QList<PackageManagerPlugin::SettingsInfo> &infos)
+void SettingsDialog::createWidgets(QWidget *parent, QFormLayout *layout, bool asPlugin, const QList<PackageManagerPlugin::SettingsInfo> &infos)
 {
+	auto ctr = DatabaseController::instance();
+
 	foreach (auto info, infos) {
+		auto key = asPlugin ?
+					   SyncedSettings::pluginKey(info.settingsKeys) :
+					   info.settingsKeys;
 		QWidget *widget = nullptr;
 
 		if(!info.widgetClassName.isNull()) {
@@ -141,7 +141,7 @@ void SettingsDialog::createWidgets(QWidget *parent, QFormLayout *layout, QSettin
 				auto cbox = new QComboBox(parent);
 				for(auto i = 0; i < config.displayNames.size() && i < config.values.size(); i++)
 					cbox->addItem(config.displayNames[i], config.values[i]);
-				cbox->setCurrentIndex(qMax(0, config.values.indexOf(settings->value(info.settingsKeys, info.defaultValue))));
+				cbox->setCurrentIndex(qMax(0, config.values.indexOf(ctr->readSettings(key, info.defaultValue))));
 				cbox->setEditable(config.editable);
 				widget = cbox;
 			} else {
@@ -176,14 +176,14 @@ void SettingsDialog::createWidgets(QWidget *parent, QFormLayout *layout, QSettin
 				}
 
 				auto userProp = widget->metaObject()->userProperty();
-				userProp.write(widget, settings->value(info.settingsKeys, info.defaultValue));
+				userProp.write(widget, ctr->readSettings(key, info.defaultValue));
 			}
 		}
 
 		if(widget->toolTip().isNull())
 			widget->setToolTip(info.description);
 
-		_settingsWidgets.insert(info.settingsKeys, {settings, widget});
+		_settingsWidgets.insert(key, widget);
 
 		auto label = new QLabel(info.displayName + tr(":"), parent);
 		label->setToolTip(info.description);
