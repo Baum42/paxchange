@@ -1,6 +1,7 @@
 #include "consoleoperator.h"
 #include "dbsettings.h"
 
+#include <QTemporaryFile>
 #include <databasecontroller.h>
 
 ConsoleOperator::ConsoleOperator(QObject *parent) :
@@ -23,5 +24,27 @@ void ConsoleOperator::startCmd(QString cmd)
 	if(term.isEmpty())
 		term = QString::fromLatin1(qgetenv("TERM"));
 
-	_process->start(term, {QStringLiteral("-e"), cmd});
+	auto tmp = new QTemporaryFile(this);
+	tmp->setAutoRemove(false);
+	tmp->open();
+
+	QTextStream stream(tmp);
+	stream << QStringLiteral("#!/bin/sh\n")
+		   << cmd << QStringLiteral("\necho -e\nread -n 1 -p \"")
+		   << tr("Press any key to continue...")
+		   << QStringLiteral("\"\n");
+	stream.flush();
+	tmp->close();
+	tmp->setPermissions(tmp->permissions() | QFileDevice::ExeUser);
+
+	auto fileName = tmp->fileName();
+	delete tmp;
+
+	connect(_process, QOverload<int>::of(&QProcess::finished),
+			this, [fileName](){
+		QFile f(fileName);
+		f.remove();
+	});
+
+	_process->start(term, {QStringLiteral("-e"), fileName});
 }
