@@ -25,7 +25,7 @@ public:
 	QString installationCmd(const QStringList &packages) override;
 	QString uninstallationCmd(const QStringList &packages) override;
 
-	QList<SettingsInfo> listSettings() override;
+	QList<SettingsInfo> listSettings() const override;
 
 private:
 	QList<PacState> _pacList;

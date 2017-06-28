@@ -144,7 +144,7 @@ QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
 	return tmp.fileName();
 }
 
-QList<PackageManagerPlugin::SettingsInfo> PacDummyPlugin::listSettings()
+QList<PackageManagerPlugin::SettingsInfo> PacDummyPlugin::listSettings() const
 {
 	return {
 		{

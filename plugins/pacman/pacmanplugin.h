@@ -18,7 +18,7 @@ public:
 	QStringList listPackages(QVector<bool> extraFilters) override;
 	QString installationCmd(const QStringList &packages) override;
 	QString uninstallationCmd(const QStringList &packages) override;
-	QList<SettingsInfo> listSettings() override;
+	QList<SettingsInfo> listSettings() const override;
 
 private:
 	QSettings *_settings;
