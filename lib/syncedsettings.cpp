@@ -13,7 +13,7 @@ SyncedSettings::~SyncedSettings()
 	//TODO commit
 }
 
-QVariant SyncedSettings::value(const QString &key) const
+QVariant SyncedSettings::value(const QString &key, const QVariant &overwriteDefault) const
 {
 	auto rKey = realKey(key);
 
@@ -23,6 +23,8 @@ QVariant SyncedSettings::value(const QString &key) const
 		auto value = DatabaseController::instance()->readSettings(key);
 		if(value.isValid())
 			return value;
+		else if(overwriteDefault.isValid())
+			return overwriteDefault;
 		else
 			return defaultValue(key);
 	}

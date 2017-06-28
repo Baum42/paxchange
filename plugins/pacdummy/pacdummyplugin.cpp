@@ -7,17 +7,15 @@
 PacDummyPlugin::PacDummyPlugin(QObject *parent) :
 	PackageManagerPlugin(parent),
 	_js(new QJsonSerializer(this)),
-	_file(new QFile(QCoreApplication::applicationDirPath() + QStringLiteral("/fakeman.json"), this)),
-	_settings(nullptr)
+	_file(new QFile(QCoreApplication::applicationDirPath() + QStringLiteral("/fakeman.json"), this))
 {
 	QJsonSerializer::registerListConverters<PacState>();
 }
 
 void PacDummyPlugin::initialize()
 {
-	_settings = createSyncedSettings(this);
-
-	if(settingsValue(_settings, QStringLiteral("delFakeman")).toBool())
+	SyncedSettings settings;
+	if(settings.value(QStringLiteral("delFakeman")).toBool())
 		_file->remove();
 
 	if(QFile::copy(QStringLiteral(":/fakeman.json"), _file->fileName()))
@@ -68,6 +66,8 @@ QStringList PacDummyPlugin::listPackages(QVector<bool> extraFilters)
 
 QString PacDummyPlugin::installationCmd(const QStringList &packages)
 {
+	SyncedSettings settings;
+
 	QTemporaryFile tmp;
 	tmp.setAutoRemove(false);
 	tmp.open();
@@ -75,7 +75,7 @@ QString PacDummyPlugin::installationCmd(const QStringList &packages)
 	QTextStream stream(&tmp);
 	stream << QStringLiteral("#!/bin/sh\n");
 
-	if(settingsValue(_settings, QStringLiteral("secret")).toInt() == 42)
+	if(settings.value(QStringLiteral("secret")).toInt() == 42)
 		stream << QStringLiteral("echo Baum!\n");
 
 	stream << QStringLiteral("echo installing the following packages:\n")
@@ -107,6 +107,8 @@ QString PacDummyPlugin::installationCmd(const QStringList &packages)
 
 QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
 {
+	SyncedSettings settings;
+
 	QTemporaryFile tmp;
 	tmp.setAutoRemove(false);
 	tmp.open();
@@ -114,7 +116,7 @@ QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
 	QTextStream stream(&tmp);
 	stream << QStringLiteral("#!/bin/sh\n");
 
-	if(settingsValue(_settings, QStringLiteral("secret")).toInt() == 42)
+	if(settings.value(QStringLiteral("secret")).toInt() == 42)
 		stream << QStringLiteral("echo Baum!\n");
 
 	stream << QStringLiteral("echo uninstalling the following packages:\n")

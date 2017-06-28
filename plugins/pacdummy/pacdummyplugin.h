@@ -31,7 +31,6 @@ private:
 	QList<PacState> _pacList;
 	QJsonSerializer *_js;
 	QFile *_file;
-	QSettings *_settings;
 };
 
 #endif // PACDUMMYPLUGIN_H

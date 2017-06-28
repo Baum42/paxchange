@@ -9,7 +9,7 @@ public:
 	SyncedSettings();
 	~SyncedSettings();
 
-	QVariant value(const QString &key) const;
+	QVariant value(const QString &key, const QVariant &overwriteDefault = QVariant()) const;
 	void setValue(const QString &key, const QVariant &value);
 	void remove(const QString &key);
 
