@@ -18,8 +18,8 @@ HEADERS += \
 	packagedatabase.h \
 	operationqueue.h \
 	libpacsync_global.h \
-	dbsettings.h \
-	comboboxconfig.h
+	comboboxconfig.h \
+    syncedsettings.h
 
 SOURCES += \
 	packagemanagerplugin.cpp \
@@ -28,8 +28,8 @@ SOURCES += \
 	databasecontroller.cpp \
 	packagedatabase.cpp \
 	operationqueue.cpp \
-	dbsettings.cpp \
-	comboboxconfig.cpp
+	comboboxconfig.cpp \
+    syncedsettings.cpp
 
 TRANSLATIONS += pacsync_lib_de.ts \
 	pacsync_lib_template.ts

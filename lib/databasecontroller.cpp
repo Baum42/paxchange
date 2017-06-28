@@ -1,6 +1,5 @@
 #include "comboboxconfig.h"
 #include "databasecontroller.h"
-#include "dbsettings.h"
 
 #include <QCoreApplication>
 #include <QFileInfo>
@@ -101,15 +100,23 @@ bool DatabaseController::isLoaded() const
 	return _loaded;
 }
 
-QSettings::SettingsMap DatabaseController::readSettings() const
+QVariant DatabaseController::readSettings(const QString &key, const QVariant &defaultValue) const
 {
-	return QJsonValue(_packageDatabase.settings).toVariant().toMap();
+	auto res = _packageDatabase.settings.value(key).toVariant();
+	if(res.isValid())
+		return res;
+	else
+		return defaultValue;
 }
 
-void DatabaseController::writeSettings(const QSettings::SettingsMap &map)
+void DatabaseController::writeSettings(const QVariantHash &changes)
 {
-	_packageDatabase.settings = QJsonValue::fromVariant(map).toObject();
-
+	for(auto it = changes.constBegin(); it != changes.constEnd(); ++it) {
+		if(it->isValid())
+			_packageDatabase.settings.insert(it.key(), QJsonValue::fromVariant(it.value()));
+		else
+			_packageDatabase.settings.remove(it.key());
+	}
 	writeFile(_packageDatabase, _dbPath);
 }
 
@@ -156,7 +163,6 @@ void DatabaseController::fileChanged()
 		try {
 			readFile();
 			sync();
-			DbSettings::triggerChange();
 		} catch(QException &e){
 			qWarning() << "Failed to reload changed file:" << e.what();
 		}
@@ -215,5 +221,4 @@ static void setupDatabaseController()
 {
 	qRegisterMetaType<ComboboxConfig>();
 	QJsonSerializer::registerAllConverters<PackageInfo>();
-	DbSettings::registerSettings();
 }

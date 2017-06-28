@@ -1,5 +1,4 @@
 #include "operationqueue.h"
-#include "dbsettings.h"
 #include "pluginloader.h"
 #include "databasecontroller.h"
 
@@ -15,8 +14,7 @@ OperationQueue::OperationQueue(DatabaseController *parent) :
 
 void OperationQueue::setOperations(const QStringList &install, const QStringList &uninstall)
 {
-	auto settings = DbSettings::create();
-	auto uninstallFirst = settings->value(QStringLiteral("lib/operations/uninstall_first"), true).toBool();
+	auto uninstallFirst = _controller->readSettings(QStringLiteral("lib/operations/uninstall_first"), true).toBool();
 
 	for(auto i = 0; i < 2; i++) {
 		if(uninstallFirst) {
@@ -48,8 +46,7 @@ void OperationQueue::startOperation()
 		return;
 	}
 
-	auto settings = DbSettings::create();
-	auto useGui = settings->value(QStringLiteral("lib/operations/usegui")).toBool();
+	auto useGui = _controller->readSettings(QStringLiteral("lib/operations/usegui"), true).toBool();
 
 	_operating = true;
 	if(_nextOpFlag == Install) {

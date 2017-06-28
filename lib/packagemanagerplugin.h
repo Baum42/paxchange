@@ -8,6 +8,8 @@
 #include <QVariant>
 #include <QVector>
 
+#include "syncedsettings.h"
+
 #define PackageManagerPlugin_iid "de.baum42.pacsync.PackageManagerPlugin"
 
 class LIBPACSYNC_SHARED_EXPORT PackageManagerPlugin : public QObject
@@ -45,7 +47,6 @@ public:
 	virtual bool startGuiInstall(const QStringList &packages);
 	virtual bool startGuiUninstall(const QStringList &packages);
 
-	QSettings *createSyncedSettings(QObject *parent) const;
 	QSettings *createLocalSettings(QObject *parent) const;
 	virtual QList<SettingsInfo> listSettings() const = 0;
 	virtual void settingsChanged();
@@ -53,9 +54,6 @@ public:
 signals:
 	void guiFinished();
 	void packagesChanged(const QStringList &added, const QStringList &removed);
-
-protected:
-	QVariant settingsValue(QSettings *settings, const QString &key) const;
 };
 
 #endif // PACKAGEMANAGERPLUGIN_H

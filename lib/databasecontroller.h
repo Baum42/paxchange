@@ -33,8 +33,8 @@ public:
 	void reloadDb();
 	bool isLoaded() const;
 
-	QSettings::SettingsMap readSettings() const;
-	void writeSettings(const QSettings::SettingsMap &map);
+	QVariant readSettings(const QString &key, const QVariant &defaultValue = QVariant()) const;
+	void writeSettings(const QVariantHash &changes);
 
 public slots:
 	void updateDb(const QStringList &packages);

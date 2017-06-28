@@ -1,7 +1,4 @@
 #include "packagemanagerplugin.h"
-#include "dbsettings.h"
-#include "comboboxconfig.h"
-
 PackageManagerPlugin::PackageManagerPlugin(QObject *parent) :
 	QObject(parent)
 {}
@@ -23,14 +20,6 @@ bool PackageManagerPlugin::startGuiUninstall(const QStringList &packages)
 	return false;
 }
 
-QSettings *PackageManagerPlugin::createSyncedSettings(QObject *parent) const
-{
-	auto settings = DbSettings::create(parent);
-	settings->beginGroup(QStringLiteral("plugins/%1")
-						 .arg(QString::fromUtf8(metaObject()->className())));
-	return settings;
-}
-
 QSettings *PackageManagerPlugin::createLocalSettings(QObject *parent) const
 {
 	auto settings = new QSettings(parent);
@@ -40,22 +29,6 @@ QSettings *PackageManagerPlugin::createLocalSettings(QObject *parent) const
 }
 
 void PackageManagerPlugin::settingsChanged() {}
-
-QVariant PackageManagerPlugin::settingsValue(QSettings *settings, const QString &key) const
-{
-	if(!settings->contains(key)) {
-		foreach(auto info, listSettings()) {
-			if(info.settingsKeys == key){
-				if(qMetaTypeId<ComboboxConfig>() == info.defaultValue.userType())
-					return info.defaultValue.value<ComboboxConfig>().defaultValue;
-				else
-					return info.defaultValue;
-			}
-		}
-		return QVariant();
-	} else
-		return settings->value(key);
-}
 
 PackageManagerPlugin::SettingsInfo::SettingsInfo(QString displayName, QString description, QString settingsKeys, int type, QVariant defaultValue, QByteArray widgetClassName) :
 	displayName(displayName),
