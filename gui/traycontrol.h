@@ -15,6 +15,8 @@ public:
 	explicit TrayControl(QObject *parent = nullptr);
 	~TrayControl();
 
+	void show();
+
 private slots:
 	void startOperation();
 

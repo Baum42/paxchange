@@ -14,7 +14,7 @@ TrayControl::TrayControl(QObject *parent) :
 	_tray(new QSystemTrayIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")), this)),
 	_trayMenu(new QMenu()),
 	_operateAction(nullptr)
-{//TODO start without db path
+{
 	_operateAction = _trayMenu->addAction(QIcon(), QString(), this, &TrayControl::startOperation);
 	auto font = _operateAction->font();
 	font.setBold(true);
@@ -55,12 +55,16 @@ TrayControl::TrayControl(QObject *parent) :
 
 	_tray->setContextMenu(_trayMenu);
 	_tray->setToolTip(QApplication::applicationDisplayName());
-	_tray->show();
 }
 
 TrayControl::~TrayControl()
 {
 	_trayMenu->deleteLater();
+}
+
+void TrayControl::show()
+{
+	_tray->show();
 }
 
 void TrayControl::startOperation()
@@ -137,6 +141,7 @@ void TrayControl::operationsChanged(OperationQueue::OpertionsFlags operations)
 		_operateAction->setVisible(true);
 
 		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/install.ico")));
+		_tray->show();
 		_tray->showMessage(tr("Packages changed!"),
 						   message,
 						   QSystemTrayIcon::Information);

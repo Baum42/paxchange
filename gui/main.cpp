@@ -31,13 +31,15 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
+	TrayControl tray;
+	ConsoleOperator co;
+
 	if(!DatabaseController::instance()->isLoaded()) {
 		if(!DatabaseWizard::run())
 			return EXIT_SUCCESS;
 	}
 
-	TrayControl tray;
-	ConsoleOperator co;
+	tray.show();
 	return a.exec();
 }
 
