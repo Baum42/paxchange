@@ -14,7 +14,7 @@ TrayControl::TrayControl(QObject *parent) :
 	_tray(new QSystemTrayIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")), this)),
 	_trayMenu(new QMenu()),
 	_operateAction(nullptr)
-{
+{//TODO start without db path
 	_operateAction = _trayMenu->addAction(QIcon(), QString(), this, &TrayControl::startOperation);
 	auto font = _operateAction->font();
 	font.setBold(true);
