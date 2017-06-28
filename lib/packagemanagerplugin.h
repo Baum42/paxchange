@@ -53,6 +53,9 @@ public:
 signals:
 	void guiFinished();
 	void packagesChanged(const QStringList &added, const QStringList &removed);
+
+protected:
+	QVariant settingsDefault(const QString &key) const;
 };
 
 #endif // PACKAGEMANAGERPLUGIN_H

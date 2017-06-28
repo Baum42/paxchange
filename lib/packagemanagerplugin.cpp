@@ -40,6 +40,15 @@ QSettings *PackageManagerPlugin::createLocalSettings(QObject *parent) const
 
 void PackageManagerPlugin::settingsChanged() {}
 
+QVariant PackageManagerPlugin::settingsDefault(const QString &key) const
+{
+	foreach(auto info, listSettings()) {
+		if(info.settingsKeys == key)
+			return info.defaultValue;
+	}
+	return QVariant();
+}
+
 PackageManagerPlugin::SettingsInfo::SettingsInfo(QString displayName, QString description, QString settingsKeys, int type, QVariant defaultValue, QByteArray widgetClassName) :
 	displayName(displayName),
 	description(description),
