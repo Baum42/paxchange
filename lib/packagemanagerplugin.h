@@ -47,7 +47,7 @@ public:
 
 	QSettings *createSyncedSettings(QObject *parent) const;
 	QSettings *createLocalSettings(QObject *parent) const;
-	virtual QList<SettingsInfo> listSettings() = 0;
+	virtual QList<SettingsInfo> listSettings() const = 0;
 	virtual void settingsChanged();
 
 signals:
@@ -55,7 +55,7 @@ signals:
 	void packagesChanged(const QStringList &added, const QStringList &removed);
 
 protected:
-	QVariant settingsDefault(const QString &key) const;
+	QVariant settingsValue(QSettings *settings, const QString &key) const;
 };
 
 #endif // PACKAGEMANAGERPLUGIN_H

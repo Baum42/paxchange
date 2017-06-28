@@ -66,7 +66,7 @@ QString PacmanPlugin::uninstallationCmd(const QStringList &packages)
 	return {};
 }
 
-QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings()
+QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings() const
 {
 	return {
 		{
