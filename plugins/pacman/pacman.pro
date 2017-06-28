@@ -12,20 +12,23 @@ CONFIG += plugin
 
 DESTDIR = $$OUT_PWD/../../pacsync
 
-include(vendor/vendor.pri)
-
 HEADERS += \
-    pacmanplugin.h
+	pacmanplugin.h
 
 SOURCES += \
-    pacmanplugin.cpp
+	pacmanplugin.cpp
 
-DISTFILES += pacman.json 
+DISTFILES += pacman.json
+
+TRANSLATIONS += pacsync_plugin_pacman_de.ts \
+	pacsync_plugin_pacman_template.ts
 
 unix {
-    target.path = $[QT_INSTALL_PLUGINS]/pacsync
-    INSTALLS += target
+	target.path = $[QT_INSTALL_PLUGINS]/pacsync
+	INSTALLS += target
 }
+
+include(vendor/vendor.pri)
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../lib/release/ -lpacsync
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../lib/debug/ -lpacsync

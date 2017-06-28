@@ -37,3 +37,7 @@ DEPENDPATH += $$PWD/../../lib
 
 RESOURCES += \
 	pacdummy.qrc
+
+qpmlupdate.target = lupdate
+qpmlrelease.target = lrelease
+QMAKE_EXTRA_TARGETS += qpmlupdate qpmlrelease

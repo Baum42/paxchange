@@ -1,3 +1,4 @@
 {
-    "Keys" : ["pacman", "arch"]
+	"Keys" : ["pacman", "arch"],
+	"TsPrefix" : "pacsync_plugin_pacman"
 }

@@ -20,8 +20,6 @@ DEFINES += "COMPANY=\"\\\"$$QMAKE_TARGET_COMPANY\\\"\""
 DEFINES += "DISPLAY_NAME=\"\\\"$$QMAKE_TARGET_DESCRIPTION\\\"\""
 DEFINES += "BUNDLE=\"\\\"$$QMAKE_TARGET_BUNDLE_PREFIX\\\"\""
 
-include(vendor/vendor.pri)
-
 HEADERS += \
 	traycontrol.h \
 	contentdialog.h \
@@ -31,8 +29,8 @@ HEADERS += \
 	dbpathpage.h \
 	dbpackagespage.h \
 	packagemodel.h \
-    settingsdialog.h \
-    consoleoperator.h
+	settingsdialog.h \
+	consoleoperator.h
 
 SOURCES += \
 		main.cpp \
@@ -44,14 +42,14 @@ SOURCES += \
 	dbpathpage.cpp \
 	dbpackagespage.cpp \
 	packagemodel.cpp \
-    settingsdialog.cpp \
-    consoleoperator.cpp
+	settingsdialog.cpp \
+	consoleoperator.cpp
 
 FORMS += \
 	editpackageswidget.ui \
 	dbselectionpage.ui \
 	dbpathpage.ui \
-    settingsdialog.ui
+	settingsdialog.ui
 
 RESOURCES += \
 	pacsync_gui.qrc
@@ -59,10 +57,15 @@ RESOURCES += \
 DISTFILES += \
 	application-x-pacsync-database.xml
 
+TRANSLATIONS += pacsync_gui_de.ts \
+	pacsync_gui_template.ts
+
 unix {
 	target.path = $$[QT_INSTALL_BINS]
 	INSTALLS += target
 }
+
+include(vendor/vendor.pri)
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../lib/release/ -lpacsync
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../lib/debug/ -lpacsync

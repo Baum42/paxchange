@@ -10,8 +10,6 @@ DEFINES += PACSYNC_LIBRARY
 
 !custom_standard_plg: DEFINES += PS_STD_PLG=\\\"\\\"
 
-include(vendor/vendor.pri)
-
 HEADERS += \
 	packagemanagerplugin.h \
 	pluginloader.h \
@@ -33,7 +31,12 @@ SOURCES += \
 	dbsettings.cpp \
 	comboboxconfig.cpp
 
+TRANSLATIONS += pacsync_lib_de.ts \
+	pacsync_lib_template.ts
+
 unix {
 	target.path = $$[QT_INSTALL_LIBS]
 	INSTALLS += target
 }
+
+include(vendor/vendor.pri)
