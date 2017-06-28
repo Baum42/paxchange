@@ -31,12 +31,10 @@ PluginLoader::PluginLoader(QObject *parent) :
 		auto loader = new QPluginLoader(plugDir.absoluteFilePath(plg), this);
 		auto meta = loader->metaData();
 		if(meta[QStringLiteral("IID")].toString() == QStringLiteral(PackageManagerPlugin_iid)) {
-			auto keys = meta[QStringLiteral("MetaData")].toObject()[QStringLiteral("Keys")].toArray();
-			if(!keys.isEmpty()) {
-				foreach (auto key, keys) {
-					qDebug() << "Found plugin for key" << key.toString();
-					_availablePlugins.insert(key.toString(), loader);
-				}
+			auto key = meta[QStringLiteral("MetaData")].toObject()[QStringLiteral("Key")].toString();
+			if(!key.isEmpty()) {
+				qDebug() << "Found plugin for key" << key;
+				_availablePlugins.insert(key, loader);
 				continue;
 			}
 		}

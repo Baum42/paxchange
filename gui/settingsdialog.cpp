@@ -27,7 +27,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	_ui->pluginScrollArea->setPalette(pal);
 
 	QSettings localSettings;
-	_ui->pluginComboBox->addItems(PluginLoader::availablePlugins());//TODO join similar
+	_ui->pluginComboBox->addItems(PluginLoader::availablePlugins());
 	_ui->pluginComboBox->setCurrentText(localSettings.value(QStringLiteral("plugins/preferred"),
 															PluginLoader::currentPlugin()).toString());
 
