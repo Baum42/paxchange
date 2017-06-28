@@ -179,7 +179,8 @@ void DatabaseController::readFile()
 		throw DatabaseException(QStringLiteral("Lock failed"));
 
 	QFile file(_dbPath);
-	file.open(QIODevice::ReadOnly);
+	if(!file.open(QIODevice::ReadOnly))
+		throw DatabaseException(file.errorString());
 	_packageDatabase = _js->deserializeFrom<PackageDatabase>(&file);
 	file.close();
 	lock.unlock();
