@@ -90,7 +90,13 @@ void SettingsDialog::accept()
 	QSet<QSettings*> syncable;
 
 	QSettings localSettings;
-	localSettings.setValue(QStringLiteral("plugins/preferred"), _ui->pluginComboBox->currentText());//TODO request restart
+	auto nValue = _ui->pluginComboBox->currentText();
+	if(nValue != localSettings.value((QStringLiteral("plugins/preferred")))) {
+		localSettings.setValue(QStringLiteral("plugins/preferred"), _ui->pluginComboBox->currentText());
+		DialogMaster::information(this,
+								  tr("Please restart the application to apply the changed default plugin!"),
+								  tr("Plugin changed"));
+	}
 
 	for(auto it = _settingsWidgets.constBegin(); it != _settingsWidgets.constEnd(); ++it) {
 		auto cBox = qobject_cast<QComboBox*>(it->second);
