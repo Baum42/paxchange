@@ -22,6 +22,8 @@ public:
 
 private:
 	QSettings *_settings;
+
+	QString createCmd(QString key, QStringList packages);
 };
 
 #endif // PACMANPLUGIN_H

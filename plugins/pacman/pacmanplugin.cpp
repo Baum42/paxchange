@@ -57,15 +57,12 @@ QStringList PacmanPlugin::listPackages(QVector<bool> extraFilters)
 
 QString PacmanPlugin::installationCmd(const QStringList &packages)
 {
-	auto f = _settings->value(QStringLiteral("frontend"), QStringLiteral("pacaur")).toString();
-	auto s = _settings->value(QStringLiteral("sudo")).toBool();
-
-	return ;
+	return createCmd(QStringLiteral("instparams"), packages);
 }
 
 QString PacmanPlugin::uninstallationCmd(const QStringList &packages)
 {
-	return {};
+	return createCmd(QStringLiteral("uninstparams"), packages);
 }
 
 QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings() const
@@ -108,4 +105,21 @@ QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings() const
 			QStringLiteral("-R %p")
 		}
 	};
+}
+
+QString PacmanPlugin::createCmd(QString key, QStringList packages)
+{
+	QString cmd;
+	if(_settings->value(QStringLiteral("sudo")).toBool())
+		cmd = QStringLiteral("sudo ");
+
+	cmd += settingsValue(_settings, QStringLiteral("frontend")).toString()
+		+ QStringLiteral(" ") + settingsValue(_settings, key).toString();
+
+	if(cmd.contains(QStringLiteral("%p")))
+		cmd.replace(QStringLiteral("%p"), packages.join(QStringLiteral(" ")));
+	else
+		cmd += QStringLiteral(" ") + packages.join(QStringLiteral(" "));
+
+	return cmd;
 }
