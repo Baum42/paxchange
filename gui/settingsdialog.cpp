@@ -90,7 +90,7 @@ void SettingsDialog::accept()
 	QSet<QSettings*> syncable;
 
 	QSettings localSettings;
-	localSettings.setValue(QStringLiteral("plugins/preferred"), _ui->pluginComboBox->currentText());
+	localSettings.setValue(QStringLiteral("plugins/preferred"), _ui->pluginComboBox->currentText());//TODO request restart
 
 	for(auto it = _settingsWidgets.constBegin(); it != _settingsWidgets.constEnd(); ++it) {
 		auto cBox = qobject_cast<QComboBox*>(it->second);
