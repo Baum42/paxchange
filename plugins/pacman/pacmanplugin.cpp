@@ -1,4 +1,4 @@
-
+#include "pacmanplugin.h"
 
 #include <QDebug>
 #include <QProcess>
