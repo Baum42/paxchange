@@ -13,7 +13,7 @@ PacmanPlugin::PacmanPlugin(QObject *parent) :
 
 void PacmanPlugin::initialize()
 {
-	//TODO remove if empty
+	_settings = createSyncedSettings(this);
 }
 
 QList<PacmanPlugin::FilterInfo> PacmanPlugin::extraFilters()
@@ -52,18 +52,17 @@ QStringList PacmanPlugin::listPackages(QVector<bool> extraFilters)
 	if(!p.waitForFinished(5000))
 		return {};
 
-	auto list = QString::fromUtf8(p.readAll()).split(QStringLiteral("\n"), QString::SkipEmptyParts);
-	return list;
+	return QString::fromUtf8(p.readAll()).split(QStringLiteral("\n"), QString::SkipEmptyParts);
 }
 
 QString PacmanPlugin::installationCmd(const QStringList &packages)
 {
-	return {};
+	return createCmd(QStringLiteral("instparams"), packages);
 }
 
 QString PacmanPlugin::uninstallationCmd(const QStringList &packages)
 {
-	return {};
+	return createCmd(QStringLiteral("uninstparams"), packages);
 }
 
 QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings() const
@@ -106,4 +105,21 @@ QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings() const
 			QStringLiteral("-R %p")
 		}
 	};
+}
+
+QString PacmanPlugin::createCmd(QString key, QStringList packages)
+{
+	QString cmd;
+	if(_settings->value(QStringLiteral("sudo")).toBool())
+		cmd = QStringLiteral("sudo ");
+
+	cmd += settingsValue(_settings, QStringLiteral("frontend")).toString()
+		+ QStringLiteral(" ") + settingsValue(_settings, key).toString();
+
+	if(cmd.contains(QStringLiteral("%p")))
+		cmd.replace(QStringLiteral("%p"), packages.join(QStringLiteral(" ")));
+	else
+		cmd += QStringLiteral(" ") + packages.join(QStringLiteral(" "));
+
+	return cmd;
 }
