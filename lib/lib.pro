@@ -8,7 +8,8 @@ VERSION = $$PACSYNCVER
 
 DEFINES += PACSYNC_LIBRARY
 
-!custom_standard_plg: DEFINES += PS_STD_PLG=\\\"\\\"
+isEmpty(PS_STD_PLG): DEFINES += PS_STD_PLG=\\\"\\\"
+else: DEFINES += PS_STD_PLG=\\\"$$PS_STD_PLG\\\"
 
 HEADERS += \
 	packagemanagerplugin.h \
