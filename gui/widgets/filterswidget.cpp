@@ -62,8 +62,6 @@ void FiltersWidget::updateEdit(const QModelIndex &current, const QModelIndex &pr
 {
 	if(previous.isValid()) {
 		FilterInfo info(_ui->nameEdit->text(), PluginLoader::currentPlugin());
-		info.onInstall = _ui->installCheckBox->isChecked();
-		info.onUninstall = _ui->uninstallCheckBox->isChecked();
 		info.regex = _ui->regexEdit->text();
 
 		info.pluginFilters.clear();
@@ -84,8 +82,6 @@ void FiltersWidget::updateEdit(const QModelIndex &current, const QModelIndex &pr
 		auto info = _filterModel->info(current);
 		if(info.plugin == PluginLoader::currentPlugin()) {
 			_ui->nameEdit->setText(info.name);
-			_ui->installCheckBox->setChecked(info.onInstall);
-			_ui->uninstallCheckBox->setChecked(info.onUninstall);
 			_ui->regexEdit->setText(info.regex);
 
 			if(info.pluginFilters.isEmpty()) {

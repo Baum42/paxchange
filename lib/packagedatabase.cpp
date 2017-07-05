@@ -28,8 +28,6 @@ FilterInfo::FilterInfo(const QString &name, const QString &plugin) :
 	name(name),
 	plugin(plugin),
 	mode(Ask),
-	onInstall(true),
-	onUninstall(true),
 	pluginFilters(),
 	regex()
 {}

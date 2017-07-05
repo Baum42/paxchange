@@ -121,26 +121,6 @@
        </layout>
       </item>
       <item>
-       <widget class="QCheckBox" name="installCheckBox">
-        <property name="text">
-         <string>Trigger on &amp;install</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="uninstallCheckBox">
-        <property name="text">
-         <string>Trigger on &amp;uninstall</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QGroupBox" name="extraFiltersGroup">
         <property name="title">
          <string>Extra Filters</string>
@@ -158,7 +138,7 @@
       <item>
        <widget class="QRadioButton" name="modeAddButton">
         <property name="text">
-         <string>Un/Inst&amp;all</string>
+         <string>&amp;Synchronize</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -168,7 +148,7 @@
       <item>
        <widget class="QRadioButton" name="modeSkipButton">
         <property name="text">
-         <string>&amp;Skip</string>
+         <string>&amp;Don't Synchronize</string>
         </property>
        </widget>
       </item>

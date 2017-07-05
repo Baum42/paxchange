@@ -42,8 +42,6 @@ class LIBPACSYNC_SHARED_EXPORT FilterInfo
 	Q_PROPERTY(QString name MEMBER name)
 	Q_PROPERTY(QString plugin MEMBER plugin)
 	Q_PROPERTY(Mode mode MEMBER mode)
-	Q_PROPERTY(bool onInstall MEMBER onInstall)
-	Q_PROPERTY(bool onUninstall MEMBER onUninstall)
 	Q_PROPERTY(QList<bool> pluginFilters MEMBER pluginFilters)
 	Q_PROPERTY(QString regex MEMBER regex)
 
@@ -62,8 +60,6 @@ public:
 	QString name;
 	QString plugin;
 	Mode mode;
-	bool onInstall;
-	bool onUninstall;
 	QList<bool> pluginFilters;
 	QString regex;
 

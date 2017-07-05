@@ -14,7 +14,7 @@
    <string>Global Filter Fallback</string>
   </property>
   <property name="whatsThis">
-   <string>Select what should happen when packages are changed on your machine. This is used as fallback if no other filters apply.</string>
+   <string>Select what should happen as default action when packages are installed on your machine. This is used as fallback if no other filters apply.</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
@@ -45,14 +45,14 @@
    <item>
     <widget class="QRadioButton" name="addButton">
      <property name="text">
-      <string>Un/Install &amp;Everything</string>
+      <string>Synchronize &amp;Everything</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QRadioButton" name="skipButton">
      <property name="text">
-      <string>Un/Install &amp;Nothing</string>
+      <string>Synchronize &amp;Nothing</string>
      </property>
     </widget>
    </item>
