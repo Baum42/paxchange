@@ -6,5 +6,5 @@ Target=*
 
 [Action]
 Description=Pacsync install remove hook
-Exec=/usr/bin/pacsync
+Exec=/usr/share/libalpm/scripts/pacsync.sh
 When=PostTransaction

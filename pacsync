@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cd ../build-pacsync-Desktop-Debug/gui/
+cd "$(dirname $(readlink -f "$0"))/../build-pacsync-Desktop-Debug/gui/"
 export LD_LIBRARY_PATH="../lib:$LD_LIBRARY_PATH"
 ./pacsync "$@"

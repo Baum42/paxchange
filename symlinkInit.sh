@@ -11,6 +11,10 @@ sudo ln -s "$srcDir/gui/application-x-pacsync-database.xml"  && update-mime-data
 cd /usr/share/libalpm/hooks
 sudo ln -s "$srcDir/plugins/pacman/pacsync.hook"
 
+#hook script
+cd /usr/share/libalpm/scripts
+sudo ln -s "$srcDir/plugins/pacman/pacsync.sh"
+
 #bin
 cd /usr/bin
 sudo ln -s "$srcDir/pacsync"
