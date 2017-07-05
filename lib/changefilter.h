@@ -4,6 +4,7 @@
 #include "packagedatabase.h"
 
 #include <QObject>
+#include <QRegularExpression>
 
 class ChangeFilter : public QObject
 {
@@ -13,11 +14,18 @@ public:
 	explicit ChangeFilter(QObject *parent = nullptr);
 
 public slots:
-	void packagesChanged(const QStringList &added, const QStringList &removed);
+	void packagesChanged(QStringList added, QStringList removed);
 
 signals:
 	void updateDatabase(const QList<PackageInfo> &infos);
 	void packagesUnclear(const QList<UnclearPackageInfo> &infos);
+
+private:
+	QList<PackageInfo> _pacInfoList;
+	QList<UnclearPackageInfo> _uPacInfoList;
+	QRegularExpression _re;
+
+	void appendExtraFilter(QStringList &list, ExtraFilter filter, bool removed);
 };
 
 #endif // CHANGEFILTER_H

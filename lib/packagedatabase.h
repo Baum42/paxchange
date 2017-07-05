@@ -29,7 +29,7 @@ class LIBPACSYNC_SHARED_EXPORT UnclearPackageInfo : public PackageInfo
 	Q_PROPERTY(QString hostName MEMBER hostName)
 
 public:
-	UnclearPackageInfo(const PackageInfo &base = {});
+	UnclearPackageInfo(const PackageInfo &base = {}, QString hostName = QString());
 	QString hostName;
 
 	bool operator ==(const UnclearPackageInfo &other) const;
