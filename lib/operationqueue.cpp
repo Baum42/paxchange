@@ -14,8 +14,10 @@ OperationQueue::OperationQueue(DatabaseController *parent) :
 
 void OperationQueue::setOperations(const QStringList &install, const QStringList &uninstall)
 {
+	auto allowUninstall = _controller->readSettings(QStringLiteral("lib/operations/uninstall"), true).toBool();
 	auto uninstallFirst = _controller->readSettings(QStringLiteral("lib/operations/uninstall_first"), true).toBool();
 
+	_opFlags = None;
 	for(auto i = 0; i < 2; i++) {
 		if(uninstallFirst) {
 			if(!install.isEmpty()) {
@@ -24,7 +26,7 @@ void OperationQueue::setOperations(const QStringList &install, const QStringList
 				_opFlags |= _nextOpFlag;
 			}
 		} else {
-			if(!uninstall.isEmpty()) {
+			if(allowUninstall && !uninstall.isEmpty()) {
 				_nextOp = uninstall;
 				_nextOpFlag = Uninstall;
 				_opFlags |= _nextOpFlag;

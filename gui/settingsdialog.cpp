@@ -46,7 +46,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 						  tr("Synchronize &Uninstalls"),
 						  tr("If enabled and packages that are synchronized get uninstalled, they will be "
 						  "uninstalled on all machines."),
-						  QStringLiteral("gui/operator/uninstall"),
+						  QStringLiteral("lib/operations/uninstall"),
 						  QMetaType::Bool,
 						  true
 					  },
@@ -117,6 +117,7 @@ void SettingsDialog::accept()
 	}
 
 	DatabaseController::instance()->writeSettings(changes);
+	DatabaseController::instance()->sync();
 	PluginLoader::plugin()->settingsChanged();
 	QDialog::accept();
 }
