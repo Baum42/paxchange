@@ -105,6 +105,11 @@ QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings() const
 	};
 }
 
+void PacmanPlugin::forwardedArguments(QStringList args)
+{
+	qDebug() << "fa:" << args;
+}
+
 QString PacmanPlugin::createCmd(QString key, QStringList packages)
 {
 	SyncedSettings settings;

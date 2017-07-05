@@ -30,6 +30,11 @@ QSettings *PackageManagerPlugin::createLocalSettings(QObject *parent) const
 
 void PackageManagerPlugin::settingsChanged() {}
 
+void PackageManagerPlugin::forwardedArguments(QStringList args)
+{
+	Q_UNUSED(args);
+}
+
 PackageManagerPlugin::SettingsInfo::SettingsInfo(QString displayName, QString description, QString settingsKeys, int type, QVariant defaultValue, QByteArray widgetClassName) :
 	displayName(displayName),
 	description(description),
