@@ -80,6 +80,11 @@ QMap<QString, FilterInfo> DatabaseController::filters() const
 	return _packageDatabase.filters;
 }
 
+QList<ExtraFilter> DatabaseController::extraFilters() const
+{
+	return _packageDatabase.extraFilters;
+}
+
 QString DatabaseController::currentPath() const
 {
 	return _dbPath;
@@ -148,6 +153,12 @@ void DatabaseController::setGlobalMode(FilterInfo::Mode mode)
 void DatabaseController::setFilters(QMap<QString, FilterInfo> filters)
 {
 	_packageDatabase.filters = filters;
+	writeCurrentFile();
+}
+
+void DatabaseController::setExtraFilters(QList<ExtraFilter> extraFilters)
+{
+	_packageDatabase.extraFilters = extraFilters;
 	writeCurrentFile();
 }
 
