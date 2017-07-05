@@ -26,8 +26,11 @@ class LIBPACSYNC_SHARED_EXPORT UnclearPackageInfo : public PackageInfo
 {
 	Q_GADGET
 
+	Q_PROPERTY(QString hostName MEMBER hostName)
+
 public:
 	UnclearPackageInfo(const PackageInfo &base = {});
+	QString hostName;
 
 	bool operator ==(const UnclearPackageInfo &other) const;
 };
@@ -87,7 +90,7 @@ class LIBPACSYNC_SHARED_EXPORT PackageDatabase
 	Q_GADGET
 
 	Q_PROPERTY(QMap<QString, PackageInfo> packages MEMBER packages)
-	Q_PROPERTY(QMap<QString, QList<UnclearPackageInfo>> unclearPackages MEMBER unclearPackages)
+	Q_PROPERTY(QMap<QString, UnclearPackageInfo> unclearPackages MEMBER unclearPackages)
 	Q_PROPERTY(FilterInfo::Mode globalMode MEMBER globalMode)
 	Q_PROPERTY(QMap<QString, FilterInfo> filters MEMBER filters)
 	Q_PROPERTY(QList<ExtraFilter> extraFilters MEMBER extraFilters)
@@ -96,11 +99,11 @@ class LIBPACSYNC_SHARED_EXPORT PackageDatabase
 public:
 	PackageDatabase();
 
-	QMap<QString, PackageInfo> packages;
-	QMap<QString, QList<UnclearPackageInfo>> unclearPackages;
+	QMap<QString, PackageInfo> packages;//key: PackageInfo::name
+	QMap<QString, UnclearPackageInfo> unclearPackages;//key: UnclearPackageInfo::name
 
 	FilterInfo::Mode globalMode;
-	QMap<QString, FilterInfo> filters;
+	QMap<QString, FilterInfo> filters;//key: FilterInfo::name
 	QList<ExtraFilter> extraFilters;
 
 	QJsonObject settings;
