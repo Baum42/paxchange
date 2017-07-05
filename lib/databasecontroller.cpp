@@ -67,6 +67,11 @@ PackageInfo DatabaseController::getInfo(const QString &pkgName) const
 	return _packageDatabase.packages.value(pkgName);
 }
 
+FilterInfo::Mode DatabaseController::globalMode() const
+{
+	return _packageDatabase.globalMode;
+}
+
 QString DatabaseController::currentPath() const
 {
 	return _dbPath;
@@ -123,7 +128,13 @@ void DatabaseController::writeSettings(const QVariantHash &changes)
 		else
 			_packageDatabase.settings.remove(it.key());
 	}
-	writeFile(_packageDatabase, _dbPath);
+	writeCurrentFile();
+}
+
+void DatabaseController::setGlobalMode(FilterInfo::Mode mode)
+{
+	_packageDatabase.globalMode = mode;
+	writeCurrentFile();
 }
 
 void DatabaseController::updateDb(const QStringList &packages)
@@ -141,7 +152,7 @@ void DatabaseController::updateDb(const QStringList &packages)
 	foreach (auto package, set)
 		_packageDatabase.packages[package] = {package};
 
-	writeFile(_packageDatabase, _dbPath);
+	writeCurrentFile();
 }
 
 void DatabaseController::sync()
@@ -212,6 +223,11 @@ void DatabaseController::writeFile(PackageDatabase p, const QString &path)
 	lock.unlock();
 
 	_watcherSkipNext = true;
+}
+
+void DatabaseController::writeCurrentFile()
+{
+	writeFile(_packageDatabase, _dbPath);
 }
 
 QString DatabaseController::lockPath(const QString &path)
