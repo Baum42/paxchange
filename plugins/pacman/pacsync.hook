@@ -1,0 +1,10 @@
+[Trigger]
+Operation=Install
+Operation=Remove
+Type=Package
+Target=*
+
+[Action]
+Description=Pacsync install remove hook
+Exec=/usr/bin/pacsync
+When=PostTransaction
