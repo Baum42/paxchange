@@ -1,10 +1,10 @@
 [Trigger]
 Operation=Install
-Operation=Remove
 Type=Package
 Target=*
 
 [Action]
 Description=Pacsync install remove hook
-Exec=/usr/share/libalpm/scripts/pacsync.sh
+Exec=/usr/share/libalpm/scripts/pacsync.sh i
 When=PostTransaction
+NeedsTargets
