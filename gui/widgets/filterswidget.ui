@@ -14,7 +14,7 @@
    <string>Edit Database Filters</string>
   </property>
   <property name="whatsThis">
-   <string>Edit the filters to be used to determine which packages should be added to the database. Everytime you un/install packages, they are compared against these filters to decide if they should be synced.</string>
+   <string>Edit the filters to be used to determine which packages should be added to the database. Everytime you install packages, they are compared against these filters to decide if they should be synced.</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="2,3">
    <property name="leftMargin">
@@ -48,6 +48,9 @@
          <property name="icon">
           <iconset theme="list-remove">
            <normaloff>.</normaloff>.</iconset>
+         </property>
+         <property name="popupMode">
+          <enum>QToolButton::MenuButtonPopup</enum>
          </property>
          <property name="toolButtonStyle">
           <enum>Qt::ToolButtonFollowStyle</enum>
@@ -176,6 +179,14 @@
     </widget>
    </item>
   </layout>
+  <action name="actionRemove_Disabled">
+   <property name="icon">
+    <iconset theme="list-remove-all-symbolic"/>
+   </property>
+   <property name="text">
+    <string>Remove Disabled</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

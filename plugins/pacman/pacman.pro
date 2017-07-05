@@ -24,7 +24,7 @@ TRANSLATIONS += pacsync_plugin_pacman_de.ts \
 	pacsync_plugin_pacman_template.ts
 
 unix {
-	target.path = $[QT_INSTALL_PLUGINS]/pacsync
+	target.path = $$[QT_INSTALL_PLUGINS]/pacsync
 	INSTALLS += target
 }
 

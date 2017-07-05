@@ -22,6 +22,7 @@ public:
 	void update(const QModelIndex &index, const FilterInfo &info);
 	FilterInfo info(const QModelIndex &index) const;
 	void remove(const QModelIndex &index);
+	void removeDisabled();
 
 	int rowCount(const QModelIndex &parent) const override;
 	QVariant data(const QModelIndex &index, int role) const override;

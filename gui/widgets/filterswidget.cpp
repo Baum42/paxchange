@@ -13,6 +13,10 @@ FiltersWidget::FiltersWidget(QWidget *parent) :
 {
 	_ui->setupUi(this);
 
+	_ui->removeButton->addAction(_ui->actionRemove_Disabled);
+	connect(_ui->actionRemove_Disabled, &QAction::triggered,
+			_filterModel, &FilterNameModel::removeDisabled);
+
 	_ui->listView->setModel(_filterModel);
 	connect(_ui->listView->selectionModel(), &QItemSelectionModel::currentChanged,
 			this, &FiltersWidget::updateEdit);
@@ -140,6 +144,7 @@ void FiltersWidget::on_regexEdit_textChanged(const QString &text)
 
 
 
+
 FilterNameModel::FilterNameModel(QObject *parent) :
 	QAbstractListModel(parent),
 	_filters()
@@ -185,6 +190,18 @@ void FilterNameModel::remove(const QModelIndex &index)
 		_filters.removeAt(index.row());
 		endRemoveRows();
 	}
+}
+
+void FilterNameModel::removeDisabled()
+{
+	beginResetModel();
+	for(auto it = _filters.begin(); it != _filters.end();) {
+		if(it->plugin != PluginLoader::currentPlugin())
+			it = _filters.erase(it);
+		else
+			it++;
+	}
+	endResetModel();
 }
 
 int FilterNameModel::rowCount(const QModelIndex &parent) const
