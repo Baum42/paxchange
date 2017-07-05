@@ -1,4 +1,3 @@
-#include "databasewizard.h"
 #include "settingsdialog.h"
 #include "traycontrol.h"
 
@@ -7,7 +6,8 @@
 #include <dialogmaster.h>
 #include <databasecontroller.h>
 #include "contentdialog.h"
-#include "editpackageswidget.h"
+#include "wizard/databasewizard.h"
+#include "widgets/editpackageswidget.h"
 
 TrayControl::TrayControl(QObject *parent) :
 	QObject(parent),

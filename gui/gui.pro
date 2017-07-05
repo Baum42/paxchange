@@ -23,36 +23,36 @@ DEFINES += "BUNDLE=\"\\\"$$QMAKE_TARGET_BUNDLE_PREFIX\\\"\""
 HEADERS += \
 	traycontrol.h \
 	contentdialog.h \
-	editpackageswidget.h \
-	databasewizard.h \
-	dbselectionpage.h \
-	dbpathpage.h \
-	dbpackagespage.h \
 	packagemodel.h \
 	settingsdialog.h \
 	consoleoperator.h \
-    globalfilterwidget.h
+	widgets/editpackageswidget.h \
+	widgets/globalfilterwidget.h \
+	wizard/databasewizard.h \
+	wizard/dbselectionpage.h \
+	wizard/dbpathpage.h \
+	wizard/dbpackagespage.h
 
 SOURCES += \
 		main.cpp \
 	traycontrol.cpp \
 	contentdialog.cpp \
-	editpackageswidget.cpp \
-	databasewizard.cpp \
-	dbselectionpage.cpp \
-	dbpathpage.cpp \
-	dbpackagespage.cpp \
 	packagemodel.cpp \
 	settingsdialog.cpp \
 	consoleoperator.cpp \
-    globalfilterwidget.cpp
+	widgets/editpackageswidget.cpp \
+	widgets/globalfilterwidget.cpp \
+	wizard/databasewizard.cpp \
+	wizard/dbselectionpage.cpp \
+	wizard/dbpathpage.cpp \
+	wizard/dbpackagespage.cpp
 
 FORMS += \
-	editpackageswidget.ui \
-	dbselectionpage.ui \
-	dbpathpage.ui \
 	settingsdialog.ui \
-    globalfilterwidget.ui
+	widgets/editpackageswidget.ui \
+	widgets/globalfilterwidget.ui \
+	wizard/dbselectionpage.ui \
+	wizard/dbpathpage.ui
 
 RESOURCES += \
 	pacsync_gui.qrc
