@@ -9,7 +9,7 @@ ContentDialog::ContentDialog(QWidget *parent) :
 	QDialog(parent),
 	tabWidget(new QTabWidget(this))
 {
-	DialogMaster::masterDialog(this);
+	DialogMaster::masterDialog(this, false, Qt::WindowContextHelpButtonHint);
 
 	tabWidget->setTabBarAutoHide(true);
 

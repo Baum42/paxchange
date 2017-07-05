@@ -16,7 +16,7 @@ class EditPackagesWidget : public QWidget
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QStringList packages READ packages WRITE setPackages USER true)
+	Q_PROPERTY(QStringList packages READ packages WRITE setPackages RESET clear USER true)
 
 public:
 	explicit EditPackagesWidget(QWidget *parent = nullptr);

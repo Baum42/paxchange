@@ -2,9 +2,10 @@
 #define DBPACKAGESPAGE_H
 
 #include <QWizardPage>
+#include "dbwidgetpage.h"
 #include "../widgets/editpackageswidget.h"
 
-class DbPackagesPage : public QWizardPage
+class DbPackagesPage : public DbWidgetPage<EditPackagesWidget>
 {
 	Q_OBJECT
 
@@ -12,10 +13,6 @@ public:
 	explicit DbPackagesPage(QWidget *parent = nullptr);
 
 	void initializePage() override;
-	void cleanupPage() override;
-
-private:
-	EditPackagesWidget *_widget;
 };
 
 #endif // DBPACKAGESPAGE_H
