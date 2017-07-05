@@ -20,7 +20,8 @@ HEADERS += \
 	operationqueue.h \
 	libpacsync_global.h \
 	comboboxconfig.h \
-    syncedsettings.h
+	syncedsettings.h \
+    changefilter.h
 
 SOURCES += \
 	packagemanagerplugin.cpp \
@@ -30,7 +31,8 @@ SOURCES += \
 	packagedatabase.cpp \
 	operationqueue.cpp \
 	comboboxconfig.cpp \
-    syncedsettings.cpp
+	syncedsettings.cpp \
+    changefilter.cpp
 
 TRANSLATIONS += pacsync_lib_de.ts \
 	pacsync_lib_template.ts

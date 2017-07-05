@@ -51,6 +51,12 @@ OperationQueue *DatabaseController::operationQueue() const
 	return _opQueue;
 }
 
+ChangeFilter *DatabaseController::changeFilter() const
+{
+	Q_UNIMPLEMENTED();
+	return nullptr;
+}
+
 QStringList DatabaseController::listPackages() const
 {
 	return _packageDatabase.packages.keys();
@@ -221,4 +227,8 @@ static void setupDatabaseController()
 {
 	qRegisterMetaType<ComboboxConfig>();
 	QJsonSerializer::registerAllConverters<PackageInfo>();
+	QJsonSerializer::registerAllConverters<UnclearPackageInfo>();
+	QJsonSerializer::registerAllConverters<QList<UnclearPackageInfo>>();
+	QJsonSerializer::registerAllConverters<FilterInfo>();
+	QJsonSerializer::registerAllConverters<ExtraFilter>();
 }
