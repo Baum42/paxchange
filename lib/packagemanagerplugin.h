@@ -50,6 +50,7 @@ public:
 	QSettings *createLocalSettings(QObject *parent) const;
 	virtual QList<SettingsInfo> listSettings() const = 0;
 	virtual void settingsChanged();
+	virtual void forwardedArguments(QStringList args);
 
 signals:
 	void guiFinished();

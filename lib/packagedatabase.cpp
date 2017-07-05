@@ -21,7 +21,7 @@ UnclearPackageInfo::UnclearPackageInfo(const PackageInfo &base) :
 
 bool UnclearPackageInfo::operator ==(const UnclearPackageInfo &other) const
 {
-	((PackageInfo)*this) == (PackageInfo)other;
+	return ((PackageInfo)*this) == (PackageInfo)other;
 }
 
 FilterInfo::FilterInfo() :
