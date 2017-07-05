@@ -14,7 +14,7 @@
    <string>Global Filter Fallback</string>
   </property>
   <property name="whatsThis">
-   <string>Select what should happen when packages are changed on your machine. This is used as fallback if no other filters apply</string>
+   <string>Select what should happen when packages are changed on your machine. This is used as fallback if no other filters apply.</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">

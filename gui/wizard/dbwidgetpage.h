@@ -5,6 +5,7 @@
 #include <QMetaProperty>
 #include <QVBoxLayout>
 #include <databasecontroller.h>
+
 template <typename T>
 class DbWidgetPage : public QWizardPage
 {

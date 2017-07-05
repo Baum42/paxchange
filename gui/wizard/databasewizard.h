@@ -18,6 +18,7 @@ public slots:
 private:
 	int _packagePageId;
 	int _globalModePageId;
+	int _filterPageId;
 };
 
 #endif // DATABASEWIZARD_H

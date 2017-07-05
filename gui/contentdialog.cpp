@@ -28,14 +28,14 @@ ContentDialog::ContentDialog(QWidget *parent) :
 
 QVariant ContentDialog::execute(QWidget *contentWidget, const QVariant &defaultValue, QWidget *parent)
 {
-	auto res = execute(contentWidget->windowTitle(), {contentWidget}, {defaultValue}, parent);
+	auto res = execute(contentWidget->windowTitle(), {contentWidget}, {defaultValue}, 0, parent);
 	if(res.isEmpty())
 		return QVariant();
 	else
 		return res.first();
 }
 
-QVariantList ContentDialog::execute(const QString &windowTitle, const QList<QWidget *> &contentWidgets, const QList<QVariant> &defaultValues, QWidget *parent)
+QVariantList ContentDialog::execute(const QString &windowTitle, const QList<QWidget *> &contentWidgets, const QVariantList &defaultValues, int startIndex, QWidget *parent)
 {
 	ContentDialog dialog(parent);
 	dialog.setWindowTitle(windowTitle);
@@ -47,9 +47,7 @@ QVariantList ContentDialog::execute(const QString &windowTitle, const QList<QWid
 		auto contentWidget = contentWidgets[i];
 
 		contentWidget->layout()->setContentsMargins(dialog.layout()->contentsMargins());
-		dialog.tabWidget->addTab(contentWidget,
-								 contentWidget->windowIcon(),
-								 contentWidget->windowTitle());
+		dialog.tabWidget->addTab(contentWidget, contentWidget->windowTitle());
 
 		auto prop = contentWidget->metaObject()->userProperty();
 		prop.write(contentWidget, defaultValues[i]);
@@ -58,6 +56,7 @@ QVariantList ContentDialog::execute(const QString &windowTitle, const QList<QWid
 	QSettings settings;
 	settings.beginGroup(QStringLiteral("gui/dialogs"));
 	settings.beginGroup(contentWidgets.first()->objectName());
+	dialog.tabWidget->setCurrentIndex(settings.value(QStringLiteral("index"), startIndex).toInt());
 	if(settings.contains(QStringLiteral("geom")))
 		dialog.restoreGeometry(settings.value(QStringLiteral("geom")).toByteArray());
 	else

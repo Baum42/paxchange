@@ -75,6 +75,11 @@ FilterInfo::Mode DatabaseController::globalMode() const
 	return _packageDatabase.globalMode;
 }
 
+QMap<QString, FilterInfo> DatabaseController::filters() const
+{
+	return _packageDatabase.filters;
+}
+
 QString DatabaseController::currentPath() const
 {
 	return _dbPath;
@@ -137,6 +142,12 @@ void DatabaseController::writeSettings(const QVariantHash &changes)
 void DatabaseController::setGlobalMode(FilterInfo::Mode mode)
 {
 	_packageDatabase.globalMode = mode;
+	writeCurrentFile();
+}
+
+void DatabaseController::setFilters(QMap<QString, FilterInfo> filters)
+{
+	_packageDatabase.filters = filters;
 	writeCurrentFile();
 }
 
