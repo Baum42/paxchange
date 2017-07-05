@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QProcess>
+#include <QStandardPaths>
 #include <comboboxconfig.h>
 
 PacmanPlugin::PacmanPlugin(QObject *parent) :
@@ -69,12 +70,11 @@ QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings() const
 	QList<QPair<QString, bool>> frontends = {
 		{QStringLiteral("pacaur"), false},
 		{QStringLiteral("yaourt"), false},
-		{QStringLiteral("pacman"), true},
-		{QStringLiteral("/usr/bin/pacman"), true},
-		{QStringLiteral("/bin/pacman"), true}
+		{QStringLiteral("pacman"), true}
 	};
 	auto index = 0;
-	while(index < (frontends.size() - 1) && QProcess::execute(QStringLiteral("which"), {frontends[index].first}) != 0)
+	while(index < (frontends.size() - 1) &&
+		  QStandardPaths::findExecutable(frontends[index].first).isNull())
 		index++;
 
 	return {
@@ -142,7 +142,7 @@ QString PacmanPlugin::createCmd(QString key, QStringList packages)
 	if(settings.value(QStringLiteral("sudo")).toBool())
 		cmd = QStringLiteral("sudo ");
 
-	cmd += settings.value(QStringLiteral("frontend")).toString()
+	cmd += QStandardPaths::findExecutable(settings.value(QStringLiteral("frontend")).toString())
 		+ QStringLiteral(" ") + settings.value(key).toString();
 
 	if(cmd.contains(QStringLiteral("%p")))

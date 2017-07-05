@@ -43,6 +43,14 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 						  true
 					  },
 					  {
+						  tr("Synchronize &Uninstalls"),
+						  tr("If enabled and packages that are synchronized get uninstalled, they will be "
+						  "uninstalled on all machines."),
+						  QStringLiteral("gui/operator/uninstall"),
+						  QMetaType::Bool,
+						  true
+					  },
+					  {
 						  tr("Operation &Order"),
 						  tr("Specify the order in which operations should be done"),
 						  QStringLiteral("lib/operations/uninstall_first"),
