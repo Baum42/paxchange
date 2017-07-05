@@ -59,6 +59,7 @@ private slots:
 private:
 	QSettings *_settings;
 	OperationQueue *_opQueue;
+	ChangeFilter *_changeFilter;
 	QString _dbPath;
 	QJsonSerializer *_js;
 	PackageDatabase _packageDatabase;

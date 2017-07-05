@@ -15,6 +15,7 @@ DatabaseController::DatabaseController(QObject *parent) :
 	QObject(parent),
 	_settings(new QSettings()),
 	_opQueue(new OperationQueue(this)),
+	_changeFilter(new ChangeFilter(this)),
 	_dbPath(),
 	_js(new QJsonSerializer(this)),
 	_packageDatabase(),
@@ -26,6 +27,9 @@ DatabaseController::DatabaseController(QObject *parent) :
 
 	connect(this, &DatabaseController::operationsRequired,
 			_opQueue, &OperationQueue::setOperations);
+
+	connect(PluginLoader::plugin(), &PackageManagerPlugin::packagesChanged,
+			_changeFilter, &ChangeFilter::packagesChanged);
 
 	try {
 		if(_settings->contains(QStringLiteral("path"))) {
@@ -53,8 +57,7 @@ OperationQueue *DatabaseController::operationQueue() const
 
 ChangeFilter *DatabaseController::changeFilter() const
 {
-	Q_UNIMPLEMENTED();
-	return nullptr;
+	return _changeFilter;
 }
 
 QStringList DatabaseController::listPackages() const

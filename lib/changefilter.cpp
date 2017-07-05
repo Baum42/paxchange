@@ -6,5 +6,6 @@ ChangeFilter::ChangeFilter(QObject *parent) :
 
 void ChangeFilter::packagesChanged(const QStringList &added, const QStringList &removed)
 {
-	Q_UNIMPLEMENTED();
+	qDebug() << "packagesChanged add:" << added << "rem:" << removed;
+	//TODO implement packagesChanged
 }
