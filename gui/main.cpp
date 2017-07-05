@@ -39,12 +39,14 @@ int main(int argc, char *argv[])
 		new ConsoleOperator(&a);
 
 		if(!DatabaseController::instance()->isLoaded()) {
-			if(!DatabaseWizard::run())
+			if(!DatabaseWizard::run()) {
+				QMetaObject::invokeMethod(qApp, "quit", Qt::QueuedConnection); //DEBUG
 				return EXIT_SUCCESS;
+			}
 		}
 
 		tray->show();
-		return 0;
+		return EXIT_SUCCESS;
 	});
 
 	QObject::connect(&instance, &QSingleInstance::instanceMessage, [&](QStringList args){
