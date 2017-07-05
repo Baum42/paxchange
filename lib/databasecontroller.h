@@ -49,9 +49,9 @@ public:
 	void writeSettings(const QVariantHash &changes);
 
 public slots:
-	void setGlobalMode(FilterInfo::Mode mode);
-	void setFilters(QMap<QString, FilterInfo> filters);
-	void setExtraFilters(QList<ExtraFilter> extraFilters);
+	void setGlobalMode(FilterInfo::Mode mode, bool save = true);
+	void setFilters(QMap<QString, FilterInfo> filters, bool save = true);
+	void setExtraFilters(QList<ExtraFilter> extraFilters, bool save = true);
 
 	void updateDb(const QStringList &packages);
 	void sync();

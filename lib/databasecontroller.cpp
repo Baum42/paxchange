@@ -144,22 +144,25 @@ void DatabaseController::writeSettings(const QVariantHash &changes)
 	writeCurrentFile();
 }
 
-void DatabaseController::setGlobalMode(FilterInfo::Mode mode)
+void DatabaseController::setGlobalMode(FilterInfo::Mode mode, bool save)
 {
 	_packageDatabase.globalMode = mode;
-	writeCurrentFile();
+	if(save)
+		writeCurrentFile();
 }
 
-void DatabaseController::setFilters(QMap<QString, FilterInfo> filters)
+void DatabaseController::setFilters(QMap<QString, FilterInfo> filters, bool save)
 {
 	_packageDatabase.filters = filters;
-	writeCurrentFile();
+	if(save)
+		writeCurrentFile();
 }
 
-void DatabaseController::setExtraFilters(QList<ExtraFilter> extraFilters)
+void DatabaseController::setExtraFilters(QList<ExtraFilter> extraFilters, bool save)
 {
 	_packageDatabase.extraFilters = extraFilters;
-	writeCurrentFile();
+	if(save)
+		writeCurrentFile();
 }
 
 void DatabaseController::updateDb(const QStringList &packages)

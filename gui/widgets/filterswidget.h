@@ -2,11 +2,34 @@
 #define FILTERSWIDGET_H
 
 #include <QWidget>
+#include <QAbstractListModel>
 #include <packagedatabase.h>
+#include <QCheckBox>
 
 namespace Ui {
 class FiltersWidget;
 }
+
+class FilterNameModel : public QAbstractListModel
+{
+public:
+	FilterNameModel(QObject *parent = nullptr);
+
+	QList<FilterInfo> filters() const;
+	void resetModel(QList<FilterInfo> filters = {});
+
+	void add();
+	void update(const QModelIndex &index, const FilterInfo &info);
+	FilterInfo info(const QModelIndex &index) const;
+	void remove(const QModelIndex &index);
+
+	int rowCount(const QModelIndex &parent) const override;
+	QVariant data(const QModelIndex &index, int role) const override;
+	Qt::ItemFlags flags(const QModelIndex &index) const override;
+
+private:
+	QList<FilterInfo> _filters;
+};
 
 class FiltersWidget : public QWidget
 {
@@ -24,9 +47,19 @@ public slots:
 	void setFilters(QMap<QString, FilterInfo> filters);
 	void clear();
 
+private slots:
+	void updateEdit(const QModelIndex &current, const QModelIndex &previous) const;
+
+	void on_addButton_clicked();
+	void on_removeButton_clicked();
+	void on_regexEdit_textChanged(const QString &text);
+
 private:
-	Ui::FiltersWidget *ui;
-	QMap<QString, FilterInfo> _filters;
+	Ui::FiltersWidget *_ui;
+	FilterNameModel *_filterModel;
+	QList<QCheckBox*> _boxes;
+
+	void reloadTitles(const QString &current = QString());
 };
 
 #endif // FILTERSWIDGET_H

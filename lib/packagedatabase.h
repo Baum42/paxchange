@@ -56,7 +56,8 @@ public:
 	Q_ENUM(Mode)
 
 public:
-	FilterInfo();
+	FilterInfo(const QString &name = QString(),
+			   const QString &plugin = QString());
 
 	QString name;
 	QString plugin;
