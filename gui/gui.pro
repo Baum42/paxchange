@@ -30,7 +30,8 @@ HEADERS += \
 	dbpackagespage.h \
 	packagemodel.h \
 	settingsdialog.h \
-	consoleoperator.h
+	consoleoperator.h \
+    globalfilterwidget.h
 
 SOURCES += \
 		main.cpp \
@@ -43,13 +44,15 @@ SOURCES += \
 	dbpackagespage.cpp \
 	packagemodel.cpp \
 	settingsdialog.cpp \
-	consoleoperator.cpp
+	consoleoperator.cpp \
+    globalfilterwidget.cpp
 
 FORMS += \
 	editpackageswidget.ui \
 	dbselectionpage.ui \
 	dbpathpage.ui \
-	settingsdialog.ui
+	settingsdialog.ui \
+    globalfilterwidget.ui
 
 RESOURCES += \
 	pacsync_gui.qrc
