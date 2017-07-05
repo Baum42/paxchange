@@ -5,7 +5,6 @@
 #include <QtJsonSerializer/QJsonSerializer>
 #include <QObject>
 
-
 class LIBPACSYNC_SHARED_EXPORT PackageInfo
 {
 	Q_GADGET
@@ -23,26 +22,94 @@ public:
 	bool operator ==(const PackageInfo &other) const;
 };
 
+class LIBPACSYNC_SHARED_EXPORT UnclearPackageInfo : public PackageInfo
+{
+	Q_GADGET
+
+public:
+	UnclearPackageInfo(const PackageInfo &base = {});
+
+	bool operator ==(const UnclearPackageInfo &other) const;
+};
+
+class LIBPACSYNC_SHARED_EXPORT FilterInfo
+{
+	Q_GADGET
+
+	Q_PROPERTY(QString name MEMBER name)
+	Q_PROPERTY(QString plugin MEMBER plugin)
+	Q_PROPERTY(Mode mode MEMBER mode)
+	Q_PROPERTY(bool onInstall MEMBER onInstall)
+	Q_PROPERTY(bool onUninstall MEMBER onUninstall)
+	Q_PROPERTY(QList<bool> pluginFilters MEMBER pluginFilters)
+	Q_PROPERTY(QString regex MEMBER regex)
+
+public:
+	enum Mode {
+		Add,
+		Skip,
+		Ask
+	};
+	Q_ENUM(Mode)
+
+public:
+	FilterInfo();
+
+	QString name;
+	QString plugin;
+	Mode mode;
+	bool onInstall;
+	bool onUninstall;
+	QList<bool> pluginFilters;
+	QString regex;
+
+	bool operator ==(const FilterInfo &other) const;
+};
+
+class LIBPACSYNC_SHARED_EXPORT ExtraFilter
+{
+	Q_GADGET
+
+	Q_PROPERTY(QString regex MEMBER regex)
+	Q_PROPERTY(FilterInfo::Mode mode MEMBER mode)
+
+public:
+	ExtraFilter(QString regex = {}, FilterInfo::Mode mode = FilterInfo::Ask);
+
+	QString regex;
+	FilterInfo::Mode mode;
+
+	bool operator ==(const ExtraFilter &other) const;
+};
+
 class LIBPACSYNC_SHARED_EXPORT PackageDatabase
 {
 	Q_GADGET
 
-	Q_PROPERTY(Mode mode MEMBER mode)
 	Q_PROPERTY(QMap<QString, PackageInfo> packages MEMBER packages)
+	Q_PROPERTY(QMap<QString, QList<UnclearPackageInfo>> unclearPackages MEMBER unclearPackages)
+	Q_PROPERTY(FilterInfo::Mode globalMode MEMBER globalMode)
+	Q_PROPERTY(QMap<QString, FilterInfo> filters MEMBER filters)
+	Q_PROPERTY(QList<ExtraFilter> extraFilters MEMBER extraFilters)
 	Q_PROPERTY(QJsonObject settings MEMBER settings)
 
 public:
-	enum Mode{
-		BlackList,
-		WhiteList
-	};
-	Q_ENUM(Mode)
-
 	PackageDatabase();
-	Mode mode;
+
 	QMap<QString, PackageInfo> packages;
+	QMap<QString, QList<UnclearPackageInfo>> unclearPackages;
+
+	FilterInfo::Mode globalMode;
+	QMap<QString, FilterInfo> filters;
+	QList<ExtraFilter> extraFilters;
 
 	QJsonObject settings;
 };
+
+Q_DECLARE_METATYPE(PackageInfo)
+Q_DECLARE_METATYPE(UnclearPackageInfo)
+Q_DECLARE_METATYPE(FilterInfo)
+Q_DECLARE_METATYPE(ExtraFilter)
+Q_DECLARE_METATYPE(PackageDatabase)
 
 #endif // PACKAGEDATABASE_H

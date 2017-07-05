@@ -12,10 +12,48 @@ bool PackageInfo::isValid() const
 
 bool PackageInfo::operator ==(const PackageInfo &other) const
 {
-	return this->name == other.name;
+	return name == other.name;
+}
+
+UnclearPackageInfo::UnclearPackageInfo(const PackageInfo &base) :
+	PackageInfo(base)
+{}
+
+bool UnclearPackageInfo::operator ==(const UnclearPackageInfo &other) const
+{
+	((PackageInfo)*this) == (PackageInfo)other;
+}
+
+FilterInfo::FilterInfo() :
+	name(),
+	plugin(),
+	mode(Ask),
+	onInstall(true),
+	onUninstall(true),
+	pluginFilters(),
+	regex()
+{}
+
+bool FilterInfo::operator ==(const FilterInfo &other) const
+{
+	return name == other.name;
+}
+
+ExtraFilter::ExtraFilter(QString regex, FilterInfo::Mode mode) :
+	regex(regex),
+	mode(mode)
+{}
+
+bool ExtraFilter::operator ==(const ExtraFilter &other) const
+{
+	return regex == other.regex;
 }
 
 PackageDatabase::PackageDatabase() :
-	mode(BlackList),
-	packages()
+	packages(),
+	unclearPackages(),
+	globalMode(FilterInfo::Ask),
+	filters(),
+	extraFilters(),
+	settings()
 {}

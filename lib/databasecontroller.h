@@ -5,6 +5,7 @@
 #include "packagedatabase.h"
 #include "pluginloader.h"
 #include "operationqueue.h"
+#include "changefilter.h"
 
 #include <QFile>
 #include <QObject>
@@ -24,6 +25,7 @@ public:
 	static DatabaseController *instance();
 
 	OperationQueue *operationQueue() const;
+	ChangeFilter *changeFilter() const;
 
 	QStringList listPackages() const;
 	PackageInfo getInfo(const QString &pkgName) const;
