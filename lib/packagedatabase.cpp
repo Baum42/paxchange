@@ -24,9 +24,9 @@ bool UnclearPackageInfo::operator ==(const UnclearPackageInfo &other) const
 	return ((PackageInfo)*this) == (PackageInfo)other;
 }
 
-FilterInfo::FilterInfo() :
-	name(),
-	plugin(),
+FilterInfo::FilterInfo(const QString &name, const QString &plugin) :
+	name(name),
+	plugin(plugin),
 	mode(Ask),
 	onInstall(true),
 	onUninstall(true),
