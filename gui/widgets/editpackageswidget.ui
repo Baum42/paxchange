@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Edit Synchronized Packages</string>
   </property>
+  <property name="whatsThis">
+   <string>Select the packages you want to add to the database. Those packages will be synchronized across your machines.</string>
+  </property>
   <property name="sizeGripEnabled" stdset="0">
    <bool>false</bool>
   </property>

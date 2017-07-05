@@ -31,7 +31,8 @@ HEADERS += \
 	wizard/databasewizard.h \
 	wizard/dbselectionpage.h \
 	wizard/dbpathpage.h \
-	wizard/dbpackagespage.h
+	wizard/dbpackagespage.h \
+	wizard/dbwidgetpage.h
 
 SOURCES += \
 		main.cpp \
@@ -45,7 +46,8 @@ SOURCES += \
 	wizard/databasewizard.cpp \
 	wizard/dbselectionpage.cpp \
 	wizard/dbpathpage.cpp \
-	wizard/dbpackagespage.cpp
+	wizard/dbpackagespage.cpp \
+	wizard/dbwidgetpage.cpp
 
 FORMS += \
 	settingsdialog.ui \

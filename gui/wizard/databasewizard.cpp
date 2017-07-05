@@ -7,6 +7,9 @@
 #include "dbselectionpage.h"
 #include "dbpathpage.h"
 #include "dbpackagespage.h"
+#include "dbwidgetpage.h"
+
+#include "../widgets/globalfilterwidget.h"
 
 DatabaseWizard::DatabaseWizard(QWidget *parent) :
 	QWizard(parent),
@@ -22,6 +25,7 @@ DatabaseWizard::DatabaseWizard(QWidget *parent) :
 	addPage(new DbSelectionPage(this));
 	addPage(new DbPathPage(this));
 	_packagePageId = addPage(new DbPackagesPage(this));
+	addPage(new DbWidgetPage<GlobalFilterWidget>(QStringLiteral("globalMode"), this));
 
 	QSettings settings;
 	restoreGeometry(settings.value(QStringLiteral("gui/wizard/geom")).toByteArray());

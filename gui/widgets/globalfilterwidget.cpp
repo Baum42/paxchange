@@ -40,3 +40,8 @@ void GlobalFilterWidget::setMode(FilterInfo::Mode mode)
 		break;
 	}
 }
+
+void GlobalFilterWidget::resetMode()
+{
+	setMode(FilterInfo::Ask);
+}
