@@ -14,7 +14,7 @@
    <string>Edit Synchronized Packages</string>
   </property>
   <property name="sizeGripEnabled" stdset="0">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
    <property name="leftMargin">

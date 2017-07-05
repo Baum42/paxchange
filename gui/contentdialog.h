@@ -2,6 +2,7 @@
 #define CONTENTDIALOG_H
 
 #include <QDialog>
+#include <QTabWidget>
 #include <QVariant>
 
 class ContentDialog : public QDialog
@@ -16,6 +17,14 @@ public:
 							QWidget *parent = nullptr);
 	template<typename TWidget, typename TData = QVariant>
 	static TData execute(const TData &defaultValue = TData(), QWidget *parent = nullptr, bool *ok = nullptr);
+
+	static QVariantList execute(const QString &windowTitle,
+								const QList<QWidget*> &contentWidgets,
+								const QList<QVariant> &defaultValues = {},
+								QWidget *parent = nullptr);
+
+private:
+	QTabWidget *tabWidget;
 };
 
 template<typename TWidget, typename TData>
