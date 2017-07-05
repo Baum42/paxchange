@@ -115,7 +115,6 @@ void TrayControl::editPackages()
 void TrayControl::editFilters()
 {
 	auto ctr = DatabaseController::instance();
-	auto ok = false;
 	auto results = ContentDialog::execute(tr("Edit Filters"),
 										  QList<QWidget*>({
 											  new GlobalFilterWidget(),
@@ -126,8 +125,10 @@ void TrayControl::editFilters()
 											  QVariant::fromValue(ctr->filters())
 										  },
 										  1);
-	if(ok)
-		qDebug() << results;
+	if(!results.isEmpty()) {
+		ctr->setGlobalMode(results[0].value<FilterInfo::Mode>(), false);
+		ctr->setFilters(results[1].value<QMap<QString,FilterInfo>>());
+	}
 }
 
 void TrayControl::openSettings()
