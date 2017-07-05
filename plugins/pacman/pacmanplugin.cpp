@@ -1,6 +1,7 @@
 #include "pacmanplugin.h"
 
 #include <QDebug>
+#include <QFile>
 #include <QProcess>
 #include <comboboxconfig.h>
 
@@ -65,6 +66,17 @@ QString PacmanPlugin::uninstallationCmd(const QStringList &packages)
 
 QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings() const
 {
+	QList<QPair<QString, bool>> frontends = {
+		{QStringLiteral("pacaur"), false},
+		{QStringLiteral("yaourt"), false},
+		{QStringLiteral("pacman"), true},
+		{QStringLiteral("/usr/bin/pacman"), true},
+		{QStringLiteral("/bin/pacman"), true}
+	};
+	auto index = 0;
+	while(index < (frontends.size() - 1) && QProcess::execute(QStringLiteral("which"), {frontends[index].first}) != 0)
+		index++;
+
 	return {
 		{
 			tr("Pacman &frontend"),
@@ -74,7 +86,7 @@ QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings() const
 			QVariant::fromValue<ComboboxConfig>({
 				{QStringLiteral("pacaur"), QStringLiteral("yaourt"), QStringLiteral("pacman")},
 				{},
-				QStringLiteral("pacaur"),
+				frontends[index].first,
 				true
 			})
 		},
@@ -82,7 +94,8 @@ QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings() const
 			tr("Requires &root"),
 			tr("Specify if the frontend of your choice needs to be run as root"),
 			QStringLiteral("sudo"),
-			QMetaType::Bool
+			QMetaType::Bool,
+			frontends[index].second
 		},
 		{
 			tr("&Install parameters"),
