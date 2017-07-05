@@ -2,7 +2,7 @@
 #define DBPACKAGESPAGE_H
 
 #include <QWizardPage>
-#include "editpackageswidget.h"
+#include "../widgets/editpackageswidget.h"
 
 class DbPackagesPage : public QWizardPage
 {

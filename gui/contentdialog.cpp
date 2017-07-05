@@ -6,12 +6,16 @@
 #include <QSettings>
 
 ContentDialog::ContentDialog(QWidget *parent) :
-	QDialog(parent)
+	QDialog(parent),
+	tabWidget(new QTabWidget(this))
 {
 	DialogMaster::masterDialog(this);
 
+	tabWidget->setTabBarAutoHide(true);
+
 	auto layout = new QVBoxLayout(this);
 	setLayout(layout);
+	layout->addWidget(tabWidget);
 
 	auto box = new QDialogButtonBox(this);
 	layout->addWidget(box);
@@ -24,27 +28,48 @@ ContentDialog::ContentDialog(QWidget *parent) :
 
 QVariant ContentDialog::execute(QWidget *contentWidget, const QVariant &defaultValue, QWidget *parent)
 {
+	auto res = execute(contentWidget->windowTitle(), {contentWidget}, {defaultValue}, parent);
+	if(res.isEmpty())
+		return QVariant();
+	else
+		return res.first();
+}
+
+QVariantList ContentDialog::execute(const QString &windowTitle, const QList<QWidget *> &contentWidgets, const QList<QVariant> &defaultValues, QWidget *parent)
+{
 	ContentDialog dialog(parent);
-	dialog.setWindowTitle(contentWidget->windowTitle());
-	dialog.setWindowIcon(contentWidget->windowIcon());
+	dialog.setWindowTitle(windowTitle);
 
-	contentWidget->setParent(&dialog);
-	static_cast<QVBoxLayout*>(dialog.layout())->insertWidget(0, contentWidget);
+	Q_ASSERT(contentWidgets.size() == defaultValues.size());
+	Q_ASSERT(!contentWidgets.isEmpty());
 
-	auto prop = contentWidget->metaObject()->userProperty();
-	prop.write(contentWidget, defaultValue);
+	for(auto i = 0; i < contentWidgets.size(); i++) {
+		auto contentWidget = contentWidgets[i];
+
+		contentWidget->layout()->setContentsMargins(dialog.layout()->contentsMargins());
+		dialog.tabWidget->addTab(contentWidget,
+								 contentWidget->windowIcon(),
+								 contentWidget->windowTitle());
+
+		auto prop = contentWidget->metaObject()->userProperty();
+		prop.write(contentWidget, defaultValues[i]);
+	}
 
 	QSettings settings;
 	settings.beginGroup(QStringLiteral("gui/dialogs"));
-	settings.beginGroup(contentWidget->objectName());
+	settings.beginGroup(contentWidgets.first()->objectName());
 	if(settings.contains(QStringLiteral("geom")))
 		dialog.restoreGeometry(settings.value(QStringLiteral("geom")).toByteArray());
 	else
 		dialog.adjustSize();
 
-	QVariant res;
-	if(dialog.exec() == QDialog::Accepted)
-		res = prop.read(contentWidget);
+	QVariantList res;
+	if(dialog.exec() == QDialog::Accepted) {
+		foreach(auto contentWidget, contentWidgets) {
+			auto prop = contentWidget->metaObject()->userProperty();
+			res.append(prop.read(contentWidget));
+		}
+	}
 
 	settings.setValue(QStringLiteral("geom"), dialog.saveGeometry());
 

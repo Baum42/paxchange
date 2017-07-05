@@ -5,7 +5,7 @@
 #include <qsingleinstance.h>
 #include "traycontrol.h"
 #include "pluginloader.h"
-#include "databasewizard.h"
+#include "wizard/databasewizard.h"
 #include "consoleoperator.h"
 
 static void setupParser(QCommandLineParser &parser);
