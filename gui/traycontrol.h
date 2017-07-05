@@ -25,6 +25,7 @@ private slots:
 
 	void changeDatabase();
 	void editPackages();
+	void editFilters();
 	void openSettings();
 
 	void about();

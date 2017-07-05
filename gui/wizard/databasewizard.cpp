@@ -10,11 +10,13 @@
 
 #include "../widgets/editpackageswidget.h"
 #include "../widgets/globalfilterwidget.h"
+#include "../widgets/filterswidget.h"
 
 DatabaseWizard::DatabaseWizard(QWidget *parent) :
 	QWizard(parent),
 	_packagePageId(-1),
-	_globalModePageId(-1)
+	_globalModePageId(-1),
+	_filterPageId(-1)
 {
 	DialogMaster::masterDialog(this);
 	setOptions(QWizard::NoBackButtonOnStartPage);
@@ -27,6 +29,7 @@ DatabaseWizard::DatabaseWizard(QWidget *parent) :
 	addPage(new DbPathPage(this));
 	_packagePageId = addPage(new DbWidgetPage<EditPackagesWidget>(QStringLiteral("packages"), "packageList", this));
 	_globalModePageId = addPage(new DbWidgetPage<GlobalFilterWidget>(QStringLiteral("globalMode"), "globalMode", this));
+	_filterPageId = addPage(new DbWidgetPage<FiltersWidget>(QStringLiteral("filters"), "filters", this));
 
 	QSettings settings;
 	restoreGeometry(settings.value(QStringLiteral("gui/wizard/geom")).toByteArray());
@@ -48,6 +51,7 @@ void DatabaseWizard::accept()
 {
 	try {
 		auto ctr = DatabaseController::instance();
+
 		if(field(QStringLiteral("isCreate")).toBool()) {
 			ctr->createDb(field(QStringLiteral("path")).toString(),
 						  field(QStringLiteral("packages")).toStringList());
@@ -55,9 +59,10 @@ void DatabaseWizard::accept()
 			if(hasVisitedPage(_packagePageId))
 				static_cast<DbWidgetPage<EditPackagesWidget>*>(page(_packagePageId))->writeDatabase();
 		}
-
 		if(hasVisitedPage(_globalModePageId))
 			static_cast<DbWidgetPage<GlobalFilterWidget>*>(page(_globalModePageId))->writeDatabase();
+		if(hasVisitedPage(_filterPageId))
+			static_cast<DbWidgetPage<FiltersWidget>*>(page(_filterPageId))->writeDatabase();
 
 		ctr->sync();
 		QWizard::accept();

@@ -20,7 +20,8 @@ public:
 
 	static QVariantList execute(const QString &windowTitle,
 								const QList<QWidget*> &contentWidgets,
-								const QList<QVariant> &defaultValues = {},
+								const QVariantList &defaultValues = {},
+								int startIndex = 0,
 								QWidget *parent = nullptr);
 
 private:

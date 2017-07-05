@@ -31,7 +31,8 @@ HEADERS += \
 	wizard/databasewizard.h \
 	wizard/dbselectionpage.h \
 	wizard/dbpathpage.h \
-	wizard/dbwidgetpage.h
+	wizard/dbwidgetpage.h \
+    widgets/filterswidget.h
 
 SOURCES += \
 		main.cpp \
@@ -45,14 +46,16 @@ SOURCES += \
 	wizard/databasewizard.cpp \
 	wizard/dbselectionpage.cpp \
 	wizard/dbpathpage.cpp \
-	wizard/dbwidgetpage.cpp
+	wizard/dbwidgetpage.cpp \
+    widgets/filterswidget.cpp
 
 FORMS += \
 	settingsdialog.ui \
 	widgets/editpackageswidget.ui \
 	widgets/globalfilterwidget.ui \
 	wizard/dbselectionpage.ui \
-	wizard/dbpathpage.ui
+	wizard/dbpathpage.ui \
+    widgets/filterswidget.ui
 
 RESOURCES += \
 	pacsync_gui.qrc

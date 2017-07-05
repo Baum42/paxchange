@@ -8,6 +8,8 @@
 #include "contentdialog.h"
 #include "wizard/databasewizard.h"
 #include "widgets/editpackageswidget.h"
+#include "widgets/filterswidget.h"
+#include "widgets/globalfilterwidget.h"
 
 TrayControl::TrayControl(QObject *parent) :
 	QObject(parent),
@@ -29,6 +31,9 @@ TrayControl::TrayControl(QObject *parent) :
 	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("package-upgrade")),
 						 tr("Edit Packages"),
 						 this, &TrayControl::editPackages);
+	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("view-filter")),
+						 tr("Edit Filters"),
+						 this, &TrayControl::editFilters);
 	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("gtk-preferences")),
 						 tr("Settings"),
 						 this, &TrayControl::openSettings);
@@ -105,6 +110,24 @@ void TrayControl::editPackages()
 																			&ok);
 	if(ok)
 		ctr->updateDb(packages);
+}
+
+void TrayControl::editFilters()
+{
+	auto ctr = DatabaseController::instance();
+	auto ok = false;
+	auto results = ContentDialog::execute(tr("Edit Filters"),
+										  QList<QWidget*>({
+											  new GlobalFilterWidget(),
+											  new FiltersWidget()
+										  }),
+										  {
+											  QVariant::fromValue(ctr->globalMode()),
+											  QVariant::fromValue(ctr->filters())
+										  },
+										  1);
+	if(ok)
+		qDebug() << results;
 }
 
 void TrayControl::openSettings()

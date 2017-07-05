@@ -21,6 +21,7 @@ class LIBPACSYNC_SHARED_EXPORT DatabaseController : public QObject
 
 	Q_PROPERTY(QStringList packageList READ listPackages WRITE updateDb)
 	Q_PROPERTY(FilterInfo::Mode globalMode READ globalMode WRITE setGlobalMode)
+	Q_PROPERTY(QMap<QString, FilterInfo> filters READ filters WRITE setFilters)
 
 public:
 	explicit DatabaseController(QObject *parent = nullptr);
@@ -34,6 +35,7 @@ public:
 	PackageInfo getInfo(const QString &pkgName) const;
 
 	FilterInfo::Mode globalMode() const;
+	QMap<QString, FilterInfo> filters() const;
 
 	QString currentPath() const;
 	void createDb(const QString &path, const QStringList &packages);
@@ -46,6 +48,7 @@ public:
 
 public slots:
 	void setGlobalMode(FilterInfo::Mode mode);
+	void setFilters(QMap<QString, FilterInfo> filters);
 
 	void updateDb(const QStringList &packages);
 	void sync();

@@ -15,7 +15,7 @@ class GlobalFilterWidget : public QWidget
 	Q_PROPERTY(FilterInfo::Mode mode READ mode WRITE setMode RESET resetMode USER true)
 
 public:
-	explicit GlobalFilterWidget(QWidget *parent = 0);
+	explicit GlobalFilterWidget(QWidget *parent = nullptr);
 	~GlobalFilterWidget();
 
 	FilterInfo::Mode mode() const;
