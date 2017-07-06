@@ -1,3 +1,2 @@
 - merge databases
-- sync action in tray
 - add "sync every x seconds" to settings

@@ -23,6 +23,7 @@ TrayControl::TrayControl(QObject *parent) :
 	_dialogAction(nullptr)
 {
 	qRegisterMetaType<QSystemTrayIcon::ActivationReason>("QSystemTrayIcon::ActivationReason");
+	auto db = DatabaseController::instance();
 
 	_operateAction = _trayMenu->addAction(QIcon(), QString(), this, &TrayControl::startOperation);
 	auto font = _operateAction->font();
@@ -40,6 +41,9 @@ TrayControl::TrayControl(QObject *parent) :
 	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("package-new")),
 						 tr("Change Database"),
 						 this, &TrayControl::changeDatabase);
+	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("view-refresh")),
+						 tr("Synchronize"),
+						 db, &DatabaseController::sync);
 	_trayMenu->addSeparator();
 	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("package-upgrade")),
 						 tr("Edit Packages"),
@@ -62,7 +66,6 @@ TrayControl::TrayControl(QObject *parent) :
 						 tr("Quit"),
 						 qApp, &QApplication::quit);
 
-	auto db = DatabaseController::instance();
 	connect(db->operationQueue(), &OperationQueue::operationsChanged,
 			this, &TrayControl::operationsChanged);
 	connect(db, &DatabaseController::unclearPackagesChanged,
