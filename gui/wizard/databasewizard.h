@@ -19,6 +19,7 @@ private:
 	int _packagePageId;
 	int _globalModePageId;
 	int _filterPageId;
+	int _extraFilterPageId;
 };
 
 #endif // DATABASEWIZARD_H
