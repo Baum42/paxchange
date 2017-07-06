@@ -1,5 +1,5 @@
 - merge databases
-- add errors where needed
 - sync action in tray
 - add "sync every x seconds" to settings
 - TODO fail if not running
+- extra filters red mark

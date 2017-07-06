@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <dialogmaster.h>
 #include <databasecontroller.h>
+#include <QTimer>
 #include "contentdialog.h"
 #include "wizard/databasewizard.h"
 #include "widgets/editpackageswidget.h"
@@ -64,9 +65,11 @@ TrayControl::TrayControl(QObject *parent) :
 	auto db = DatabaseController::instance();
 	connect(db->operationQueue(), &OperationQueue::operationsChanged,
 			this, &TrayControl::operationsChanged);
-
 	connect(db, &DatabaseController::unclearPackagesChanged,
 			this, &TrayControl::showUnclear);
+	connect(db, &DatabaseController::guiError,
+			this, &TrayControl::showMessage,
+			Qt::QueuedConnection);
 
 	connect(_tray, &QSystemTrayIcon::activated,
 			this, &TrayControl::trayAction,
@@ -114,6 +117,17 @@ void TrayControl::showUnclearDialog()
 	enableAll(true);
 }
 
+void TrayControl::showMessage(const QString &text, bool critical)
+{
+	QTimer::singleShot(500, this, [=](){
+		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/error.ico")));
+		_tray->show();
+		_tray->showMessage(critical ? tr("Error") : tr("Warning"),
+						   text,
+						   critical ? QSystemTrayIcon::Critical : QSystemTrayIcon::Warning);
+	});
+}
+
 void TrayControl::trayMessageClicked()
 {
 	trayAction(QSystemTrayIcon::Trigger);
@@ -149,8 +163,10 @@ void TrayControl::editPackages()
 	auto packages = ContentDialog::execute<EditPackagesWidget, QStringList>(ctr->listPackages(),
 																			nullptr,
 																			&ok);
-	if(ok)
+	if(ok) {
 		ctr->updateDb(packages);
+		ctr->sync();
+	}
 
 	enableAll(true);
 }

@@ -209,22 +209,7 @@ void DatabaseController::clearPackages(const QList<UnclearPackageInfo> &clearedP
 
 void DatabaseController::sync()
 {
-	QStringList pI, pUI;
-	auto installedP = PluginLoader::plugin()->listAllPackages();
-	auto targetP = _packageDatabase.packages;
-
-	for(auto it = targetP.constBegin(); it != targetP.constEnd(); it++){
-		auto contains = installedP.contains(it->name);
-		if(!contains && !it->removed)
-			pI.append(it->name);
-
-		if(it->removed && contains)
-			pUI.append(it->name);
-	}
-
-	if(!(pI.isEmpty() && pUI.isEmpty()))
-		emit operationsRequired(pI, pUI);
-	emit unclearPackagesChanged(_packageDatabase.unclearPackages.size());
+	QMetaObject::invokeMethod(this, "syncImpl", Qt::QueuedConnection);
 }
 
 void DatabaseController::fileChanged()
@@ -250,6 +235,25 @@ void DatabaseController::updatePackages(const QList<PackageInfo> &addedPkg, cons
 	foreach (auto unclear, unclearPkg)
 		_packageDatabase.unclearPackages[unclear.name] = unclear;
 	writeCurrentFile();
+	emit unclearPackagesChanged(_packageDatabase.unclearPackages.size());
+}
+
+void DatabaseController::syncImpl()
+{
+	QStringList pI, pUI;
+	auto installedP = PluginLoader::plugin()->listAllPackages();
+	auto targetP = _packageDatabase.packages;
+
+	for(auto it = targetP.constBegin(); it != targetP.constEnd(); it++){
+		auto contains = installedP.contains(it->name);
+		if(!contains && !it->removed)
+			pI.append(it->name);
+
+		if(it->removed && contains)
+			pUI.append(it->name);
+	}
+
+	emit operationsRequired(pI, pUI);
 	emit unclearPackagesChanged(_packageDatabase.unclearPackages.size());
 }
 

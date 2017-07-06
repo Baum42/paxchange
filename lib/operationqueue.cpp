@@ -35,6 +35,7 @@ void OperationQueue::setOperations(const QStringList &install, const QStringList
 		uninstallFirst = !uninstallFirst;
 	}
 
+	qDebug() << _nextOp;
 	emit operationsChanged(_opFlags);
 }
 
@@ -67,12 +68,14 @@ void OperationQueue::startOperation()
 void OperationQueue::cmdDone()
 {
 	try {
-		_operating = false;
-		_controller->reloadDb();
-		_controller->sync();
+		if(_operating) {
+			_operating = false;
+			_controller->reloadDb();
+			_controller->sync();
+		}
 	} catch(QException &e) {
 		qWarning() << "Failed to reload changed file:" << e.what();
-		emit guiError(tr("Failed to reload database!"), true);
+		_controller->guiError(tr("Failed to reload database!"), true);
 	}
 }
 

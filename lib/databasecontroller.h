@@ -71,6 +71,8 @@ private slots:
 	void fileChanged();
 	void updatePackages(const QList<PackageInfo> &addedPkg, const QList<UnclearPackageInfo> &unclearPkg);
 
+	void syncImpl();
+
 private:
 	QSettings *_settings;
 	OperationQueue *_opQueue;

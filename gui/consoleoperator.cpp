@@ -13,6 +13,8 @@ ConsoleOperator::ConsoleOperator(QObject *parent) :
 			this, &ConsoleOperator::startCmd);
 	connect(_process, QOverload<int>::of(&QProcess::finished),
 			db->operationQueue(), &OperationQueue::cmdDone);
+	connect(_process, &QProcess::errorOccurred,
+			this, &ConsoleOperator::errorOccurred);
 }
 
 void ConsoleOperator::startCmd(QString cmd)
@@ -44,4 +46,12 @@ void ConsoleOperator::startCmd(QString cmd)
 	});
 
 	_process->start(term, {QStringLiteral("-e"), fileName});
+}
+
+void ConsoleOperator::errorOccurred()
+{
+	auto db = DatabaseController::instance();
+	db->operationQueue()->cmdDone();
+	qCritical() << "Console command failed" << _process->errorString();
+	db->guiError(tr("Failed to start console for un/install operations"), true);
 }
