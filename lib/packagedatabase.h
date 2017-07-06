@@ -50,9 +50,9 @@ class LIBPACSYNC_SHARED_EXPORT FilterInfo
 
 public:
 	enum Mode {
-		Add,
-		Skip,
-		Ask
+		Add = 0,
+		Skip = 1,
+		Ask = 2
 	};
 	Q_ENUM(Mode)
 

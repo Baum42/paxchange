@@ -13,7 +13,15 @@ FiltersWidget::FiltersWidget(QWidget *parent) :
 {
 	_ui->setupUi(this);
 
+	_ui->addButton->setDefaultAction(_ui->action_Add);
+	_ui->removeButton->setDefaultAction(_ui->action_Remove);
 	_ui->removeButton->addAction(_ui->actionRemove_Disabled);
+	_ui->listView->addActions({
+								  _ui->action_Add,
+								  _ui->action_Remove,
+								  _ui->actionRemove_Disabled
+							  });
+
 	connect(_ui->actionRemove_Disabled, &QAction::triggered,
 			_filterModel, &FilterNameModel::removeDisabled);
 
@@ -120,13 +128,13 @@ void FiltersWidget::updateEdit(const QModelIndex &current, const QModelIndex &pr
 	_ui->editWidget->setEnabled(false);
 }
 
-void FiltersWidget::on_addButton_clicked()
+void FiltersWidget::on_action_Add_triggered()
 {
 	_filterModel->add();
 	_ui->listView->setCurrentIndex(_filterModel->index(_filterModel->filters().size() - 1));
 }
 
-void FiltersWidget::on_removeButton_clicked()
+void FiltersWidget::on_action_Remove_triggered()
 {
 	auto index = _ui->listView->currentIndex();
 	if(index.isValid())

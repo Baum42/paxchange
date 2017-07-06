@@ -107,8 +107,7 @@ void ChangeFilter::packagesChanged(const QStringList &added, const QStringList &
 
 	}
 
-	emit updateDatabase(_pacInfoList.values());//TODO connect and use
-	emit packagesUnclear(_uPacInfoList.values());//TODO connect and use
+	emit updateDatabase(_pacInfoList.values(), _uPacInfoList.values());
 }
 
 bool ChangeFilter::setRegexPattern(QString pattern)

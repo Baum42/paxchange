@@ -51,8 +51,8 @@ public slots:
 private slots:
 	void updateEdit(const QModelIndex &current, const QModelIndex &previous) const;
 
-	void on_addButton_clicked();
-	void on_removeButton_clicked();
+	void on_action_Add_triggered();
+	void on_action_Remove_triggered();
 	void on_regexEdit_textChanged(const QString &text);
 
 private:

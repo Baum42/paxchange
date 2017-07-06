@@ -30,6 +30,8 @@ DatabaseController::DatabaseController(QObject *parent) :
 
 	connect(PluginLoader::plugin(), &PackageManagerPlugin::packagesChanged,
 			_changeFilter, &ChangeFilter::packagesChanged);
+	connect(_changeFilter, &ChangeFilter::updateDatabase,
+			this, &DatabaseController::updatePackages);
 
 	try {
 		if(_settings->contains(QStringLiteral("path"))) {
@@ -53,11 +55,6 @@ DatabaseController *DatabaseController::instance()
 OperationQueue *DatabaseController::operationQueue() const
 {
 	return _opQueue;
-}
-
-ChangeFilter *DatabaseController::changeFilter() const
-{
-	return _changeFilter;
 }
 
 QStringList DatabaseController::listPackages() const
@@ -144,25 +141,22 @@ void DatabaseController::writeSettings(const QVariantHash &changes)
 	writeCurrentFile();
 }
 
-void DatabaseController::setGlobalMode(FilterInfo::Mode mode, bool save)
+void DatabaseController::setGlobalMode(FilterInfo::Mode mode)
 {
 	_packageDatabase.globalMode = mode;
-	if(save)
-		writeCurrentFile();
+	writeCurrentFile();
 }
 
-void DatabaseController::setFilters(QMap<QString, FilterInfo> filters, bool save)
+void DatabaseController::setFilters(QMap<QString, FilterInfo> filters)
 {
 	_packageDatabase.filters = filters;
-	if(save)
-		writeCurrentFile();
+	writeCurrentFile();
 }
 
-void DatabaseController::setExtraFilters(QList<ExtraFilter> extraFilters, bool save)
+void DatabaseController::setExtraFilters(QList<ExtraFilter> extraFilters)
 {
 	_packageDatabase.extraFilters = extraFilters;
-	if(save)
-		writeCurrentFile();
+	writeCurrentFile();
 }
 
 void DatabaseController::updateDb(const QStringList &packages)
@@ -200,6 +194,8 @@ void DatabaseController::sync()
 
 	if(!(pI.isEmpty() && pUI.isEmpty()))
 		emit operationsRequired(pI, pUI);
+	if(!_packageDatabase.unclearPackages.isEmpty())
+		emit unclearPackages(_packageDatabase.unclearPackages.values());
 }
 
 void DatabaseController::fileChanged()
@@ -215,6 +211,18 @@ void DatabaseController::fileChanged()
 	_watcherSkipNext = false;
 
 	_watcher->addPath(_dbPath);
+}
+
+void DatabaseController::updatePackages(const QList<PackageInfo> &addedPkg, const QList<UnclearPackageInfo> &unclearPkg)
+{
+	foreach (auto package, addedPkg)
+		_packageDatabase.packages[package.name] = package;
+	foreach (auto unclear, unclearPkg)
+		_packageDatabase.unclearPackages[unclear.name] = unclear;
+	writeCurrentFile();
+
+	if(!_packageDatabase.unclearPackages.isEmpty())
+		emit unclearPackages(_packageDatabase.unclearPackages.values());
 }
 
 void DatabaseController::cleanUp()

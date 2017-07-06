@@ -30,7 +30,6 @@ public:
 	static DatabaseController *instance();
 
 	OperationQueue *operationQueue() const;
-	ChangeFilter *changeFilter() const;
 
 	QStringList listPackages() const;
 	PackageInfo getInfo(const QString &pkgName) const;
@@ -49,18 +48,21 @@ public:
 	void writeSettings(const QVariantHash &changes);
 
 public slots:
-	void setGlobalMode(FilterInfo::Mode mode, bool save = true);
-	void setFilters(QMap<QString, FilterInfo> filters, bool save = true);
-	void setExtraFilters(QList<ExtraFilter> extraFilters, bool save = true);
+	//TODO write transaction
+	void setGlobalMode(FilterInfo::Mode mode);
+	void setFilters(QMap<QString, FilterInfo> filters);
+	void setExtraFilters(QList<ExtraFilter> extraFilters);
 
 	void updateDb(const QStringList &packages);
 	void sync();
 
 signals:
 	void operationsRequired(const QStringList &packagesInstall, const QStringList &packagesUninstall);
+	void unclearPackages(const QList<UnclearPackageInfo> &unclearPkg);
 
 private slots:
 	void fileChanged();
+	void updatePackages(const QList<PackageInfo> &addedPkg, const QList<UnclearPackageInfo> &unclearPkg);
 
 private:
 	QSettings *_settings;

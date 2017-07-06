@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Edit Database Filters</string>
+   <string>Database Filters</string>
   </property>
   <property name="whatsThis">
    <string>Edit the filters to be used to determine which packages should be added to the database. Everytime you install packages, they are compared against these filters to decide if they should be synced.</string>
@@ -33,6 +33,9 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QListView" name="listView">
+       <property name="contextMenuPolicy">
+        <enum>Qt::ActionsContextMenu</enum>
+       </property>
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
@@ -42,13 +45,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QToolButton" name="removeButton">
-         <property name="text">
-          <string>Remove</string>
-         </property>
-         <property name="icon">
-          <iconset theme="list-remove">
-           <normaloff>.</normaloff>.</iconset>
-         </property>
          <property name="popupMode">
           <enum>QToolButton::MenuButtonPopup</enum>
          </property>
@@ -72,13 +68,6 @@
        </item>
        <item>
         <widget class="QToolButton" name="addButton">
-         <property name="text">
-          <string>Add</string>
-         </property>
-         <property name="icon">
-          <iconset theme="list-add">
-           <normaloff>.</normaloff>.</iconset>
-         </property>
          <property name="toolButtonStyle">
           <enum>Qt::ToolButtonFollowStyle</enum>
          </property>
@@ -181,10 +170,38 @@
   </layout>
   <action name="actionRemove_Disabled">
    <property name="icon">
-    <iconset theme="list-remove-all-symbolic"/>
+    <iconset theme="list-remove-all-symbolic">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Remove Disabled</string>
+    <string>Remove &amp;Disabled</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+Del</string>
+   </property>
+  </action>
+  <action name="action_Add">
+   <property name="icon">
+    <iconset theme="list-add">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Add</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Ins</string>
+   </property>
+  </action>
+  <action name="action_Remove">
+   <property name="icon">
+    <iconset theme="list-remove">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Remove</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
    </property>
   </action>
  </widget>

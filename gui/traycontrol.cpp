@@ -10,6 +10,7 @@
 #include "widgets/editpackageswidget.h"
 #include "widgets/filterswidget.h"
 #include "widgets/globalfilterwidget.h"
+#include "widgets/extrafilterswidget.h"
 
 TrayControl::TrayControl(QObject *parent) :
 	QObject(parent),
@@ -71,6 +72,12 @@ TrayControl::~TrayControl()
 void TrayControl::show()
 {
 	_tray->show();
+	showUnclear({
+					{
+						"Test",
+						"Baum"
+					}
+				});
 }
 
 void TrayControl::startOperation()
@@ -127,16 +134,19 @@ void TrayControl::editFilters()
 	auto results = ContentDialog::execute(tr("Edit Filters"),
 										  QList<QWidget*>({
 											  new GlobalFilterWidget(),
-											  new FiltersWidget()
+											  new FiltersWidget(),
+											  new ExtraFiltersWidget()
 										  }),
 										  {
 											  QVariant::fromValue(ctr->globalMode()),
-											  QVariant::fromValue(ctr->filters())
+											  QVariant::fromValue(ctr->filters()),
+											  QVariant::fromValue(ctr->extraFilters())
 										  },
 										  1);
 	if(!results.isEmpty()) {
-		ctr->setGlobalMode(results[0].value<FilterInfo::Mode>(), false);
+		ctr->setGlobalMode(results[0].value<FilterInfo::Mode>());
 		ctr->setFilters(results[1].value<QMap<QString,FilterInfo>>());
+		ctr->setExtraFilters(results[2].value<QList<ExtraFilter>>());
 	}
 
 	enableAll(true);
@@ -183,6 +193,26 @@ void TrayControl::operationsChanged(OperationQueue::OpertionsFlags operations)
 		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/install.ico")));
 		_tray->show();
 		_tray->showMessage(tr("Packages changed!"),
+						   message,
+						   QSystemTrayIcon::Information);
+	}
+}
+
+void TrayControl::showUnclear(const QList<UnclearPackageInfo> &unclearPkg)
+{
+	if(unclearPkg.isEmpty()) {
+		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")));
+		_operateAction->setVisible(false);
+	} else {
+		auto message = tr("There are %L1 packages that need to be revised for synchronization.")
+					   .arg(unclearPkg.size());
+		_operateAction->setIcon(QIcon::fromTheme(QStringLiteral("package-available-locked")));
+		_operateAction->setText(tr("Review unclear packages"));
+		_operateAction->setVisible(true);
+
+		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/question.ico")));
+		_tray->show();
+		_tray->showMessage(tr("Packages unclear!"),
 						   message,
 						   QSystemTrayIcon::Information);
 	}

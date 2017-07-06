@@ -20,8 +20,7 @@ public slots:
 	void packagesChanged(const QStringList &added, const QStringList &removed);
 
 signals:
-	void updateDatabase(const QList<PackageInfo> &infos);
-	void packagesUnclear(const QList<UnclearPackageInfo> &infos);
+	void updateDatabase(const QList<PackageInfo> &addedPkg, const QList<UnclearPackageInfo> &unclearPkg);
 
 private:
 	QMap<QString, PackageInfo> _pacInfoList;
