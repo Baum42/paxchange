@@ -8,6 +8,8 @@
 #include <qsingleinstance.h>
 #include <QFileInfo>
 #include <QFile>
+#include <QTranslator>
+#include <QLibraryInfo>
 #include "traycontrol.h"
 #include "pluginloader.h"
 #include "wizard/databasewizard.h"
@@ -27,6 +29,18 @@ int main(int argc, char *argv[])
 	QApplication::setApplicationDisplayName(QStringLiteral(DISPLAY_NAME));
 	QApplication::setWindowIcon(QIcon(QStringLiteral(":/icons/main.svg")));
 	QApplication::setQuitOnLastWindowClosed(false);
+
+	//load translations
+	auto translator = new QTranslator(qApp);
+	if(translator->load(QLocale(),
+						QStringLiteral("pacsync_gui"),
+						QStringLiteral("_"),
+						QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+		qApp->installTranslator(translator);
+	else {
+		qWarning() << "Failed to load translations";
+		delete translator;
+	}
 
 	QSingleInstance instance;
 

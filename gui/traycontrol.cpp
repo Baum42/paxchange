@@ -215,7 +215,7 @@ void TrayControl::about()
 	if(++counter == 0b00101010)
 		QApplication::setWindowIcon(QIcon(QStringLiteral(":/icons/28106788.png")));
 	DialogMaster::about(nullptr,
-						tr("TODO"),
+						tr("A tool to synchronized installed packages across multiple machines"),
 						true,
 						QStringLiteral("https://github.com/Baum42/pacsync"));
 }

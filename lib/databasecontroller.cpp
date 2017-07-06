@@ -5,6 +5,8 @@
 #include <QFileInfo>
 #include <QGlobalStatic>
 #include <QLockFile>
+#include <QTranslator>
+#include <QLibraryInfo>
 
 Q_GLOBAL_STATIC(DatabaseController, _instance)
 
@@ -335,4 +337,16 @@ static void setupDatabaseController()
 	QJsonSerializer::registerAllConverters<QList<UnclearPackageInfo>>();
 	QJsonSerializer::registerAllConverters<FilterInfo>();
 	QJsonSerializer::registerAllConverters<ExtraFilter>();
+
+	//load translations
+	auto translator = new QTranslator(qApp);
+	if(translator->load(QLocale(),
+						QStringLiteral("pacsync_lib"),
+						QStringLiteral("_"),
+						QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+		qApp->installTranslator(translator);
+	else {
+		qWarning() << "Failed to load translations";
+		delete translator;
+	}
 }
