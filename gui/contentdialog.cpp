@@ -71,6 +71,7 @@ QVariantList ContentDialog::execute(const QString &windowTitle, const QList<QWid
 	}
 
 	settings.setValue(QStringLiteral("geom"), dialog.saveGeometry());
+	settings.setValue(QStringLiteral("index"), dialog.tabWidget->currentIndex());
 
 	return res;
 }
