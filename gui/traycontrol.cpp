@@ -15,7 +15,8 @@ TrayControl::TrayControl(QObject *parent) :
 	QObject(parent),
 	_tray(new QSystemTrayIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")), this)),
 	_trayMenu(new QMenu()),
-	_operateAction(nullptr)
+	_operateAction(nullptr),
+	_dialogAction(nullptr)
 {
 	_operateAction = _trayMenu->addAction(QIcon(), QString(), this, &TrayControl::startOperation);
 	auto font = _operateAction->font();
@@ -98,11 +99,15 @@ void TrayControl::trayAction(QSystemTrayIcon::ActivationReason reason)
 
 void TrayControl::changeDatabase()
 {
+	enableAll(false);
 	DatabaseWizard::run();
+	enableAll(true);
 }
 
 void TrayControl::editPackages()
 {
+	enableAll(false);
+
 	auto ctr = DatabaseController::instance();
 	auto ok = false;
 	auto packages = ContentDialog::execute<EditPackagesWidget, QStringList>(ctr->listPackages(),
@@ -110,10 +115,14 @@ void TrayControl::editPackages()
 																			&ok);
 	if(ok)
 		ctr->updateDb(packages);
+
+	enableAll(true);
 }
 
 void TrayControl::editFilters()
 {
+	enableAll(false);
+
 	auto ctr = DatabaseController::instance();
 	auto results = ContentDialog::execute(tr("Edit Filters"),
 										  QList<QWidget*>({
@@ -129,15 +138,22 @@ void TrayControl::editFilters()
 		ctr->setGlobalMode(results[0].value<FilterInfo::Mode>(), false);
 		ctr->setFilters(results[1].value<QMap<QString,FilterInfo>>());
 	}
+
+	enableAll(true);
 }
 
 void TrayControl::openSettings()
 {
+	enableAll(false);
 	SettingsDialog::showSettings();
+	enableAll(true);
 }
 
 void TrayControl::about()
 {
+	static int counter = 0;
+	if(++counter == 0b00101010)
+		QApplication::setWindowIcon(QIcon(QStringLiteral(":/icons/28106788.png")));
 	DialogMaster::about(nullptr,
 						tr("TODO"),
 						true,
@@ -170,4 +186,11 @@ void TrayControl::operationsChanged(OperationQueue::OpertionsFlags operations)
 						   message,
 						   QSystemTrayIcon::Information);
 	}
+}
+
+void TrayControl::enableAll(bool enable)
+{
+	foreach(auto action, _trayMenu->actions())
+		action->setEnabled(enable);
+	_trayMenu->actions().last()->setEnabled(true);
 }

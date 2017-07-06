@@ -37,6 +37,9 @@ private:
 	QMenu *_trayMenu;
 
 	QAction *_operateAction;
+	QAction *_dialogAction;
+
+	void enableAll(bool enable);
 };
 
 #endif // TRAYCONTROL_H

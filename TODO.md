@@ -1,2 +1,3 @@
 - merge databases
 - add errors where needed
+- lock only 1 dialog at a time

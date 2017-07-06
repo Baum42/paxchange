@@ -4,6 +4,7 @@
         <file alias="install.svg">icons/pacsync_install.svg</file>
         <file alias="error.svg">icons/pacsync_error.svg</file>
         <file alias="question.svg">icons/pacsync_question.svg</file>
+        <file alias="28106788.png">icons/28106788.png</file>
     </qresource>
     <qresource prefix="/icons/tray">
         <file alias="main.ico">icons/pacsync.ico</file>
