@@ -20,6 +20,7 @@ public:
 	bool isValid() const;
 
 	bool operator ==(const PackageInfo &other) const;
+	bool equals(const PackageInfo &other) const;
 };
 
 class LIBPACSYNC_SHARED_EXPORT UnclearPackageInfo : public PackageInfo
@@ -36,6 +37,7 @@ public:
 	QStringList filterNames;
 
 	bool operator ==(const UnclearPackageInfo &other) const;
+	bool equals(const UnclearPackageInfo &other) const;
 };
 
 class LIBPACSYNC_SHARED_EXPORT FilterInfo
@@ -67,6 +69,7 @@ public:
 	QString regex;
 
 	bool operator ==(const FilterInfo &other) const;
+	bool equals(const FilterInfo &other) const;
 };
 
 class LIBPACSYNC_SHARED_EXPORT ExtraFilter
@@ -83,6 +86,7 @@ public:
 	FilterInfo::Mode mode;
 
 	bool operator ==(const ExtraFilter &other) const;
+	bool equals(const ExtraFilter &other) const;
 };
 
 class LIBPACSYNC_SHARED_EXPORT PackageDatabase
