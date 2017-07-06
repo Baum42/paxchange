@@ -26,11 +26,10 @@ private:
 	QMap<QString, PackageInfo> _pacInfoList;
 	QMap<QString, UnclearPackageInfo> _uPacInfoList;
 
-	bool setRegexPattern(QString pattern);
-	void addPacInfo(ExtraFilter extraFilter, bool alreadyAdded);
+	QRegularExpression createRegEx(QString pattern);
 
 	template <typename TFilter>
-	void applyFilters(const QSet<QString> &packages,
+	void applyFilters(QSet<QString> &packages,
 					  const QList<TFilter> &filters,
 					  const std::function<bool(QString, TFilter)> &filterFn,
 					  const std::function<QString(TFilter)> &filterNameFn);

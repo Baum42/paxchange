@@ -13,7 +13,7 @@ void ChangeFilter::packagesChanged(const QStringList &added, const QStringList &
 
 	auto db = DatabaseController::instance();
 
-	//already in db?
+	//check if already in db
 	foreach (auto pac, removed) {
 		auto info = db->getInfo(pac);
 		if(info.isValid() && !info.removed){
@@ -22,7 +22,7 @@ void ChangeFilter::packagesChanged(const QStringList &added, const QStringList &
 		}
 	}
 
-	QSet<QString> addedRest;
+	QSet<QString> addedSet;
 	foreach(auto pac, added){
 		auto info = db->getInfo(pac);
 		if(info.isValid()){
@@ -31,127 +31,111 @@ void ChangeFilter::packagesChanged(const QStringList &added, const QStringList &
 				_pacInfoList[pac] = info;
 			}
 		} else
-			addedRest.insert(pac);
+			addedSet.insert(pac);
 	}
 
-/*	QHash<QString, QRegularExpression> cache;
-	auto extraFilters = db->extraFilters();
-	foreach(auto filter, extraFilters){
-		cache[filter.regex] = {QString(), QRegularExpression::OptimizeOnFirstUsageOption |
-							   QRegularExpression::DontCaptureOption};
-	}
-
-	auto filterFn = [](QString pac, ExtraFilter filter){
-
-	};
-	auto filterNameFn = [](ExtraFilter filter){
-		return filter.regex;
-	};
-
-	applyFilters<ExtraFilter>(QSet<QString>::fromList(added), extraFilters, filterFn, filterNameFn);
-
-*/
 	//extra filters
+	QHash<QString, QRegularExpression> eCache;
+	auto extraFilters = db->extraFilters();
+	foreach(auto filter, extraFilters)
+		eCache[filter.regex] = createRegEx(filter.regex);
 
-
-
-
-
-
-
-
-/*
-	foreach (auto filter, db->extraFilters()) {
-		if(!setRegexPattern(filter.regex))
-			continue;
-
-		foreach(auto pac, added){
-			if(_re.match(*it).hasMatch()){
-				if(filter.mode == FilterInfo::Ask || _pacInfoList.contains(pac)) {
-					_uPacInfoList[pac] = UnclearPackageInfo(pac,
-															QSysInfo::machineHostName(),
-															tr("Extra Filter: %1").arg(filter.regex));
-				} else if(filter.mode == FilterInfo::Add)
-					_pacInfoList[pac] = pac;
-
-				addedRest.remove(pac);
-			}
-		}
-	}
+	applyFilters<ExtraFilter>(addedSet, extraFilters,
+	[&eCache](QString pac, ExtraFilter filter){
+		if(!eCache[filter.regex].isValid())
+			return false;
+		return eCache[filter.regex].match(pac).hasMatch();
+	}, [](ExtraFilter filter){
+		return tr("Extra Filter: %1").arg(filter.regex);
+	});
 
 	//filters
-	erasedPackages.clear();
-	foreach(auto filter, db->filters()){
-		if(filter.plugin != PluginLoader::currentPlugin())
-			continue;
+	QHash<QString, QPair<QRegularExpression, QStringList>> cache;
+	auto filters = db->filters().values();
+	foreach (auto filter, filters){
+		if(filter.plugin == PluginLoader::currentPlugin())
+			cache[filter.name] = {createRegEx(filter.regex),
+								  PluginLoader::plugin()->listPackages(QVector<bool>::fromList(filter.pluginFilters))};
+	}
 
-		if(!filter.regex.isEmpty()){
-			if(!setRegexPattern(filter.regex))
-				continue;
-		}
-
-
-		auto pacListFiltered = PluginLoader::plugin()->listPackages(filter.pluginFilters);
-		for(auto it = added.begin(); it != added.end();){
-			if((filter.regex.isEmpty() || _re.match(*it).hasMatch()) && pacListFiltered.contains(*it)){
-
-				erasedPackages.append(*it);
-				it = added.erase(it);
-			} else
-				it++;
-		}
-	}*/
+	applyFilters<FilterInfo>(addedSet, filters,
+	[&cache](QString pac, FilterInfo filter){
+		if(!cache.contains(filter.name) ||
+			(!filter.regex.isEmpty() && !cache[filter.name].first.match(pac).hasMatch()) ||
+			!cache[filter.name].first.isValid())
+			return false;
+		return cache[filter.name].second.contains(pac);
+	}, [](FilterInfo filter){
+		return tr("Filter: %1").arg(filter.name);
+	});
 
 	//global
-	for(auto it = added.begin(); it != added.end();){
-
+	switch (db->globalMode()) {
+	case FilterInfo::Ask:
+		foreach (auto pac, addedSet)
+			_uPacInfoList[pac] = {pac, QSysInfo::machineHostName()};
+		break;
+	case FilterInfo::Add:
+		foreach (auto pac, addedSet)
+			_pacInfoList[pac] = pac;
+		break;
+	case FilterInfo::Skip:
+		break;
+	default:
+		Q_UNREACHABLE();
+		break;
 	}
 
 	emit updateDatabase(_pacInfoList.values(), _uPacInfoList.values());
 }
 
-bool ChangeFilter::setRegexPattern(QString pattern)
+QRegularExpression ChangeFilter::createRegEx(QString pattern)
 {
-/*	_re.setPattern(pattern);
-
-	if(!_re.isValid()){
+	auto re = QRegularExpression{pattern, QRegularExpression::OptimizeOnFirstUsageOption | QRegularExpression::DontCaptureOption};
+	if(!re.isValid()){
 		qWarning() << tr("invalid regular expression") << pattern
-				   << tr("with error:") << _re.errorString();
-		return false;
-	}*/
-	return true;
+				   << tr("with error:") << re.errorString();
+	}
+
+	return re;
 }
 
 template<typename TFilter>
-void ChangeFilter::applyFilters(const QSet<QString> &packages,
+void ChangeFilter::applyFilters(QSet<QString> &packages,
 								const QList<TFilter> &filters,
 								const std::function<bool(QString, TFilter)> &filterFn,
 								const std::function<QString(TFilter)> &filterNameFn)
 {
-	foreach(auto pac, packages){
+	for(auto it = packages.begin(); it != packages.end();){
 		QStringList fmList;
 
 		auto mode = FilterInfo::Ask;
 		foreach(auto filter, filters){
-			if(filterFn(pac, filter)){
+			if(filterFn(*it, filter)){
 				fmList.append(filterNameFn(filter));
 				mode = filter.mode;
 			}
 		}
 
-		if(fmList.size() > 1)
-			_uPacInfoList[pac] = {pac, QSysInfo::machineHostName(), fmList};
-		else {
+		if(fmList.size() > 1){
+			_uPacInfoList[*it] = {*it, QSysInfo::machineHostName(), fmList};
+			it = packages.erase(it);
+		} else if(fmList.size() == 1) {
 			switch (mode) {
 			case FilterInfo::Ask:
-				_uPacInfoList[pac] = {pac, QSysInfo::machineHostName()};
+				_uPacInfoList[*it] = {*it, QSysInfo::machineHostName()};
 				break;
 			case FilterInfo::Add:
-				_pacInfoList[pac] = pac;
+				_pacInfoList[*it] = *it;
+				break;
+			case FilterInfo::Skip:
 				break;
 			default:
+				Q_UNREACHABLE();
 				break;
 			}
-		}
+			it = packages.erase(it);
+		} else
+			it++;
 	}
 }
