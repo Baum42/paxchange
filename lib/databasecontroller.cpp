@@ -21,7 +21,8 @@ DatabaseController::DatabaseController(QObject *parent) :
 	_packageDatabase(),
 	_watcher(new QFileSystemWatcher(this)),
 	_watcherSkipNext(false),
-	_loaded(false)
+	_loaded(false),
+	_isTransaction(false)
 {
 	_settings->beginGroup(QStringLiteral("lib/dbcontroller"));
 
@@ -144,6 +145,19 @@ void DatabaseController::writeSettings(const QVariantHash &changes)
 			_packageDatabase.settings.remove(it.key());
 	}
 	writeCurrentFile();
+}
+
+void DatabaseController::beginSaveTransaction()
+{
+	_isTransaction = true;
+}
+
+void DatabaseController::commitSave()
+{
+	if(_isTransaction) {
+		_isTransaction = false;
+		writeCurrentFile();
+	}
 }
 
 void DatabaseController::setGlobalMode(FilterInfo::Mode mode)
@@ -274,7 +288,8 @@ void DatabaseController::writeFile(PackageDatabase p, const QString &path)
 
 void DatabaseController::writeCurrentFile()
 {
-	writeFile(_packageDatabase, _dbPath);
+	if(!_isTransaction)
+		writeFile(_packageDatabase, _dbPath);
 }
 
 QString DatabaseController::lockPath(const QString &path)

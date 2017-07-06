@@ -48,8 +48,10 @@ public:
 	QVariant readSettings(const QString &key, const QVariant &defaultValue = QVariant()) const;
 	void writeSettings(const QVariantHash &changes);
 
+	void beginSaveTransaction();
+	void commitSave();
+
 public slots:
-	//TODO write transaction
 	void setGlobalMode(FilterInfo::Mode mode);
 	void setFilters(QMap<QString, FilterInfo> filters);
 	void setExtraFilters(QList<ExtraFilter> extraFilters);
@@ -77,6 +79,8 @@ private:
 	QFileSystemWatcher *_watcher;
 	bool _watcherSkipNext;
 	bool _loaded;
+
+	bool _isTransaction;
 
 	void cleanUp();
 	void readFile();

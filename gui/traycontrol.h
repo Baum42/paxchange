@@ -44,6 +44,7 @@ private:
 	QAction *_dialogAction;
 
 	void enableAll(bool enable);
+	void reloadIcon();
 };
 
 #endif // TRAYCONTROL_H
