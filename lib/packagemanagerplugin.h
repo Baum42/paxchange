@@ -30,8 +30,14 @@ public:
 		int type; //QMetaType::Type
 		QVariant defaultValue;
 		QByteArray widgetClassName;
-		SettingsInfo(QString displayName, QString description, QString settingsKeys,
-					 int type = QMetaType::QString, QVariant defaultValue = {}, QByteArray widgetClassName = {});
+		QVariantMap widgetProperties;
+		SettingsInfo(QString displayName,
+					 QString description,
+					 QString settingsKeys,
+					 int type = QMetaType::QString,
+					 QVariant defaultValue = {},
+					 QByteArray widgetClassName = {},
+					 QVariantMap widgetProperties = {});
 	};
 
 	PackageManagerPlugin(QObject *parent = nullptr);

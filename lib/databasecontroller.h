@@ -12,6 +12,7 @@
 #include <QSettings>
 #include <QtJsonSerializer/QJsonSerializer>
 #include <QFileSystemWatcher>
+#include <QTimer>
 
 DEF_EXC(DatabaseException)
 
@@ -42,7 +43,6 @@ public:
 	QString currentPath() const;
 	void createDb(const QString &path, const QStringList &packages);
 	void loadDb(const QString &path);
-	void reloadDb();
 	bool isLoaded() const;
 
 	QVariant readSettings(const QString &key, const QVariant &defaultValue = QVariant()) const;
@@ -52,6 +52,8 @@ public:
 	void commitSave();
 
 public slots:
+	void reloadDb();
+
 	void setGlobalMode(FilterInfo::Mode mode);
 	void setFilters(QMap<QString, FilterInfo> filters);
 	void setExtraFilters(QList<ExtraFilter> extraFilters);
@@ -81,6 +83,7 @@ private:
 	QJsonSerializer *_js;
 	PackageDatabase _packageDatabase;
 	QFileSystemWatcher *_watcher;
+	QTimer *_reloadTimer;
 	bool _watcherSkipNext;
 	bool _loaded;
 

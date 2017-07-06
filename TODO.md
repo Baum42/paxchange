@@ -1,2 +1,1 @@
 - merge databases
-- add "sync every x seconds" to settings

@@ -20,11 +20,16 @@ DatabaseController::DatabaseController(QObject *parent) :
 	_js(new QJsonSerializer(this)),
 	_packageDatabase(),
 	_watcher(new QFileSystemWatcher(this)),
+	_reloadTimer(new QTimer(this)),
 	_watcherSkipNext(false),
 	_loaded(false),
 	_isTransaction(false)
 {
 	_settings->beginGroup(QStringLiteral("lib/dbcontroller"));
+
+	_reloadTimer->setTimerType(Qt::VeryCoarseTimer);
+	connect(_reloadTimer, &QTimer::timeout,
+			this, &DatabaseController::reloadDb);
 
 	connect(this, &DatabaseController::operationsRequired,
 			_opQueue, &OperationQueue::setOperations);
@@ -37,7 +42,7 @@ DatabaseController::DatabaseController(QObject *parent) :
 	try {
 		if(_settings->contains(QStringLiteral("path"))) {
 			loadDb(_settings->value(QStringLiteral("path")).toString());
-			QMetaObject::invokeMethod(this, "sync", Qt::QueuedConnection);
+			sync();
 		}
 	} catch(QException &e) {
 		qCritical() << e.what();
@@ -122,6 +127,7 @@ void DatabaseController::loadDb(const QString &path)
 void DatabaseController::reloadDb()
 {
 	readFile();
+	sync();
 }
 
 bool DatabaseController::isLoaded() const
@@ -240,6 +246,7 @@ void DatabaseController::updatePackages(const QList<PackageInfo> &addedPkg, cons
 
 void DatabaseController::syncImpl()
 {
+	qDebug() << Q_FUNC_INFO;
 	QStringList pI, pUI;
 	auto installedP = PluginLoader::plugin()->listAllPackages();
 	auto targetP = _packageDatabase.packages;
@@ -252,6 +259,12 @@ void DatabaseController::syncImpl()
 		if(it->removed && contains)
 			pUI.append(it->name);
 	}
+
+	auto interval = readSettings(QStringLiteral("lib/database/resync"), 0).toInt();
+	if(interval == 0)
+		_reloadTimer->stop();
+	else
+		_reloadTimer->start(interval * 60 * 1000);
 
 	emit operationsRequired(pI, pUI);
 	emit unclearPackagesChanged(_packageDatabase.unclearPackages.size());

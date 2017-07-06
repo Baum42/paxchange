@@ -71,7 +71,6 @@ void OperationQueue::cmdDone()
 		if(_operating) {
 			_operating = false;
 			_controller->reloadDb();
-			_controller->sync();
 		}
 	} catch(QException &e) {
 		qWarning() << "Failed to reload changed file:" << e.what();

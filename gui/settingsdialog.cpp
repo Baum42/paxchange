@@ -36,6 +36,19 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 				  false,
 				  {
 					  {
+						  tr("Periodic &Sync"),
+						  tr("In cases you file system does not report when the database file gets changed externally, "
+						  "you can enable a periodic resync of the database."),
+						  QStringLiteral("lib/database/resync"),
+						  QMetaType::Int,
+						  0,
+						  QByteArray(),
+						  {
+							  {QStringLiteral("specialValueText"), tr("Automatic Change detection")},
+							  {QStringLiteral("suffix"), tr(" Minutes")}
+						  }
+					  },
+					  {
 						  tr("Use &GUI Installer"),
 						  tr("If supported by the plugin, a GUI will be used instead of a console popup"),
 						  QStringLiteral("lib/operations/usegui"),
@@ -191,6 +204,8 @@ void SettingsDialog::createWidgets(QWidget *parent, QFormLayout *layout, bool as
 
 		if(widget->toolTip().isNull())
 			widget->setToolTip(info.description);
+		for(auto it = info.widgetProperties.constBegin(); it != info.widgetProperties.constEnd(); ++it)
+			widget->setProperty(it.key().toUtf8().constData(), it.value());
 
 		_settingsWidgets.insert(key, widget);
 
