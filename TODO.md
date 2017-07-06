@@ -2,4 +2,3 @@
 - add errors where needed
 - sync action in tray
 - add "sync every x seconds" to settings
-- TODO fail if not running
