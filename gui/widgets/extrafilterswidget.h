@@ -1,6 +1,7 @@
 #ifndef EXTRAFILTERSWIDGET_H
 #define EXTRAFILTERSWIDGET_H
 
+#include <QTreeWidget>
 #include <QWidget>
 #include <packagedatabase.h>
 
@@ -26,6 +27,7 @@ public slots:
 private slots:
 	void on_action_Add_Filter_triggered();
 	void on_action_Remove_Filter_triggered();
+	void on_treeWidget_itemChanged(QTreeWidgetItem *item, int column);
 
 private:
 	Ui::ExtraFiltersWidget *_ui;

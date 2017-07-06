@@ -146,7 +146,7 @@ void FiltersWidget::on_regexEdit_textChanged(const QString &text)
 	QRegularExpression regex(text);
 	auto pal = palette();
 	if(!regex.isValid())
-		pal.setColor(QPalette::Text, Qt::darkRed);
+		pal.setColor(QPalette::Text, Qt::red);
 	_ui->regexEdit->setPalette(pal);
 }
 

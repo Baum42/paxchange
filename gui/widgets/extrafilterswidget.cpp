@@ -57,6 +57,17 @@ void ExtraFiltersWidget::on_action_Remove_Filter_triggered()
 		delete item;
 }
 
+void ExtraFiltersWidget::on_treeWidget_itemChanged(QTreeWidgetItem *item, int column)
+{
+	if(item && column == 0) {
+		QRegularExpression regex(item->text(0));
+		if(!regex.isValid())
+			item->setForeground(0, Qt::red);
+		else
+			item->setForeground(0, item->foreground(1));
+	}
+}
+
 void ExtraFiltersWidget::addFilter(const ExtraFilter &filter)
 {
 	auto item = new QTreeWidgetItem(_ui->treeWidget);
