@@ -92,14 +92,14 @@ void TrayControl::show()
 void TrayControl::startOperation()
 {
 	_operateAction->setVisible(false);
-	_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")));
+	reloadIcon();
 	DatabaseController::instance()->operationQueue()->startOperation();
 }
 
 void TrayControl::showUnclearDialog()
 {
 	_unclearAction->setVisible(false);
-	_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")));
+	reloadIcon();
 
 	enableAll(false);
 
@@ -204,8 +204,8 @@ void TrayControl::about()
 void TrayControl::operationsChanged(OperationQueue::OpertionsFlags operations)
 {
 	if(operations == OperationQueue::None) {
-		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")));//TODO NO CLEAR
 		_operateAction->setVisible(false);
+		reloadIcon();
 	} else {
 		auto op = DatabaseController::instance()->operationQueue();
 
@@ -221,7 +221,7 @@ void TrayControl::operationsChanged(OperationQueue::OpertionsFlags operations)
 		}
 		_operateAction->setVisible(true);
 
-		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/install.ico")));
+		reloadIcon();
 		_tray->show();
 		_tray->showMessage(tr("Packages changed!"),
 						   message,
@@ -232,11 +232,11 @@ void TrayControl::operationsChanged(OperationQueue::OpertionsFlags operations)
 void TrayControl::showUnclear(int count)
 {
 	if(count == 0) {
-		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")));//TODO NO CLEAR
 		_unclearAction->setVisible(false);
+		reloadIcon();
 	} else {
 		_unclearAction->setVisible(true);
-		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/question.ico")));
+		reloadIcon();
 		_tray->show();
 		_tray->showMessage(tr("Packages unclear!"),
 						   tr("There are %L1 packages that need to be revised for synchronization.")
@@ -250,4 +250,14 @@ void TrayControl::enableAll(bool enable)
 	foreach(auto action, _trayMenu->actions())
 		action->setEnabled(enable);
 	_trayMenu->actions().last()->setEnabled(true);
+}
+
+void TrayControl::reloadIcon()
+{
+	if(_unclearAction->isVisible())
+		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/question.ico")));
+	else if(_operateAction->isVisible())
+		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/install.ico")));
+	else
+		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")));
 }
