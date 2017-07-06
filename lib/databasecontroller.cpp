@@ -57,6 +57,20 @@ DatabaseController::DatabaseController(QObject *parent) :
 			this, &DatabaseController::fileChanged);
 }
 
+void DatabaseController::loadTranslation(const QString &name)
+{
+	auto translator = new QTranslator(qApp);
+	if(translator->load(QLocale(),
+						name,
+						QStringLiteral("_"),
+						QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+		qApp->installTranslator(translator);
+	else {
+		qWarning() << "Failed to load translations for" << name;
+		delete translator;
+	}
+}
+
 DatabaseController *DatabaseController::instance()
 {
 	return _instance;
@@ -339,14 +353,5 @@ static void setupDatabaseController()
 	QJsonSerializer::registerAllConverters<ExtraFilter>();
 
 	//load translations
-	auto translator = new QTranslator(qApp);
-	if(translator->load(QLocale(),
-						QStringLiteral("pacsync_lib"),
-						QStringLiteral("_"),
-						QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
-		qApp->installTranslator(translator);
-	else {
-		qWarning() << "Failed to load translations";
-		delete translator;
-	}
+	DatabaseController::loadTranslation(QStringLiteral("pacsync_lib"));
 }

@@ -28,6 +28,8 @@ class LIBPACSYNC_SHARED_EXPORT DatabaseController : public QObject
 public:
 	explicit DatabaseController(QObject *parent = nullptr);
 
+	static void loadTranslation(const QString &name);
+
 	static DatabaseController *instance();
 
 	OperationQueue *operationQueue() const;

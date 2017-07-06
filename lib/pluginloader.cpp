@@ -10,6 +10,8 @@
 #include <QLibraryInfo>
 #endif
 
+#include "databasecontroller.h"
+
 Q_GLOBAL_STATIC(PluginLoader, pluginLoader)
 
 PluginLoader::PluginLoader(QObject *parent) :
@@ -63,12 +65,13 @@ void PluginLoader::loadPlugin(const QString &overwrite)
 	if(!loader)
 		throw PluginLoadException(QStringLiteral("The given key does not name a plugin"));
 
-	if(loader->load()) {//TODO load translations
+	if(loader->load()) {
 		auto object = loader->instance();
 		pluginLoader->_plugin = qobject_cast<PackageManagerPlugin*>(object);
 		if(!pluginLoader->_plugin)
 			throw PluginLoadException(QStringLiteral("The loaded plugin is not a PackageManagerPlugin"));
 		pluginLoader->_pluginKey = name;
+		DatabaseController::loadTranslation(loader->metaData()[QStringLiteral("MetaData")].toObject()[QStringLiteral("TsPrefix")].toString());
 		pluginLoader->_plugin->initialize();
 	} else
 		throw PluginLoadException(QStringLiteral("Failed to load plugin with error : %1")

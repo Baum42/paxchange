@@ -31,17 +31,7 @@ int main(int argc, char *argv[])
 	QApplication::setQuitOnLastWindowClosed(false);
 
 	//load translations
-	auto translator = new QTranslator(qApp);
-	if(translator->load(QLocale(),
-						QStringLiteral("pacsync_gui"),
-						QStringLiteral("_"),
-						QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
-		qApp->installTranslator(translator);
-	else {
-		qWarning() << "Failed to load translations";
-		delete translator;
-	}
-
+	DatabaseController::loadTranslation(QStringLiteral("pacsync_gui"));
 	QSingleInstance instance;
 
 	QCommandLineParser parser;
