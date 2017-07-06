@@ -5,11 +5,11 @@
 #include <QProcess>
 #include <QStandardPaths>
 #include <comboboxconfig.h>
+#include <databasecontroller.h>
 
 PacmanPlugin::PacmanPlugin(QObject *parent) :
 	PackageManagerPlugin(parent)
 {}
-
 
 void PacmanPlugin::initialize()
 {
@@ -49,8 +49,11 @@ QStringList PacmanPlugin::listPackages(QVector<bool> extraFilters)
 
 	QProcess p;
 	p.start(QStringLiteral("pacman"), {queryString});
-	if(!p.waitForFinished(5000))
+	if(!p.waitForFinished(5000)) {
+		qCritical() << "Package read failed" << p.errorString();
+		DatabaseController::instance()->guiError(tr("Failed to load packages from pacman!"), true);
 		return {};
+	}
 
 	return QString::fromUtf8(p.readAll()).split(QStringLiteral("\n"), QString::SkipEmptyParts);
 }
