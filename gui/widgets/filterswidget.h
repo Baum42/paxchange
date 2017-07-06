@@ -12,6 +12,8 @@ class FiltersWidget;
 
 class FilterNameModel : public QAbstractListModel
 {
+	Q_OBJECT
+
 public:
 	FilterNameModel(QObject *parent = nullptr);
 

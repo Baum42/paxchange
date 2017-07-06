@@ -4,7 +4,12 @@
 <context>
     <name>PacmanPlugin</name>
     <message>
-        <location filename="pacmanplugin.cpp" line="+73"/>
+        <location filename="pacmanplugin.cpp" line="+54"/>
+        <source>Failed to load packages from pacman!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
         <source>Pacman &amp;frontend</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25,7 +30,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>The parameters to be used for installation. %p is replaced by the list of packages (space seperated). If missing, the packages are appended to the command line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -40,7 +45,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-10"/>
+        <location line="+13"/>
+        <location line="+10"/>
+        <source>Invalid plugin parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-33"/>
         <source>&amp;Install parameters</source>
         <oldsource>Extra &amp;install parameters</oldsource>
         <translation type="unfinished"></translation>
