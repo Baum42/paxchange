@@ -1,1 +1,2 @@
 - merge databases
+- add errors where needed
