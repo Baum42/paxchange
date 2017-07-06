@@ -45,7 +45,7 @@ class LIBPACSYNC_SHARED_EXPORT FilterInfo
 	Q_PROPERTY(QString name MEMBER name)
 	Q_PROPERTY(QString plugin MEMBER plugin)
 	Q_PROPERTY(Mode mode MEMBER mode)
-	Q_PROPERTY(QList<bool> pluginFilters MEMBER pluginFilters)
+	Q_PROPERTY(QVector<bool> pluginFilters MEMBER pluginFilters)
 	Q_PROPERTY(QString regex MEMBER regex)
 
 public:
@@ -63,7 +63,7 @@ public:
 	QString name;
 	QString plugin;
 	Mode mode;
-	QList<bool> pluginFilters;
+	QVector<bool> pluginFilters;
 	QString regex;
 
 	bool operator ==(const FilterInfo &other) const;
