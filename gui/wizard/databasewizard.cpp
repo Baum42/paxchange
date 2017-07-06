@@ -55,6 +55,7 @@ void DatabaseWizard::accept()
 	try {
 		auto ctr = DatabaseController::instance();
 
+		ctr->beginSaveTransaction();
 		if(field(QStringLiteral("isCreate")).toBool()) {
 			ctr->createDb(field(QStringLiteral("path")).toString(),
 						  field(QStringLiteral("packages")).toStringList());
@@ -68,7 +69,7 @@ void DatabaseWizard::accept()
 			static_cast<DbWidgetPage<FiltersWidget>*>(page(_filterPageId))->writeDatabase();
 		if(hasVisitedPage(_extraFilterPageId))
 			static_cast<DbWidgetPage<ExtraFiltersWidget>*>(page(_extraFilterPageId))->writeDatabase();
-
+		ctr->commitSave();
 		ctr->sync();
 		QWizard::accept();
 	} catch(QException &e) {

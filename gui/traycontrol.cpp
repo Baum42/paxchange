@@ -173,9 +173,11 @@ void TrayControl::editFilters()
 										  },
 										  1);
 	if(!results.isEmpty()) {
+		ctr->beginSaveTransaction();
 		ctr->setGlobalMode(results[0].value<FilterInfo::Mode>());
 		ctr->setFilters(results[1].value<QMap<QString,FilterInfo>>());
 		ctr->setExtraFilters(results[2].value<QList<ExtraFilter>>());
+		ctr->commitSave();
 	}
 
 	enableAll(true);
