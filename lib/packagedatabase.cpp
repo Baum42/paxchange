@@ -15,9 +15,10 @@ bool PackageInfo::operator ==(const PackageInfo &other) const
 	return name == other.name;
 }
 
-UnclearPackageInfo::UnclearPackageInfo(const PackageInfo &base, QString hostName) :
-	PackageInfo(base),
-	hostName(hostName)
+UnclearPackageInfo::UnclearPackageInfo(QString name, QString hostName, QString filterName) :
+	PackageInfo(name),
+	hostName(hostName),
+	filterName(filterName)
 {}
 
 bool UnclearPackageInfo::operator ==(const UnclearPackageInfo &other) const

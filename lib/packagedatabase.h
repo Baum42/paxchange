@@ -27,10 +27,13 @@ class LIBPACSYNC_SHARED_EXPORT UnclearPackageInfo : public PackageInfo
 	Q_GADGET
 
 	Q_PROPERTY(QString hostName MEMBER hostName)
+	Q_PROPERTY(QString filterName MEMBER filterName)
 
 public:
-	UnclearPackageInfo(const PackageInfo &base = {}, QString hostName = QString());
+	UnclearPackageInfo(QString name = {}, QString hostName = {}, QString filterName = {});
+
 	QString hostName;
+	QString filterName;
 
 	bool operator ==(const UnclearPackageInfo &other) const;
 };

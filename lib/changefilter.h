@@ -25,7 +25,7 @@ private:
 	QList<UnclearPackageInfo> _uPacInfoList;
 	QRegularExpression _re;
 
-	void appendExtraFilter(QStringList &list, ExtraFilter filter, bool removed);
+	void appendExtraFilter(QStringList &list, ExtraFilter filter);
 };
 
 #endif // CHANGEFILTER_H

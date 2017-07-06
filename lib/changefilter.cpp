@@ -47,18 +47,13 @@ void ChangeFilter::packagesChanged(QStringList added, QStringList removed)
 		}
 
 		//install
-		appendExtraFilter(added, filter, true);//TODO remove function if not duplicated code
+		appendExtraFilter(added, filter);//TODO remove function if not duplicated code
 	}
 
 	//filters
 	foreach(auto filter, db->filters()){
 		//install
 		for(auto it = added.begin(); it != added.end();){
-
-		}
-
-		//remove
-		for(auto it = removed.begin(); it != removed.end();){
 
 		}
 	}
@@ -69,23 +64,20 @@ void ChangeFilter::packagesChanged(QStringList added, QStringList removed)
 
 	}
 
-	//remove
-	for(auto it = removed.begin(); it != removed.end();){
-
-	}
-
 	emit updateDatabase(_pacInfoList);//TODO connect and use
 	emit packagesUnclear(_uPacInfoList);//TODO connect and use
 }
 
-void ChangeFilter::appendExtraFilter(QStringList &list, ExtraFilter filter, bool removed)
+void ChangeFilter::appendExtraFilter(QStringList &list, ExtraFilter filter)
 {
 	for(auto it = list.begin(); it != list.end();){
 		if(_re.match(*it).hasMatch()){
-			if(filter.mode == FilterInfo::Ask)
-				_uPacInfoList.append({{*it, removed}, QSysInfo::machineHostName()});
-			else if(filter.mode == FilterInfo::Add)
-				_pacInfoList.append({*it, removed});
+			if(filter.mode == FilterInfo::Ask) {
+				_uPacInfoList.append(UnclearPackageInfo(*it,
+														QSysInfo::machineHostName(),
+														tr("Extra Filter: %1").arg(filter.regex)));
+			} else if(filter.mode == FilterInfo::Add)
+				_pacInfoList.append(*it);
 
 			it = list.erase(it);
 		}else
