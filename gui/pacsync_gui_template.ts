@@ -2,25 +2,30 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>DatabaseWizard</name>
+    <name>ConsoleOperator</name>
     <message>
-        <location filename="databasewizard.cpp" line="+57"/>
-        <source>Failed to create/load database!</source>
+        <location filename="consoleoperator.cpp" line="+33"/>
+        <source>Press any key to continue...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Failed to start console for un/install operations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>DbPackagesPage</name>
+    <name>DatabaseWizard</name>
     <message>
-        <location filename="dbpackagespage.cpp" line="+13"/>
-        <source>Select the packages you want to add to the database. Those packages will be synchronized across your machines.</source>
+        <location filename="wizard/databasewizard.cpp" line="+78"/>
+        <source>Failed to create/load database!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DbPathPage</name>
     <message>
-        <location filename="dbpathpage.ui" line="+39"/>
+        <location filename="wizard/dbpathpage.ui" line="+39"/>
         <source>select a pacsync database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -35,7 +40,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dbpathpage.cpp" line="+25"/>
+        <location filename="wizard/dbpathpage.cpp" line="+25"/>
         <source>Create new Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -63,7 +68,7 @@
 <context>
     <name>DbSelectionPage</name>
     <message>
-        <location filename="dbselectionpage.ui" line="+14"/>
+        <location filename="wizard/dbselectionpage.ui" line="+14"/>
         <source>Select the database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -86,8 +91,13 @@
 <context>
     <name>EditPackagesWidget</name>
     <message>
-        <location filename="editpackageswidget.ui" line="+14"/>
+        <location filename="widgets/editpackageswidget.ui" line="+14"/>
         <source>Edit Synchronized Packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Select the packages you want to add to the database. Those packages will be synchronized across your machines.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -157,10 +167,187 @@
     </message>
 </context>
 <context>
+    <name>ExtraFiltersWidget</name>
+    <message>
+        <location filename="widgets/extrafilterswidget.ui" line="+14"/>
+        <source>Extra Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Add additional filters. Those have precedence over the normal filters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Filter Expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <source>&amp;Add Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Ctrl+Ins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>&amp;Remove Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Del</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="widgets/extrafilterswidget.cpp" line="+98"/>
+        <source>Synchronize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Don&apos;t Synchronize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Ask</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FilterNameModel</name>
+    <message>
+        <location filename="widgets/filterswidget.cpp" line="+176"/>
+        <source>New Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FiltersWidget</name>
+    <message>
+        <location filename="widgets/filterswidget.ui" line="+14"/>
+        <source>Database Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Edit the filters to be used to determine which packages should be added to the database. Everytime you install packages, they are compared against these filters to decide if they should be synced.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+86"/>
+        <source>Filter &amp;Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Extra Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Filter by regex</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>&amp;Synchronize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>&amp;Don&apos;t Synchronize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>A&amp;sk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Remove &amp;Disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Shift+Del</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>&amp;Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Ctrl+Ins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>&amp;Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Del</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="widgets/filterswidget.cpp" line="-119"/>
+        <source>%1-%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GLOBAL</name>
     <message>
-        <location filename="main.cpp" line="+51"/>
+        <location filename="main.cpp" line="+84"/>
         <source>Explicitly select the plugin to be loaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Forwards the arguments to the plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GlobalFilterWidget</name>
+    <message>
+        <location filename="widgets/globalfilterwidget.ui" line="+14"/>
+        <source>Global Filter Fallback</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Select what should happen as default action when packages are installed on your machine. This is used as fallback if no other filters apply.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Synchronize &amp;Everything</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Synchronize &amp;Nothing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Always &amp;Ask</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -187,7 +374,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="+40"/>
+        <location filename="settingsdialog.cpp" line="+39"/>
+        <source>Periodic &amp;Sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>In cases you file system does not report when the database file gets changed externally, you can enable a periodic resync of the database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Automatic Change detection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source> Minutes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Use &amp;GUI Installer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -198,6 +405,16 @@
     </message>
     <message>
         <location line="+6"/>
+        <source>Synchronize &amp;Uninstalls</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>If enabled and packages that are synchronized get uninstalled, they will be uninstalled on all machines.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Operation &amp;Order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -227,7 +444,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+35"/>
+        <source>Please restart the application to apply the changed default plugin!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Plugin changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+97"/>
         <source>:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -235,8 +462,18 @@
 <context>
     <name>TrayControl</name>
     <message>
-        <location filename="traycontrol.cpp" line="+26"/>
+        <location filename="traycontrol.cpp" line="+35"/>
+        <source>Review unclear packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Change Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Synchronize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -246,6 +483,12 @@
     </message>
     <message>
         <location line="+3"/>
+        <location line="+130"/>
+        <source>Edit Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-127"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -265,7 +508,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+62"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+90"/>
         <source>TODO</source>
         <translation type="unfinished"></translation>
     </message>
@@ -295,8 +548,56 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Packages changed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Packages unclear!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>There are %L1 packages that need to be revised for synchronization.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnclearPackagesWidget</name>
+    <message>
+        <location filename="widgets/unclearpackageswidget.ui" line="+14"/>
+        <source>Relove Unclear Packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Decide whether you want to synchronize packages or not. Those packages either had conflicts or are ment to be solved by hand.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <source>Package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Synchronize / Conflicting Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="widgets/unclearpackageswidget.cpp" line="+40"/>
+        <source>Unclear Packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Conflicting Packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>, </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

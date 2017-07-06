@@ -45,3 +45,7 @@ unix {
 }
 
 include(vendor/vendor.pri)
+
+DISTFILES += \
+    pacsync_lib_template.ts \
+    pacsync_lib_de.ts

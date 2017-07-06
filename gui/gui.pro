@@ -67,7 +67,9 @@ RESOURCES += \
 	pacsync_gui.qrc
 
 DISTFILES += \
-	application-x-pacsync-database.xml
+	application-x-pacsync-database.xml \
+    pacsync_gui_de.ts \
+    pacsync_gui_template.ts
 
 TRANSLATIONS += pacsync_gui_de.ts \
 	pacsync_gui_template.ts

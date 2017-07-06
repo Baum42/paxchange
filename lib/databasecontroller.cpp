@@ -5,6 +5,8 @@
 #include <QFileInfo>
 #include <QGlobalStatic>
 #include <QLockFile>
+#include <QTranslator>
+#include <QLibraryInfo>
 
 Q_GLOBAL_STATIC(DatabaseController, _instance)
 
@@ -20,11 +22,16 @@ DatabaseController::DatabaseController(QObject *parent) :
 	_js(new QJsonSerializer(this)),
 	_packageDatabase(),
 	_watcher(new QFileSystemWatcher(this)),
+	_reloadTimer(new QTimer(this)),
 	_watcherSkipNext(false),
 	_loaded(false),
 	_isTransaction(false)
 {
 	_settings->beginGroup(QStringLiteral("lib/dbcontroller"));
+
+	_reloadTimer->setTimerType(Qt::VeryCoarseTimer);
+	connect(_reloadTimer, &QTimer::timeout,
+			this, &DatabaseController::reloadDb);
 
 	connect(this, &DatabaseController::operationsRequired,
 			_opQueue, &OperationQueue::setOperations);
@@ -37,15 +44,31 @@ DatabaseController::DatabaseController(QObject *parent) :
 	try {
 		if(_settings->contains(QStringLiteral("path"))) {
 			loadDb(_settings->value(QStringLiteral("path")).toString());
-			QMetaObject::invokeMethod(this, "sync", Qt::QueuedConnection);
+			sync();
 		}
 	} catch(QException &e) {
 		qCritical() << e.what();
 		cleanUp();
+		qApp->exit(EXIT_FAILURE);
+		return;
 	}
 
 	connect(_watcher, &QFileSystemWatcher::fileChanged,
 			this, &DatabaseController::fileChanged);
+}
+
+void DatabaseController::loadTranslation(const QString &name)
+{
+	auto translator = new QTranslator(qApp);
+	if(translator->load(QLocale(),
+						name,
+						QStringLiteral("_"),
+						QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+		qApp->installTranslator(translator);
+	else {
+		qWarning() << "Failed to load translations for" << name;
+		delete translator;
+	}
 }
 
 DatabaseController *DatabaseController::instance()
@@ -120,6 +143,7 @@ void DatabaseController::loadDb(const QString &path)
 void DatabaseController::reloadDb()
 {
 	readFile();
+	sync();
 }
 
 bool DatabaseController::isLoaded() const
@@ -207,22 +231,7 @@ void DatabaseController::clearPackages(const QList<UnclearPackageInfo> &clearedP
 
 void DatabaseController::sync()
 {
-	QStringList pI, pUI;
-	auto installedP = PluginLoader::plugin()->listAllPackages();
-	auto targetP = _packageDatabase.packages;
-
-	for(auto it = targetP.constBegin(); it != targetP.constEnd(); it++){
-		auto contains = installedP.contains(it->name);
-		if(!contains && !it->removed)
-			pI.append(it->name);
-
-		if(it->removed && contains)
-			pUI.append(it->name);
-	}
-
-	if(!(pI.isEmpty() && pUI.isEmpty()))
-		emit operationsRequired(pI, pUI);
-	emit unclearPackagesChanged(_packageDatabase.unclearPackages.size());
+	QMetaObject::invokeMethod(this, "syncImpl", Qt::QueuedConnection);
 }
 
 void DatabaseController::fileChanged()
@@ -233,6 +242,7 @@ void DatabaseController::fileChanged()
 			sync();
 		} catch(QException &e){
 			qWarning() << "Failed to reload changed file:" << e.what();
+			emit guiError(tr("Failed to reload changed file"));
 		}
 	}
 	_watcherSkipNext = false;
@@ -247,6 +257,32 @@ void DatabaseController::updatePackages(const QList<PackageInfo> &addedPkg, cons
 	foreach (auto unclear, unclearPkg)
 		_packageDatabase.unclearPackages[unclear.name] = unclear;
 	writeCurrentFile();
+	emit unclearPackagesChanged(_packageDatabase.unclearPackages.size());
+}
+
+void DatabaseController::syncImpl()
+{
+	qDebug() << Q_FUNC_INFO;
+	QStringList pI, pUI;
+	auto installedP = PluginLoader::plugin()->listAllPackages();
+	auto targetP = _packageDatabase.packages;
+
+	for(auto it = targetP.constBegin(); it != targetP.constEnd(); it++){
+		auto contains = installedP.contains(it->name);
+		if(!contains && !it->removed)
+			pI.append(it->name);
+
+		if(it->removed && contains)
+			pUI.append(it->name);
+	}
+
+	auto interval = readSettings(QStringLiteral("lib/database/resync"), 0).toInt();
+	if(interval == 0)
+		_reloadTimer->stop();
+	else
+		_reloadTimer->start(interval * 60 * 1000);
+
+	emit operationsRequired(pI, pUI);
 	emit unclearPackagesChanged(_packageDatabase.unclearPackages.size());
 }
 
@@ -288,8 +324,14 @@ void DatabaseController::writeFile(PackageDatabase p, const QString &path)
 
 void DatabaseController::writeCurrentFile()
 {
-	if(!_isTransaction)
-		writeFile(_packageDatabase, _dbPath);
+	if(!_isTransaction) {
+		try {
+			writeFile(_packageDatabase, _dbPath);
+		} catch(QException &e) {
+			qWarning() << "Failed to save database:" << e.what();
+			emit guiError(tr("Failed to save file!"), true);
+		}
+	}
 }
 
 QString DatabaseController::lockPath(const QString &path)
@@ -309,4 +351,7 @@ static void setupDatabaseController()
 	QJsonSerializer::registerAllConverters<QList<UnclearPackageInfo>>();
 	QJsonSerializer::registerAllConverters<FilterInfo>();
 	QJsonSerializer::registerAllConverters<ExtraFilter>();
+
+	//load translations
+	DatabaseController::loadTranslation(QStringLiteral("pacsync_lib"));
 }

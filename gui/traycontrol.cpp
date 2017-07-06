@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <dialogmaster.h>
 #include <databasecontroller.h>
+#include <QTimer>
 #include "contentdialog.h"
 #include "wizard/databasewizard.h"
 #include "widgets/editpackageswidget.h"
@@ -22,6 +23,7 @@ TrayControl::TrayControl(QObject *parent) :
 	_dialogAction(nullptr)
 {
 	qRegisterMetaType<QSystemTrayIcon::ActivationReason>("QSystemTrayIcon::ActivationReason");
+	auto db = DatabaseController::instance();
 
 	_operateAction = _trayMenu->addAction(QIcon(), QString(), this, &TrayControl::startOperation);
 	auto font = _operateAction->font();
@@ -39,6 +41,9 @@ TrayControl::TrayControl(QObject *parent) :
 	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("package-new")),
 						 tr("Change Database"),
 						 this, &TrayControl::changeDatabase);
+	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("view-refresh")),
+						 tr("Synchronize"),
+						 db, &DatabaseController::sync);
 	_trayMenu->addSeparator();
 	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("package-upgrade")),
 						 tr("Edit Packages"),
@@ -61,12 +66,13 @@ TrayControl::TrayControl(QObject *parent) :
 						 tr("Quit"),
 						 qApp, &QApplication::quit);
 
-	auto db = DatabaseController::instance();
 	connect(db->operationQueue(), &OperationQueue::operationsChanged,
 			this, &TrayControl::operationsChanged);
-
 	connect(db, &DatabaseController::unclearPackagesChanged,
 			this, &TrayControl::showUnclear);
+	connect(db, &DatabaseController::guiError,
+			this, &TrayControl::showMessage,
+			Qt::QueuedConnection);
 
 	connect(_tray, &QSystemTrayIcon::activated,
 			this, &TrayControl::trayAction,
@@ -114,6 +120,17 @@ void TrayControl::showUnclearDialog()
 	enableAll(true);
 }
 
+void TrayControl::showMessage(const QString &text, bool critical)
+{
+	QTimer::singleShot(500, this, [=](){
+		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/error.ico")));
+		_tray->show();
+		_tray->showMessage(critical ? tr("Error") : tr("Warning"),
+						   text,
+						   critical ? QSystemTrayIcon::Critical : QSystemTrayIcon::Warning);
+	});
+}
+
 void TrayControl::trayMessageClicked()
 {
 	trayAction(QSystemTrayIcon::Trigger);
@@ -149,8 +166,10 @@ void TrayControl::editPackages()
 	auto packages = ContentDialog::execute<EditPackagesWidget, QStringList>(ctr->listPackages(),
 																			nullptr,
 																			&ok);
-	if(ok)
+	if(ok) {
 		ctr->updateDb(packages);
+		ctr->sync();
+	}
 
 	enableAll(true);
 }
@@ -196,7 +215,7 @@ void TrayControl::about()
 	if(++counter == 0b00101010)
 		QApplication::setWindowIcon(QIcon(QStringLiteral(":/icons/28106788.png")));
 	DialogMaster::about(nullptr,
-						tr("TODO"),
+						tr("A tool to synchronized installed packages across multiple machines"),
 						true,
 						QStringLiteral("https://github.com/Baum42/pacsync"));
 }

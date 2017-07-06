@@ -18,7 +18,9 @@ HEADERS += \
 SOURCES += \
 	pacmanplugin.cpp
 
-DISTFILES += pacman.json
+DISTFILES += pacman.json \
+    pacsync_plugin_pacman_de.ts \
+    pacsync_plugin_pacman_template.ts
 
 TRANSLATIONS += pacsync_plugin_pacman_de.ts \
 	pacsync_plugin_pacman_template.ts

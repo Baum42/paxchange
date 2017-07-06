@@ -2,6 +2,7 @@
 
 #include <QCoreApplication>
 #include <QTemporaryFile>
+#include <databasecontroller.h>
 
 
 PacDummyPlugin::PacDummyPlugin(QObject *parent) :
@@ -22,7 +23,13 @@ void PacDummyPlugin::initialize()
 		_file->setPermissions(QFile::ReadOwner | QFile::WriteOwner);
 
 	_file->open(QIODevice::ReadOnly);
-	_pacList = _js->deserializeFrom<QList<PacState>>(_file);
+	try {
+		_pacList = _js->deserializeFrom<QList<PacState>>(_file);
+	} catch (QException &e) {
+		qCritical() << e.what();
+		DatabaseController::instance()->guiError(tr("Init failed"), true);
+	}
+
 	_file->close();
 }
 

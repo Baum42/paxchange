@@ -22,6 +22,8 @@ private slots:
 	void startOperation();
 	void showUnclearDialog();
 
+	void showMessage(const QString &text, bool critical);
+
 	void trayMessageClicked();
 	void trayAction(QSystemTrayIcon::ActivationReason reason);
 

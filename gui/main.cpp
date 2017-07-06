@@ -8,6 +8,8 @@
 #include <qsingleinstance.h>
 #include <QFileInfo>
 #include <QFile>
+#include <QTranslator>
+#include <QLibraryInfo>
 #include "traycontrol.h"
 #include "pluginloader.h"
 #include "wizard/databasewizard.h"
@@ -28,6 +30,8 @@ int main(int argc, char *argv[])
 	QApplication::setWindowIcon(QIcon(QStringLiteral(":/icons/main.svg")));
 	QApplication::setQuitOnLastWindowClosed(false);
 
+	//load translations
+	DatabaseController::loadTranslation(QStringLiteral("pacsync_gui"));
 	QSingleInstance instance;
 
 	QCommandLineParser parser;

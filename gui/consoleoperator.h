@@ -12,6 +12,7 @@ public:
 
 private slots:
 	void startCmd(QString cmd);
+	void errorOccurred();
 
 private:
 	QProcess *_process;

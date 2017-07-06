@@ -55,14 +55,15 @@ void DatabaseWizard::accept()
 	try {
 		auto ctr = DatabaseController::instance();
 
-		ctr->beginSaveTransaction();
 		if(field(QStringLiteral("isCreate")).toBool()) {
 			ctr->createDb(field(QStringLiteral("path")).toString(),
 						  field(QStringLiteral("packages")).toStringList());
 		} else if(field(QStringLiteral("isLoad")).toBool()) {
+			ctr->beginSaveTransaction();
 			if(hasVisitedPage(_packagePageId))
 				static_cast<DbWidgetPage<EditPackagesWidget>*>(page(_packagePageId))->writeDatabase();
 		}
+		ctr->beginSaveTransaction();
 		if(hasVisitedPage(_globalModePageId))
 			static_cast<DbWidgetPage<GlobalFilterWidget>*>(page(_globalModePageId))->writeDatabase();
 		if(hasVisitedPage(_filterPageId))

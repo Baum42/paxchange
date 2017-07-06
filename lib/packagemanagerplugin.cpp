@@ -35,13 +35,12 @@ void PackageManagerPlugin::forwardedArguments(QStringList args)
 	Q_UNUSED(args);
 }
 
-PackageManagerPlugin::SettingsInfo::SettingsInfo(QString displayName, QString description, QString settingsKeys, int type, QVariant defaultValue, QByteArray widgetClassName) :
+PackageManagerPlugin::SettingsInfo::SettingsInfo(QString displayName, QString description, QString settingsKeys, int type, QVariant defaultValue, QByteArray widgetClassName, QVariantMap widgetProperties) :
 	displayName(displayName),
 	description(description),
 	settingsKeys(settingsKeys),
 	type(type),
 	defaultValue(defaultValue),
-	widgetClassName(widgetClassName)
-{
-
-}
+	widgetClassName(widgetClassName),
+	widgetProperties(widgetProperties)
+{}
