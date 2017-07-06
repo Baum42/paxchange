@@ -33,7 +33,8 @@ HEADERS += \
 	wizard/dbpathpage.h \
 	wizard/dbwidgetpage.h \
     widgets/filterswidget.h \
-    widgets/extrafilterswidget.h
+    widgets/extrafilterswidget.h \
+    widgets/unclearpackageswidget.h
 
 SOURCES += \
 		main.cpp \
@@ -49,7 +50,8 @@ SOURCES += \
 	wizard/dbpathpage.cpp \
 	wizard/dbwidgetpage.cpp \
     widgets/filterswidget.cpp \
-    widgets/extrafilterswidget.cpp
+    widgets/extrafilterswidget.cpp \
+    widgets/unclearpackageswidget.cpp
 
 FORMS += \
 	settingsdialog.ui \
@@ -58,7 +60,8 @@ FORMS += \
 	wizard/dbselectionpage.ui \
 	wizard/dbpathpage.ui \
     widgets/filterswidget.ui \
-    widgets/extrafilterswidget.ui
+    widgets/extrafilterswidget.ui \
+    widgets/unclearpackageswidget.ui
 
 RESOURCES += \
 	pacsync_gui.qrc
