@@ -125,7 +125,7 @@ void TrayControl::trayAction(QSystemTrayIcon::ActivationReason reason)
 	case QSystemTrayIcon::Trigger:
 		if(_unclearAction->isVisible())
 			_unclearAction->trigger();
-		if(_operateAction->isVisible())
+		else if(_operateAction->isVisible())
 			_operateAction->trigger();
 		break;
 	default:
@@ -202,7 +202,7 @@ void TrayControl::about()
 void TrayControl::operationsChanged(OperationQueue::OpertionsFlags operations)
 {
 	if(operations == OperationQueue::None) {
-		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")));
+		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")));//TODO NO CLEAR
 		_operateAction->setVisible(false);
 	} else {
 		auto op = DatabaseController::instance()->operationQueue();
@@ -230,7 +230,7 @@ void TrayControl::operationsChanged(OperationQueue::OpertionsFlags operations)
 void TrayControl::showUnclear(int count)
 {
 	if(count == 0) {
-		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")));
+		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")));//TODO NO CLEAR
 		_unclearAction->setVisible(false);
 	} else {
 		_unclearAction->setVisible(true);
