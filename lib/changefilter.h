@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QRegularExpression>
+#include <QMap>
 
 class ChangeFilter : public QObject
 {
@@ -21,11 +22,12 @@ signals:
 	void packagesUnclear(const QList<UnclearPackageInfo> &infos);
 
 private:
-	QList<PackageInfo> _pacInfoList;
-	QList<UnclearPackageInfo> _uPacInfoList;
+	QMap<QString, PackageInfo> _pacInfoList;
+	QMap<QString, UnclearPackageInfo> _uPacInfoList;
 	QRegularExpression _re;
 
-	void appendExtraFilter(QStringList &list, ExtraFilter filter);
+	bool setRegexPattern(QString pattern);
+	void addPacInfo(ExtraFilter extraFilter, bool alreadyAdded);
 };
 
 #endif // CHANGEFILTER_H

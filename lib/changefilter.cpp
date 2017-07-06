@@ -17,70 +17,85 @@ void ChangeFilter::packagesChanged(QStringList added, QStringList removed)
 	auto pacList = db->listPackages();
 
 	//already in db?
+	foreach (auto pac, removed) {
+		auto info = db->getInfo(pac);
+		if(info.isValid() && !info.removed){
+			info.removed = true;
+			_pacInfoList[pac] = info;
+		}
+	}
 	for(auto it = added.begin(); it != added.end();){
 		auto info = db->getInfo(*it);
 		if(info.isValid()){
 			if(info.removed){
 				info.removed = false;
-				_pacInfoList.append(info);
+				_pacInfoList[*it] = info;
 			}
 			it = added.erase(it);
 		} else
 			it++;
 	}
-	foreach (auto pac, removed) {
-		auto info = db->getInfo(pac);
-		if(info.isValid() && !info.removed){
-			info.removed = true;
-			_pacInfoList.append(info);
-		}
-	}
 
 	//extra filters
 	foreach (auto filter, db->extraFilters()) {
-		_re.setPattern(filter.regex);
-
-		if(!_re.isValid()){
-			qWarning() << tr("invalid regular expression") << filter.regex
-					   << tr("with error:") << _re.errorString();
+		if(!setRegexPattern(filter.regex))
 			continue;
-		}
 
-		//install
-		appendExtraFilter(added, filter);//TODO remove function if not duplicated code
+		for(auto it = added.begin(); it != added.end();){
+			if(_re.match(*it).hasMatch()){
+				if(filter.mode == FilterInfo::Ask || _pacInfoList.contains(*it)) {
+					_uPacInfoList[*it] = UnclearPackageInfo(*it,
+															QSysInfo::machineHostName(),
+															tr("Extra Filter: %1").arg(filter.regex));
+				} else if(filter.mode == FilterInfo::Add)
+					_pacInfoList[*it] = *it;
+
+				it = added.erase(it);
+			}else
+				it++;
+		}
 	}
 
 	//filters
+	erasedPackages.clear();//TODO use
 	foreach(auto filter, db->filters()){
-		//install
-		for(auto it = added.begin(); it != added.end();){
+		if(filter.plugin != PluginLoader::currentPlugin())
+			continue;
 
+		if(!filter.regex.isEmpty()){
+			if(!setRegexPattern(filter.regex))
+				continue;
+		}
+
+
+		auto pacListFiltered = PluginLoader::plugin()->listPackages(filter.pluginFilters);
+		for(auto it = added.begin(); it != added.end();){
+			if((filter.regex.isEmpty() || _re.match(*it).hasMatch()) && pacListFiltered.contains(*it)){
+
+				erasedPackages.append(*it);
+				it = added.erase(it);
+			} else
+				it++;
 		}
 	}
 
 	//global
-	//install
 	for(auto it = added.begin(); it != added.end();){
 
 	}
 
-	emit updateDatabase(_pacInfoList);//TODO connect and use
-	emit packagesUnclear(_uPacInfoList);//TODO connect and use
+	emit updateDatabase(_pacInfoList.values());//TODO connect and use
+	emit packagesUnclear(_uPacInfoList.values());//TODO connect and use
 }
 
-void ChangeFilter::appendExtraFilter(QStringList &list, ExtraFilter filter)
+bool ChangeFilter::setRegexPattern(QString pattern)
 {
-	for(auto it = list.begin(); it != list.end();){
-		if(_re.match(*it).hasMatch()){
-			if(filter.mode == FilterInfo::Ask) {
-				_uPacInfoList.append(UnclearPackageInfo(*it,
-														QSysInfo::machineHostName(),
-														tr("Extra Filter: %1").arg(filter.regex)));
-			} else if(filter.mode == FilterInfo::Add)
-				_pacInfoList.append(*it);
+	_re.setPattern(pattern);
 
-			it = list.erase(it);
-		}else
-			it++;
+	if(!_re.isValid()){
+		qWarning() << tr("invalid regular expression") << pattern
+				   << tr("with error:") << _re.errorString();
+		return false;
 	}
+	return true;
 }
