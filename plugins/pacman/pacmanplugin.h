@@ -19,6 +19,8 @@ public:
 	QString installationCmd(const QStringList &packages) override;
 	QString uninstallationCmd(const QStringList &packages) override;
 	QList<SettingsInfo> listSettings() const override;
+
+public slots:
 	void forwardedArguments(QStringList args) override;
 
 private:
