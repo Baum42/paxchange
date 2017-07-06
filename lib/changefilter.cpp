@@ -3,11 +3,16 @@
 
 
 ChangeFilter::ChangeFilter(QObject *parent) :
-	QObject(parent)
+	QObject(parent),
+	_pacInfoList(),
+	_uPacInfoList()
 {}
 
 void ChangeFilter::packagesChanged(const QStringList &added, const QStringList &removed)
 {
+	_pacInfoList.clear();
+	_uPacInfoList.clear();
+
 	qDebug() << "packagesChanged add:" << added << "rem:" << removed;
 	//TODO implement packagesChanged
 
