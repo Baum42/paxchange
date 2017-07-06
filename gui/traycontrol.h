@@ -20,6 +20,7 @@ public:
 
 private slots:
 	void startOperation();
+	void showUnclearDialog();
 
 	void trayMessageClicked();
 	void trayAction(QSystemTrayIcon::ActivationReason reason);
@@ -32,13 +33,14 @@ private slots:
 	void about();
 
 	void operationsChanged(OperationQueue::OpertionsFlags operations);
-	void showUnclear(const QList<UnclearPackageInfo> &unclearPkg);
+	void showUnclear(int count);
 
 private:
 	QSystemTrayIcon *_tray;
 	QMenu *_trayMenu;
 
 	QAction *_operateAction;
+	QAction *_unclearAction;
 	QAction *_dialogAction;
 
 	void enableAll(bool enable);

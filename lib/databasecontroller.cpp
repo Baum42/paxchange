@@ -62,6 +62,11 @@ QStringList DatabaseController::listPackages() const
 	return _packageDatabase.packages.keys();
 }
 
+QList<UnclearPackageInfo> DatabaseController::listUnclearPackages() const
+{
+	return _packageDatabase.unclearPackages.values();
+}
+
 PackageInfo DatabaseController::getInfo(const QString &pkgName) const
 {
 	return _packageDatabase.packages.value(pkgName);
@@ -177,6 +182,15 @@ void DatabaseController::updateDb(const QStringList &packages)
 	writeCurrentFile();
 }
 
+void DatabaseController::clearPackages(const QList<UnclearPackageInfo> &clearedPackages)
+{
+	foreach (auto package, clearedPackages)
+		_packageDatabase.packages[package.name] = package;
+	_packageDatabase.unclearPackages.clear();
+	writeCurrentFile();
+	sync();
+}
+
 void DatabaseController::sync()
 {
 	QStringList pI, pUI;
@@ -194,8 +208,7 @@ void DatabaseController::sync()
 
 	if(!(pI.isEmpty() && pUI.isEmpty()))
 		emit operationsRequired(pI, pUI);
-	if(!_packageDatabase.unclearPackages.isEmpty())
-		emit unclearPackages(_packageDatabase.unclearPackages.values());
+	emit unclearPackagesChanged(_packageDatabase.unclearPackages.size());
 }
 
 void DatabaseController::fileChanged()
@@ -220,9 +233,7 @@ void DatabaseController::updatePackages(const QList<PackageInfo> &addedPkg, cons
 	foreach (auto unclear, unclearPkg)
 		_packageDatabase.unclearPackages[unclear.name] = unclear;
 	writeCurrentFile();
-
-	if(!_packageDatabase.unclearPackages.isEmpty())
-		emit unclearPackages(_packageDatabase.unclearPackages.values());
+	emit unclearPackagesChanged(_packageDatabase.unclearPackages.size());
 }
 
 void DatabaseController::cleanUp()

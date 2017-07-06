@@ -32,6 +32,7 @@ public:
 	OperationQueue *operationQueue() const;
 
 	QStringList listPackages() const;
+	QList<UnclearPackageInfo> listUnclearPackages() const;
 	PackageInfo getInfo(const QString &pkgName) const;
 
 	FilterInfo::Mode globalMode() const;
@@ -54,11 +55,13 @@ public slots:
 	void setExtraFilters(QList<ExtraFilter> extraFilters);
 
 	void updateDb(const QStringList &packages);
+	void clearPackages(const QList<UnclearPackageInfo> &clearedPackages);
+
 	void sync();
 
 signals:
 	void operationsRequired(const QStringList &packagesInstall, const QStringList &packagesUninstall);
-	void unclearPackages(const QList<UnclearPackageInfo> &unclearPkg);
+	void unclearPackagesChanged(int count);
 
 private slots:
 	void fileChanged();

@@ -11,19 +11,29 @@
 #include "widgets/filterswidget.h"
 #include "widgets/globalfilterwidget.h"
 #include "widgets/extrafilterswidget.h"
+#include "widgets/unclearpackageswidget.h"
 
 TrayControl::TrayControl(QObject *parent) :
 	QObject(parent),
 	_tray(new QSystemTrayIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")), this)),
 	_trayMenu(new QMenu()),
 	_operateAction(nullptr),
+	_unclearAction(nullptr),
 	_dialogAction(nullptr)
 {
+	qRegisterMetaType<QSystemTrayIcon::ActivationReason>("QSystemTrayIcon::ActivationReason");
+
 	_operateAction = _trayMenu->addAction(QIcon(), QString(), this, &TrayControl::startOperation);
 	auto font = _operateAction->font();
 	font.setBold(true);
 	_operateAction->setFont(font);
 	_operateAction->setVisible(false);
+
+	_unclearAction = _trayMenu->addAction(QIcon::fromTheme(QStringLiteral("package-available-locked")),
+										  tr("Review unclear packages"),
+										  this, &TrayControl::showUnclearDialog);
+	_unclearAction->setFont(font);
+	_unclearAction->setVisible(false);
 
 	_trayMenu->addSeparator();
 	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("package-new")),
@@ -55,10 +65,15 @@ TrayControl::TrayControl(QObject *parent) :
 	connect(db->operationQueue(), &OperationQueue::operationsChanged,
 			this, &TrayControl::operationsChanged);
 
+	connect(db, &DatabaseController::unclearPackagesChanged,
+			this, &TrayControl::showUnclear);
+
 	connect(_tray, &QSystemTrayIcon::activated,
-			this, &TrayControl::trayAction);
+			this, &TrayControl::trayAction,
+			Qt::QueuedConnection);
 	connect(_tray, &QSystemTrayIcon::messageClicked,
-			this, &TrayControl::trayMessageClicked);
+			this, &TrayControl::trayMessageClicked,
+			Qt::QueuedConnection);
 
 	_tray->setContextMenu(_trayMenu);
 	_tray->setToolTip(QApplication::applicationDisplayName());
@@ -72,12 +87,6 @@ TrayControl::~TrayControl()
 void TrayControl::show()
 {
 	_tray->show();
-	showUnclear({
-					{
-						"Test",
-						"Baum"
-					}
-				});
 }
 
 void TrayControl::startOperation()
@@ -85,6 +94,24 @@ void TrayControl::startOperation()
 	_operateAction->setVisible(false);
 	_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")));
 	DatabaseController::instance()->operationQueue()->startOperation();
+}
+
+void TrayControl::showUnclearDialog()
+{
+	_unclearAction->setVisible(false);
+	_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")));
+
+	enableAll(false);
+
+	auto ctr = DatabaseController::instance();
+	auto ok = false;
+	auto packages = ContentDialog::execute<UnclearPackagesWidget, QList<UnclearPackageInfo>>(ctr->listUnclearPackages(),
+																							 nullptr,
+																							 &ok);
+	if(ok)
+		ctr->clearPackages(packages);
+
+	enableAll(true);
 }
 
 void TrayControl::trayMessageClicked()
@@ -96,6 +123,8 @@ void TrayControl::trayAction(QSystemTrayIcon::ActivationReason reason)
 {
 	switch (reason) {
 	case QSystemTrayIcon::Trigger:
+		if(_unclearAction->isVisible())
+			_unclearAction->trigger();
 		if(_operateAction->isVisible())
 			_operateAction->trigger();
 		break;
@@ -198,22 +227,18 @@ void TrayControl::operationsChanged(OperationQueue::OpertionsFlags operations)
 	}
 }
 
-void TrayControl::showUnclear(const QList<UnclearPackageInfo> &unclearPkg)
+void TrayControl::showUnclear(int count)
 {
-	if(unclearPkg.isEmpty()) {
+	if(count == 0) {
 		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")));
-		_operateAction->setVisible(false);
+		_unclearAction->setVisible(false);
 	} else {
-		auto message = tr("There are %L1 packages that need to be revised for synchronization.")
-					   .arg(unclearPkg.size());
-		_operateAction->setIcon(QIcon::fromTheme(QStringLiteral("package-available-locked")));
-		_operateAction->setText(tr("Review unclear packages"));
-		_operateAction->setVisible(true);
-
+		_unclearAction->setVisible(true);
 		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/question.ico")));
 		_tray->show();
 		_tray->showMessage(tr("Packages unclear!"),
-						   message,
+						   tr("There are %L1 packages that need to be revised for synchronization.")
+						   .arg(count),
 						   QSystemTrayIcon::Information);
 	}
 }
