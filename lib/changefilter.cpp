@@ -13,9 +13,6 @@ void ChangeFilter::packagesChanged(const QStringList &added, const QStringList &
 	_pacInfoList.clear();
 	_uPacInfoList.clear();
 
-	qDebug() << "packagesChanged add:" << added << "rem:" << removed;
-	//TODO implement packagesChanged
-
 	auto db = DatabaseController::instance();
 
 	//check if already in db

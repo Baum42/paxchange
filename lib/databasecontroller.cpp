@@ -42,6 +42,8 @@ DatabaseController::DatabaseController(QObject *parent) :
 	} catch(QException &e) {
 		qCritical() << e.what();
 		cleanUp();
+		qApp->exit(EXIT_FAILURE);
+		return;
 	}
 
 	connect(_watcher, &QFileSystemWatcher::fileChanged,
@@ -233,6 +235,7 @@ void DatabaseController::fileChanged()
 			sync();
 		} catch(QException &e){
 			qWarning() << "Failed to reload changed file:" << e.what();
+			emit guiError(tr("Failed to reload changed file"));
 		}
 	}
 	_watcherSkipNext = false;
@@ -288,8 +291,14 @@ void DatabaseController::writeFile(PackageDatabase p, const QString &path)
 
 void DatabaseController::writeCurrentFile()
 {
-	if(!_isTransaction)
-		writeFile(_packageDatabase, _dbPath);
+	if(!_isTransaction) {
+		try {
+			writeFile(_packageDatabase, _dbPath);
+		} catch(QException &e) {
+			qWarning() << "Failed to save database:" << e.what();
+			emit guiError(tr("Failed to save file!"), true);
+		}
+	}
 }
 
 QString DatabaseController::lockPath(const QString &path)

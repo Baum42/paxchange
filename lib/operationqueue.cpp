@@ -66,9 +66,14 @@ void OperationQueue::startOperation()
 
 void OperationQueue::cmdDone()
 {
-	_operating = false;
-	_controller->reloadDb();
-	_controller->sync();
+	try {
+		_operating = false;
+		_controller->reloadDb();
+		_controller->sync();
+	} catch(QException &e) {
+		qWarning() << "Failed to reload changed file:" << e.what();
+		emit guiError(tr("Failed to reload database!"), true);
+	}
 }
 
 OperationQueue::OpertionsFlags OperationQueue::operations() const

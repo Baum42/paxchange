@@ -65,6 +65,8 @@ signals:
 	void operationsRequired(const QStringList &packagesInstall, const QStringList &packagesUninstall);
 	void unclearPackagesChanged(int count);
 
+	void guiError(const QString &error, bool critical = false);
+
 private slots:
 	void fileChanged();
 	void updatePackages(const QList<PackageInfo> &addedPkg, const QList<UnclearPackageInfo> &unclearPkg);
