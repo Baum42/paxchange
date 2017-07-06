@@ -30,7 +30,6 @@ public:
 	static DatabaseController *instance();
 
 	OperationQueue *operationQueue() const;
-	ChangeFilter *changeFilter() const;
 
 	QStringList listPackages() const;
 	PackageInfo getInfo(const QString &pkgName) const;
@@ -59,9 +58,11 @@ public slots:
 
 signals:
 	void operationsRequired(const QStringList &packagesInstall, const QStringList &packagesUninstall);
+	void unclearPackages(const QList<UnclearPackageInfo> &unclearPkg);
 
 private slots:
 	void fileChanged();
+	void updatePackages(const QList<PackageInfo> &addedPkg, const QList<UnclearPackageInfo> &unclearPkg);
 
 private:
 	QSettings *_settings;

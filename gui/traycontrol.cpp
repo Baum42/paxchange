@@ -72,6 +72,12 @@ TrayControl::~TrayControl()
 void TrayControl::show()
 {
 	_tray->show();
+	showUnclear({
+					{
+						"Test",
+						"Baum"
+					}
+				});
 }
 
 void TrayControl::startOperation()
@@ -187,6 +193,26 @@ void TrayControl::operationsChanged(OperationQueue::OpertionsFlags operations)
 		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/install.ico")));
 		_tray->show();
 		_tray->showMessage(tr("Packages changed!"),
+						   message,
+						   QSystemTrayIcon::Information);
+	}
+}
+
+void TrayControl::showUnclear(const QList<UnclearPackageInfo> &unclearPkg)
+{
+	if(unclearPkg.isEmpty()) {
+		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/main.ico")));
+		_operateAction->setVisible(false);
+	} else {
+		auto message = tr("There are %L1 packages that need to be revised for synchronization.")
+					   .arg(unclearPkg.size());
+		_operateAction->setIcon(QIcon::fromTheme(QStringLiteral("package-available-locked")));
+		_operateAction->setText(tr("Review unclear packages"));
+		_operateAction->setVisible(true);
+
+		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/question.ico")));
+		_tray->show();
+		_tray->showMessage(tr("Packages unclear!"),
 						   message,
 						   QSystemTrayIcon::Information);
 	}

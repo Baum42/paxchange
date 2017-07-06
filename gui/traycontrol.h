@@ -4,6 +4,7 @@
 #include <QMenu>
 #include <QObject>
 #include <QSystemTrayIcon>
+#include <packagedatabase.h>
 
 #include <operationqueue.h>
 
@@ -31,6 +32,7 @@ private slots:
 	void about();
 
 	void operationsChanged(OperationQueue::OpertionsFlags operations);
+	void showUnclear(const QList<UnclearPackageInfo> &unclearPkg);
 
 private:
 	QSystemTrayIcon *_tray;

@@ -64,8 +64,7 @@ void ChangeFilter::packagesChanged(QStringList added, QStringList removed)
 
 	}
 
-	emit updateDatabase(_pacInfoList);//TODO connect and use
-	emit packagesUnclear(_uPacInfoList);//TODO connect and use
+	emit updateDatabase(_pacInfoList, _uPacInfoList);
 }
 
 void ChangeFilter::appendExtraFilter(QStringList &list, ExtraFilter filter)
