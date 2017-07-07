@@ -45,13 +45,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
-        <location line="+10"/>
-        <source>Invalid plugin parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-33"/>
+        <location line="-10"/>
         <source>&amp;Install parameters</source>
         <oldsource>Extra &amp;install parameters</oldsource>
         <translation type="unfinished"></translation>

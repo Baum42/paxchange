@@ -119,7 +119,7 @@ QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings() const
 void PacmanPlugin::forwardedArguments(QStringList args)
 {
 	if(args.size() < 2){
-		qWarning() << tr("Invalid plugin parameters");
+		qWarning() << "Invalid plugin parameters";
 		return;
 	}
 
@@ -129,7 +129,7 @@ void PacmanPlugin::forwardedArguments(QStringList args)
 	else if(first == QStringLiteral("r"))
 		emit packagesChanged({}, args);
 	else
-		qWarning() << tr("Invalid plugin parameters");
+		qWarning() << "Invalid plugin parameters";
 }
 
 QString PacmanPlugin::createCmd(QString key, QStringList packages)
