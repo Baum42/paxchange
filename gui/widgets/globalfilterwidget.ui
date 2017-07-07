@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Global Filter Fallback</string>
+   <string>Default Install reaction</string>
   </property>
   <property name="whatsThis">
    <string>Select what should happen as default action when packages are installed on your machine. This is used as fallback if no other filters apply.</string>

@@ -25,12 +25,7 @@
 <context>
     <name>DbMergerDialog</name>
     <message>
-        <location filename="dbmergerdialog.ui" line="+14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location filename="dbmergerdialog.ui" line="+22"/>
         <source>Merge with:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -50,7 +45,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="-27"/>
+        <location line="+37"/>
         <source>Merge Databases</source>
         <translation type="unfinished"></translation>
     </message>
@@ -76,7 +72,8 @@
     </message>
     <message>
         <location line="+3"/>
-        <source>Failed to merger the specified database with the current one! The file does either not exist or is corrupted.</source>
+        <source>Failed to merge the specified database with the current one! The file does either not exist or is corrupted.</source>
+        <oldsource>Failed to merger the specified database with the current one! The file does either not exist or is corrupted.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -299,7 +296,8 @@
     <name>FiltersWidget</name>
     <message>
         <location filename="widgets/filterswidget.ui" line="+14"/>
-        <source>Database Filters</source>
+        <source>Package Filters</source>
+        <oldsource>Database Filters</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -390,7 +388,7 @@
     <name>GlobalFilterWidget</name>
     <message>
         <location filename="widgets/globalfilterwidget.ui" line="+14"/>
-        <source>Global Filter Fallback</source>
+        <source>Default Install reaction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -646,7 +644,8 @@
     <name>UnclearPackagesWidget</name>
     <message>
         <location filename="widgets/unclearpackageswidget.ui" line="+14"/>
-        <source>Relove Unclear Packages</source>
+        <source>Resolve Unclear Packages</source>
+        <oldsource>Relove Unclear Packages</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>

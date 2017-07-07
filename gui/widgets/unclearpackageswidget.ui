@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Relove Unclear Packages</string>
+   <string>Resolve Unclear Packages</string>
   </property>
   <property name="whatsThis">
    <string>Decide whether you want to synchronize packages or not. Those packages either had conflicts or are ment to be solved by hand.</string>

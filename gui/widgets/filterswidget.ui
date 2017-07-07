@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Database Filters</string>
+   <string>Package Filters</string>
   </property>
   <property name="whatsThis">
    <string>Edit the filters to be used to determine which packages should be added to the database. Everytime you install packages, they are compared against these filters to decide if they should be synced.</string>

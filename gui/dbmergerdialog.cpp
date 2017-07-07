@@ -53,7 +53,7 @@ void DbMergerDialog::on_commandLinkButton_clicked()
 		DialogMaster::information(this, tr("Merge completed!"));
 	} else {
 		DialogMaster::critical(this,
-							   tr("Failed to merger the specified database with the current one! "
+							   tr("Failed to merge the specified database with the current one! "
 								  "The file does either not exist or is corrupted."),
 							   tr("Merge failed!"));
 		reject();
