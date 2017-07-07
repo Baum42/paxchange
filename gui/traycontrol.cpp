@@ -41,19 +41,27 @@ TrayControl::TrayControl(QObject *parent) :
 	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("package-new")),
 						 tr("Change Database"),
 						 this, &TrayControl::changeDatabase);
-	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("view-refresh")),
-						 tr("Synchronize"),
-						 db, &DatabaseController::sync);
-	_trayMenu->addSeparator();
-	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("package-upgrade")),
-						 tr("Edit Packages"),
-						 this, &TrayControl::editPackages);
-	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("view-filter")),
-						 tr("Edit Filters"),
-						 this, &TrayControl::editFilters);
-	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("gtk-preferences")),
-						 tr("Settings"),
-						 this, &TrayControl::openSettings);
+
+	auto dbMenu = _trayMenu->addMenu(QIcon::fromTheme(QStringLiteral("package-available")),
+									 tr("Database Actions"));
+	dbMenu->addAction(QIcon::fromTheme(QStringLiteral("merge")),
+					  tr("Merge Database"),
+					  this, &TrayControl::mergeDatabase);
+	dbMenu->addAction(QIcon::fromTheme(QStringLiteral("view-refresh")),
+					  tr("Synchronize"),
+					  db, &DatabaseController::sync);
+	dbMenu->addSeparator();
+	dbMenu->addAction(QIcon::fromTheme(QStringLiteral("package-upgrade")),
+					  tr("Edit Packages"),
+					  this, &TrayControl::editPackages);
+	dbMenu->addAction(QIcon::fromTheme(QStringLiteral("view-filter")),
+					  tr("Edit Filters"),
+					  this, &TrayControl::editFilters);
+	dbMenu->addSeparator();
+	dbMenu->addAction(QIcon::fromTheme(QStringLiteral("gtk-preferences")),
+					  tr("Settings"),
+					  this, &TrayControl::openSettings);
+
 	_trayMenu->addSeparator();
 	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("help-about")),
 						 tr("About"),
@@ -155,6 +163,11 @@ void TrayControl::changeDatabase()
 	enableAll(false);
 	DatabaseWizard::run();
 	enableAll(true);
+}
+
+void TrayControl::mergeDatabase()
+{
+	Q_UNIMPLEMENTED();
 }
 
 void TrayControl::editPackages()

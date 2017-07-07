@@ -28,6 +28,7 @@ private slots:
 	void trayAction(QSystemTrayIcon::ActivationReason reason);
 
 	void changeDatabase();
+	void mergeDatabase();
 	void editPackages();
 	void editFilters();
 	void openSettings();
