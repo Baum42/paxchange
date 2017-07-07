@@ -23,6 +23,69 @@
     </message>
 </context>
 <context>
+    <name>DbMergerDialog</name>
+    <message>
+        <location filename="dbmergerdialog.ui" line="+14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Merge with:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>select a pacsync database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>application/x-pacsync-database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>application/octet-stream</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Merge Databases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Merge Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Delete Merged file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dbmergerdialog.cpp" line="+47"/>
+        <source>Merged without any conflicts!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Merge completed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Failed to merger the specified database with the current one! The file does either not exist or is corrupted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Merge failed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DbPathPage</name>
     <message>
         <location filename="wizard/dbpathpage.ui" line="+39"/>
@@ -313,7 +376,7 @@
 <context>
     <name>GLOBAL</name>
     <message>
-        <location filename="main.cpp" line="+84"/>
+        <location filename="main.cpp" line="+78"/>
         <source>Explicitly select the plugin to be loaded</source>
         <translation type="unfinished"></translation>
     </message>
@@ -472,6 +535,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+4"/>
+        <source>Database Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Merge Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+3"/>
         <source>Synchronize</source>
         <translation type="unfinished"></translation>
@@ -483,27 +556,38 @@
     </message>
     <message>
         <location line="+3"/>
-        <location line="+130"/>
+        <location line="+133"/>
         <source>Edit Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-127"/>
+        <location line="-129"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
+        <location line="+162"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>%1 — Version %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+3"/>
+        <source>&lt;p&gt;A tool to synchronize installed packages across multiple machines.&lt;/p&gt;&lt;p&gt;Loaded Plugin: &lt;i&gt;%1&lt;/i&gt;&lt;br/&gt;Qt-Version: &lt;a href=&quot;https://www.qt.io/&quot;&gt;%2&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Developed by: Felix Barz and Mike Zeller&lt;br/&gt;Project Website: &lt;a href=&quot;https://github.com/Baum42/pacsync&quot;&gt;https://github.com/Baum42/pacsync&lt;/a&gt;&lt;br/&gt;License: &lt;a href=&quot;https://github.com/Baum42/pacsync/blob/master/LICENSE&quot;&gt;BSD 3 Clause&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Icons based on &lt;a href=&quot;http://www.flaticon.com/authors/roundicons&quot;&gt;Roundicons&lt;/a&gt; from &lt;a href=&quot;http://www.flaticon.com&quot;&gt;www.flaticon.com&lt;/a&gt; and licensed by &lt;a href=&quot;http://creativecommons.org/licenses/by/3.0/&quot;&gt;CC 3.0 BY&lt;/a&gt;&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-174"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -518,12 +602,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+90"/>
-        <source>TODO</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
+        <location line="+129"/>
         <source>The package database has changed. Packages have to be %1.</source>
         <translation type="unfinished"></translation>
     </message>

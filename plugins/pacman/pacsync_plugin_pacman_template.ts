@@ -4,7 +4,7 @@
 <context>
     <name>PacmanPlugin</name>
     <message>
-        <location filename="pacmanplugin.cpp" line="+54"/>
+        <location filename="pacmanplugin.cpp" line="+49"/>
         <source>Failed to load packages from pacman!</source>
         <translation type="unfinished"></translation>
     </message>

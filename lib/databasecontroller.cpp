@@ -242,7 +242,7 @@ void DatabaseController::fileChanged()
 			sync();
 		} catch(QException &e){
 			qWarning() << "Failed to reload changed file:" << e.what();
-			emit guiError(tr("Failed to reload changed file"));
+			emit guiError(tr("Failed to reload changed package database"));
 		}
 	}
 	_watcherSkipNext = false;
@@ -328,7 +328,7 @@ void DatabaseController::writeCurrentFile()
 			writeFile(_packageDatabase, _dbPath);
 		} catch(QException &e) {
 			qWarning() << "Failed to save database:" << e.what();
-			emit guiError(tr("Failed to save file!"), true);
+			emit guiError(tr("Failed to save package database!"), true);
 		}
 	}
 }

@@ -95,8 +95,8 @@ QRegularExpression ChangeFilter::createRegEx(QString pattern)
 {
 	auto re = QRegularExpression{pattern, QRegularExpression::OptimizeOnFirstUsageOption | QRegularExpression::DontCaptureOption};
 	if(!re.isValid()){
-		qWarning() << tr("invalid regular expression") << pattern
-				   << tr("with error:") << re.errorString();
+		qWarning() << "Invalid regular expression" << pattern
+				   << "with error:" << re.errorString();
 	}
 
 	return re;
