@@ -1,6 +1,7 @@
 #include "databasecontroller.h"
 #include "databasemerger.h"
 #include "packagedatabase.h"
+#include <QJsonSerializer>
 
 #include <QFile>
 
@@ -30,8 +31,10 @@ bool DatabaseMerger::mergeDb(QString dbPath)
 		foreach (auto pacInfo, pacDbOther.packages) {
 			if(!pacDbCurrent.packages.contains(pacInfo.name))
 				pacDbCurrent.packages[pacInfo.name] = pacInfo;
-			else if(pacInfo.removed != pacDbCurrent.packages[pacInfo.name].removed)
+			else if(pacInfo.removed != pacDbCurrent.packages[pacInfo.name].removed) {
 				pacDbCurrent.packages[pacInfo.name].removed = false;
+				_log.append(tr("Merged package %1 to be installed").arg(pacInfo.name));
+			}
 		}
 
 		//unlearPackages: keep current on conflict
@@ -39,13 +42,13 @@ bool DatabaseMerger::mergeDb(QString dbPath)
 			if(!pacDbCurrent.unclearPackages.contains(unclearPac.name))
 				pacDbCurrent.unclearPackages[unclearPac.name] = unclearPac;
 			else if(!unclearPac.equals(pacDbCurrent.unclearPackages[unclearPac.name]))
-				_log.append({tr("unclear package"),  unclearPac.name});
+				_log.append(tr("Conflict on unclear package info %1 - kept state of current database").arg(unclearPac.name));
 		}
 
 
 		//mode: keep current on conflict
 		if(pacDbOther.globalMode != pacDbCurrent.globalMode)
-			_log.append({tr("global mode"), QString()});
+			_log.append(tr("Conflict on global filter mode - kept state of current database"));
 
 		//filter: auto rename on conflict
 		foreach (auto filter, pacDbOther.filters){
@@ -58,9 +61,9 @@ bool DatabaseMerger::mergeDb(QString dbPath)
 					filter.name = tr("%1-%2").arg(oldName).arg(++idx);
 				while(pacDbCurrent.filters.contains(filter.name));
 				pacDbCurrent.filters[filter.name] = filter;
-				_log.append({tr("filter auto rename"),  tr("%1 -> %2")
+				_log.append(tr("Conflict on filter %1 - renamed new filter to %2")
 							.arg(oldName)
-							.arg(filter.name)});
+							.arg(filter.name));
 			}
 		}
 
@@ -70,12 +73,12 @@ bool DatabaseMerger::mergeDb(QString dbPath)
 			if(index == -1)
 				pacDbCurrent.extraFilters.append(eFilter);
 			else if(!eFilter.equals(pacDbCurrent.extraFilters.at(index)))
-				_log.append({tr("extra filter"),  eFilter.regex});
+				_log.append(tr("Conflict on extra filter %1 - kept state of current database").arg(eFilter.regex));
 		}
 
 		//settings keep current and log
 		if(pacDbCurrent.settings != pacDbOther.settings)
-			_log.append({tr("settings"), QString()});
+			_log.append(tr("Conflict on settings - kept state of current database"));
 
 		currentFile.seek(0);
 		_js->serializeTo<PackageDatabase>(&currentFile, pacDbCurrent);
@@ -87,7 +90,7 @@ bool DatabaseMerger::mergeDb(QString dbPath)
 	}
 }
 
-QList<QPair<QString, QString> > DatabaseMerger::log() const
+QStringList DatabaseMerger::log() const
 {
 	return _log;
 }

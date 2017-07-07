@@ -1,8 +1,8 @@
 #ifndef DATABASEMERGER_H
 #define DATABASEMERGER_H
 
-#include <QJsonSerializer>
 #include <QObject>
+class QJsonSerializer;
 
 class DatabaseMerger : public QObject
 {
@@ -13,12 +13,12 @@ public:
 
 	bool mergeDb(QString dbPath);
 
-	QList<QPair<QString, QString>> log() const;
+	QStringList log() const;
 
 private:
 	QJsonSerializer *_js;
 
-	QList<QPair<QString, QString>> _log;//what, package name
+	QStringList _log;//what, package name
 };
 
 #endif // DATABASEMERGER_H

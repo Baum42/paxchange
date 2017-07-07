@@ -34,7 +34,8 @@ HEADERS += \
 	wizard/dbwidgetpage.h \
     widgets/filterswidget.h \
     widgets/extrafilterswidget.h \
-    widgets/unclearpackageswidget.h
+    widgets/unclearpackageswidget.h \
+    dbmergerdialog.h
 
 SOURCES += \
 		main.cpp \
@@ -51,7 +52,8 @@ SOURCES += \
 	wizard/dbwidgetpage.cpp \
     widgets/filterswidget.cpp \
     widgets/extrafilterswidget.cpp \
-    widgets/unclearpackageswidget.cpp
+    widgets/unclearpackageswidget.cpp \
+    dbmergerdialog.cpp
 
 FORMS += \
 	settingsdialog.ui \
@@ -61,7 +63,8 @@ FORMS += \
 	wizard/dbpathpage.ui \
     widgets/filterswidget.ui \
     widgets/extrafilterswidget.ui \
-    widgets/unclearpackageswidget.ui
+    widgets/unclearpackageswidget.ui \
+    dbmergerdialog.ui
 
 RESOURCES += \
 	pacsync_gui.qrc

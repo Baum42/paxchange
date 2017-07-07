@@ -1,3 +1,4 @@
+#include "dbmergerdialog.h"
 #include "settingsdialog.h"
 #include "traycontrol.h"
 
@@ -167,7 +168,7 @@ void TrayControl::changeDatabase()
 
 void TrayControl::mergeDatabase()
 {
-	Q_UNIMPLEMENTED();
+	DbMergerDialog::merge();
 }
 
 void TrayControl::editPackages()
