@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.1
+Name=Pac-Sync
+Comment=A tool to synchronize installed packages across multiple machines
+Comment[de]=Ein Tool zum Synchronisieren von installierten Paketen über mehrere Rechner
+Exec=pacsync
+Icon=pacsync
+Terminal=false
+Categories=Utility;
