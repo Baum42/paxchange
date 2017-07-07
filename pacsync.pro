@@ -5,6 +5,10 @@ SUBDIRS += \
 	gui \
 	plugins
 
+DISTFILES += README.md \
+	LICENSE \
+	TODO.md
+
 gui.depends += lib
 plugins.depends += lib
 
