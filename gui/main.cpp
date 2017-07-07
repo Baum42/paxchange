@@ -1,23 +1,16 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDebug>
-#include <QDir>
-#include <QStandardPaths>
-#include <QTemporaryFile>
 #include <databasecontroller.h>
 #include <qsingleinstance.h>
 #include <QFileInfo>
 #include <QFile>
-#include <QTranslator>
-#include <QLibraryInfo>
 #include "traycontrol.h"
 #include "pluginloader.h"
 #include "wizard/databasewizard.h"
 #include "consoleoperator.h"
 
 static void setupParser(QCommandLineParser &parser);
-static void cacheForwardedPluginArgs(QStringList args);
-static void readCachedForwardedPluginArgs();
 
 int main(int argc, char *argv[])
 {
@@ -32,16 +25,14 @@ int main(int argc, char *argv[])
 
 	//load translations
 	DatabaseController::loadTranslation(QStringLiteral("pacsync_gui"));
-	QSingleInstance instance;
-
 	QCommandLineParser parser;
 	setupParser(parser);
 	parser.process(a);
 
+	QSingleInstance instance;
 	instance.setStartupFunction([&]() {
 		if(parser.isSet(QStringLiteral("f"))){
-			cacheForwardedPluginArgs(parser.positionalArguments());
-
+			PluginLoader::cacheForwardedPluginArgs(parser.positionalArguments());
 			QMetaObject::invokeMethod(qApp, "quit", Qt::QueuedConnection); //DEBUG
 			return EXIT_SUCCESS;
 		}
@@ -61,9 +52,8 @@ int main(int argc, char *argv[])
 				QMetaObject::invokeMethod(qApp, "quit", Qt::QueuedConnection); //DEBUG
 				return EXIT_SUCCESS;
 			}
-		}
-
-		readCachedForwardedPluginArgs();
+		} else
+			PluginLoader::readCachedForwardedPluginArgs();
 
 		tray->show();
 		return EXIT_SUCCESS;
@@ -92,37 +82,4 @@ static void setupParser(QCommandLineParser &parser)
 						 {QStringLiteral("f"), QStringLiteral("forward")},
 						 QCoreApplication::translate("GLOBAL", "Forwards the arguments to the plugin")
 					 });
-}
-
-static void cacheForwardedPluginArgs(QStringList args)
-{
-	auto cacheDir = QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
-	cacheDir.mkpath(QStringLiteral("hooks"));
-	cacheDir.cd(QStringLiteral("hooks"));
-
-	QTemporaryFile file(cacheDir.absoluteFilePath(QStringLiteral("XXXXXX.cmd")));
-	file.setAutoRemove(false);
-	file.open();
-	QDataStream stream(&file);
-	stream << args;
-	file.close();
-}
-
-static void readCachedForwardedPluginArgs()
-{
-	auto cacheDir = QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
-	if(cacheDir.cd(QStringLiteral("hooks"))){
-		foreach (auto fileInfo, cacheDir.entryInfoList(QDir::Files)) {
-			QFile file(fileInfo.absoluteFilePath());
-			file.open(QIODevice::ReadOnly);
-			QDataStream stream(&file);
-			QStringList args;
-			stream >> args;
-			QMetaObject::invokeMethod(PluginLoader::plugin(), "forwardedArguments",
-									   Qt::QueuedConnection,
-									   Q_ARG(QStringList, args));
-			file.close();
-			file.remove();
-		}
-	}
 }

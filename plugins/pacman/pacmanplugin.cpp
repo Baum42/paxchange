@@ -11,11 +11,6 @@ PacmanPlugin::PacmanPlugin(QObject *parent) :
 	PackageManagerPlugin(parent)
 {}
 
-void PacmanPlugin::initialize()
-{
-	//TODO remove if unused
-}
-
 QList<PacmanPlugin::FilterInfo> PacmanPlugin::extraFilters()
 {
 	QList<PacmanPlugin::FilterInfo> list;

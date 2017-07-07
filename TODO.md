@@ -1,1 +1,1 @@
-- merge databases
+- interactive merge

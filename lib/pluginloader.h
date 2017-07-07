@@ -22,6 +22,9 @@ public:
 
 	static PackageManagerPlugin *plugin();
 
+	static void cacheForwardedPluginArgs(QStringList args);
+	static void readCachedForwardedPluginArgs();
+
 private:
 	QHash<QString, QPluginLoader*> _availablePlugins;
 	PackageManagerPlugin *_plugin;

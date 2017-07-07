@@ -12,7 +12,6 @@ class PacmanPlugin : public PackageManagerPlugin
 public:
 	PacmanPlugin(QObject *parent = nullptr);
 
-	void initialize() override;
 	QList<FilterInfo> extraFilters() override;
 	QStringList listAllPackages() override;
 	QStringList listPackages(QVector<bool> extraFilters) override;

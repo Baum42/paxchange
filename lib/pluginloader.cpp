@@ -1,11 +1,14 @@
 #include "pluginloader.h"
 #include <QDir>
+#include <QStandardPaths>
+#include <QTemporaryFile>
 #include <QJsonArray>
 #include <QJsonValue>
 #include <QDebug>
 #include <QGlobalStatic>
 #ifndef QT_NO_DEBUG
 #include <QCoreApplication>
+#include <QDataStream>
 #else
 #include <QLibraryInfo>
 #endif
@@ -81,6 +84,39 @@ void PluginLoader::loadPlugin(const QString &overwrite)
 PackageManagerPlugin *PluginLoader::plugin()
 {
 	return pluginLoader->_plugin;
+}
+
+void PluginLoader::cacheForwardedPluginArgs(QStringList args)
+{
+	auto cacheDir = QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+	cacheDir.mkpath(QStringLiteral("hooks"));
+	cacheDir.cd(QStringLiteral("hooks"));
+
+	QTemporaryFile file(cacheDir.absoluteFilePath(QStringLiteral("XXXXXX.cmd")));
+	file.setAutoRemove(false);
+	file.open();
+	QDataStream stream(&file);
+	stream << args;
+	file.close();
+}
+
+void PluginLoader::readCachedForwardedPluginArgs()
+{
+	auto cacheDir = QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+	if(cacheDir.cd(QStringLiteral("hooks"))){
+		foreach (auto fileInfo, cacheDir.entryInfoList(QDir::Files)) {
+			QFile file(fileInfo.absoluteFilePath());
+			file.open(QIODevice::ReadOnly);
+			QDataStream stream(&file);
+			QStringList args;
+			stream >> args;
+			QMetaObject::invokeMethod(plugin(), "forwardedArguments",
+									   Qt::QueuedConnection,
+									   Q_ARG(QStringList, args));
+			file.close();
+			file.remove();
+		}
+	}
 }
 
 QString PluginLoader::defaultPlugin() const
