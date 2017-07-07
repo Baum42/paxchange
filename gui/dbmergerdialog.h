@@ -18,6 +18,9 @@ public:
 
 	static void merge(QWidget *parent = nullptr);
 
+public slots:
+	void reject() override;
+
 private slots:
 	void on_commandLinkButton_clicked();
 

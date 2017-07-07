@@ -33,7 +33,7 @@ bool DatabaseMerger::mergeDb(QString dbPath)
 				pacDbCurrent.packages[pacInfo.name] = pacInfo;
 			else if(pacInfo.removed != pacDbCurrent.packages[pacInfo.name].removed) {
 				pacDbCurrent.packages[pacInfo.name].removed = false;
-				_log.append(tr("Merged package %1 to be installed").arg(pacInfo.name));
+				_log.append(tr("Conflict on install state of package %1. Has been set to \"install\"").arg(pacInfo.name));
 			}
 		}
 
@@ -42,7 +42,7 @@ bool DatabaseMerger::mergeDb(QString dbPath)
 			if(!pacDbCurrent.unclearPackages.contains(unclearPac.name))
 				pacDbCurrent.unclearPackages[unclearPac.name] = unclearPac;
 			else if(!unclearPac.equals(pacDbCurrent.unclearPackages[unclearPac.name]))
-				_log.append(tr("Conflict on unclear package info %1 - kept state of current database").arg(unclearPac.name));
+				_log.append(tr("Conflict on reason for unclear package %1 - kept info of current database").arg(unclearPac.name));
 		}
 
 
@@ -78,7 +78,7 @@ bool DatabaseMerger::mergeDb(QString dbPath)
 
 		//settings keep current and log
 		if(pacDbCurrent.settings != pacDbOther.settings)
-			_log.append(tr("Conflict on settings - kept state of current database"));
+			_log.append(tr("Unable to merger settings - kept state of current database"));
 
 		currentFile.seek(0);
 		_js->serializeTo<PackageDatabase>(&currentFile, pacDbCurrent);

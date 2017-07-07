@@ -8,6 +8,7 @@ DbMergerDialog::DbMergerDialog(QWidget *parent) :
 	_merger(new DatabaseMerger(this))
 {
 	_ui->setupUi(this);
+	_ui->deleteCheckBox->setVisible(false);
 	DialogMaster::masterDialog(this);
 }
 
@@ -22,6 +23,13 @@ void DbMergerDialog::merge(QWidget *parent)
 	dialog.exec();
 }
 
+void DbMergerDialog::reject()
+{
+	if(_ui->deleteCheckBox->isChecked())
+		QFile::remove(_ui->pathedit->path());
+	QDialog::reject();
+}
+
 void DbMergerDialog::on_commandLinkButton_clicked()
 {
 	if(!QFile::exists(_ui->pathedit->path()))
@@ -32,6 +40,7 @@ void DbMergerDialog::on_commandLinkButton_clicked()
 
 	if(_merger->mergeDb(_ui->pathedit->path())) {
 		_ui->buttonBox->setStandardButtons(QDialogButtonBox::Close);
+		_ui->deleteCheckBox->setVisible(true);
 
 		auto log = _merger->log();
 		if(log.isEmpty())
