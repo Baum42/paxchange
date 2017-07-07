@@ -20,7 +20,10 @@ SOURCES += \
 
 DISTFILES += pacman.json \
 	pacsync_plugin_pacman_de.ts \
-	pacsync_plugin_pacman_template.ts
+	pacsync_plugin_pacman_template.ts \
+	pacsync.sh \
+	pacsync_install.hook \
+	pacsync_remove.hook
 
 TRANSLATIONS += pacsync_plugin_pacman_de.ts \
 	pacsync_plugin_pacman_template.ts
