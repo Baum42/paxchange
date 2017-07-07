@@ -32,10 +32,10 @@ HEADERS += \
 	wizard/dbselectionpage.h \
 	wizard/dbpathpage.h \
 	wizard/dbwidgetpage.h \
-    widgets/filterswidget.h \
-    widgets/extrafilterswidget.h \
-    widgets/unclearpackageswidget.h \
-    dbmergerdialog.h
+	widgets/filterswidget.h \
+	widgets/extrafilterswidget.h \
+	widgets/unclearpackageswidget.h \
+	dbmergerdialog.h
 
 SOURCES += \
 		main.cpp \
@@ -50,10 +50,10 @@ SOURCES += \
 	wizard/dbselectionpage.cpp \
 	wizard/dbpathpage.cpp \
 	wizard/dbwidgetpage.cpp \
-    widgets/filterswidget.cpp \
-    widgets/extrafilterswidget.cpp \
-    widgets/unclearpackageswidget.cpp \
-    dbmergerdialog.cpp
+	widgets/filterswidget.cpp \
+	widgets/extrafilterswidget.cpp \
+	widgets/unclearpackageswidget.cpp \
+	dbmergerdialog.cpp
 
 FORMS += \
 	settingsdialog.ui \
@@ -61,25 +61,30 @@ FORMS += \
 	widgets/globalfilterwidget.ui \
 	wizard/dbselectionpage.ui \
 	wizard/dbpathpage.ui \
-    widgets/filterswidget.ui \
-    widgets/extrafilterswidget.ui \
-    widgets/unclearpackageswidget.ui \
-    dbmergerdialog.ui
+	widgets/filterswidget.ui \
+	widgets/extrafilterswidget.ui \
+	widgets/unclearpackageswidget.ui \
+	dbmergerdialog.ui
 
 RESOURCES += \
 	pacsync_gui.qrc
 
 DISTFILES += \
 	application-x-pacsync-database.xml \
-    pacsync_gui_de.ts \
-    pacsync_gui_template.ts
+	pacsync_gui_de.ts \
+	pacsync_gui_template.ts
 
 TRANSLATIONS += pacsync_gui_de.ts \
 	pacsync_gui_template.ts
 
 unix {
 	target.path = $$[QT_INSTALL_BINS]
-	INSTALLS += target
+
+	trInstall.path = $$[QT_INSTALL_TRANSLATIONS]
+	trInstall.files = $$OUT_PWD/pacsync_gui_de.qm
+	trInstall.CONFIG += no_check_exist
+
+	INSTALLS += target trInstall
 }
 
 include(vendor/vendor.pri)

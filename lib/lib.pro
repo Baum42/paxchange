@@ -21,8 +21,8 @@ HEADERS += \
 	libpacsync_global.h \
 	comboboxconfig.h \
 	syncedsettings.h \
-    changefilter.h \
-    databasemerger.h
+	changefilter.h \
+	databasemerger.h
 
 SOURCES += \
 	packagemanagerplugin.cpp \
@@ -33,19 +33,24 @@ SOURCES += \
 	operationqueue.cpp \
 	comboboxconfig.cpp \
 	syncedsettings.cpp \
-    changefilter.cpp \
-    databasemerger.cpp
+	changefilter.cpp \
+	databasemerger.cpp
 
 TRANSLATIONS += pacsync_lib_de.ts \
 	pacsync_lib_template.ts
 
+DISTFILES += \
+	pacsync_lib_template.ts \
+	pacsync_lib_de.ts
+
 unix {
 	target.path = $$[QT_INSTALL_LIBS]
-	INSTALLS += target
+
+	trInstall.path = $$[QT_INSTALL_TRANSLATIONS]
+	trInstall.files = $$OUT_PWD/pacsync_lib_de.qm
+	trInstall.CONFIG += no_check_exist
+
+	INSTALLS += target trInstall
 }
 
 include(vendor/vendor.pri)
-
-DISTFILES += \
-    pacsync_lib_template.ts \
-    pacsync_lib_de.ts

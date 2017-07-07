@@ -6,9 +6,9 @@
 #include <QJsonValue>
 #include <QDebug>
 #include <QGlobalStatic>
+#include <QDataStream>
 #ifndef QT_NO_DEBUG
 #include <QCoreApplication>
-#include <QDataStream>
 #else
 #include <QLibraryInfo>
 #endif
