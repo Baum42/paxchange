@@ -35,7 +35,6 @@ void OperationQueue::setOperations(const QStringList &install, const QStringList
 		uninstallFirst = !uninstallFirst;
 	}
 
-	qDebug() << _nextOp;
 	emit operationsChanged(_opFlags);
 }
 

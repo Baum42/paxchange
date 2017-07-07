@@ -3,7 +3,6 @@
 #include "traycontrol.h"
 
 #include <QApplication>
-#include <QDebug>
 #include <dialogmaster.h>
 #include <databasecontroller.h>
 #include <QTimer>

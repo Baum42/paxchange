@@ -38,7 +38,7 @@ PluginLoader::PluginLoader(QObject *parent) :
 		if(meta[QStringLiteral("IID")].toString() == QStringLiteral(PackageManagerPlugin_iid)) {
 			auto key = meta[QStringLiteral("MetaData")].toObject()[QStringLiteral("Key")].toString();
 			if(!key.isEmpty()) {
-				qDebug() << "Found plugin for key" << key;
+				qInfo() << "Found plugin for key" << key;
 				_availablePlugins.insert(key, loader);
 				continue;
 			}

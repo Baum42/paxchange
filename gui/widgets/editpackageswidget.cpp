@@ -1,7 +1,6 @@
 #include "editpackageswidget.h"
 #include "ui_editpackageswidget.h"
 #include "pluginloader.h"
-#include <QDebug>
 #include <dialogmaster.h>
 
 EditPackagesWidget::EditPackagesWidget(QWidget *parent) :

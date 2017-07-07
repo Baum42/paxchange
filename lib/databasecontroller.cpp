@@ -262,7 +262,6 @@ void DatabaseController::updatePackages(const QList<PackageInfo> &addedPkg, cons
 
 void DatabaseController::syncImpl()
 {
-	qDebug() << Q_FUNC_INFO;
 	QStringList pI, pUI;
 	auto installedP = PluginLoader::plugin()->listAllPackages();
 	auto targetP = _packageDatabase.packages;
