@@ -2,16 +2,16 @@ TEMPLATE = app
 
 QT       += core gui widgets
 
-TARGET = pacsync
-VERSION = $$PACSYNCVER
+TARGET = paxchange
+VERSION = $$PAXCHANGEVER
 
-RC_ICONS += ./icons/pacsync.ico
+RC_ICONS += ./icons/paxchange.ico
 QMAKE_TARGET_COMPANY = "Baum42"
 QMAKE_TARGET_PRODUCT = $$TARGET
-QMAKE_TARGET_DESCRIPTION = "Pac-Sync"
+QMAKE_TARGET_DESCRIPTION = "Paxchange"
 QMAKE_TARGET_COPYRIGHT = "Felix Barz & Mike Zeller"
 
-ICON = ./icons/pacsync.icns
+ICON = ./icons/paxchange.icns
 QMAKE_TARGET_BUNDLE_PREFIX = de.baum42
 
 DEFINES += "TARGET=\\\"$$TARGET\\\""
@@ -67,21 +67,22 @@ FORMS += \
 	dbmergerdialog.ui
 
 RESOURCES += \
-	pacsync_gui.qrc
+	paxchange_gui.qrc
 
 DISTFILES += \
-	application-x-pacsync-database.xml \
-	pacsync_gui_de.ts \
-	pacsync_gui_template.ts
+	application-x-paxchange-database.xml \
+	paxchange_gui_de.ts \
+	paxchange_gui_template.ts \
+	paxchange.desktop
 
-TRANSLATIONS += pacsync_gui_de.ts \
-	pacsync_gui_template.ts
+TRANSLATIONS += paxchange_gui_de.ts \
+	paxchange_gui_template.ts
 
 unix {
 	target.path = $$[QT_INSTALL_BINS]
 
 	trInstall.path = $$[QT_INSTALL_TRANSLATIONS]
-	trInstall.files = $$OUT_PWD/pacsync_gui_de.qm
+	trInstall.files = $$OUT_PWD/paxchange_gui_de.qm
 	trInstall.CONFIG += no_check_exist
 
 	INSTALLS += target trInstall
@@ -89,9 +90,9 @@ unix {
 
 include(vendor/vendor.pri)
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../lib/release/ -lpacsync
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../lib/debug/ -lpacsync
-else:unix: LIBS += -L$$OUT_PWD/../lib/ -lpacsync
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../lib/release/ -lpaxchange
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../lib/debug/ -lpaxchange
+else:unix: LIBS += -L$$OUT_PWD/../lib/ -lpaxchange
 
 INCLUDEPATH += $$PWD/../lib
 DEPENDPATH += $$PWD/../lib

@@ -31,12 +31,12 @@
     </message>
     <message>
         <location line="+16"/>
-        <source>select a pacsync database</source>
+        <source>select a paxchange database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>application/x-pacsync-database</source>
+        <source>application/x-paxchange-database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -86,12 +86,12 @@
     <name>DbPathPage</name>
     <message>
         <location filename="wizard/dbpathpage.ui" line="+39"/>
-        <source>select a pacsync database</source>
+        <source>select a paxchange database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>application/x-pacsync-database</source>
+        <source>application/x-paxchange-database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -116,7 +116,7 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Open an existing Pac-Sync database to be used for this machine.</source>
+        <source>Open an existing Paxchange database to be used for this machine.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -576,7 +576,7 @@
     </message>
     <message>
         <location line="+3"/>
-        <source>&lt;p&gt;A tool to synchronize installed packages across multiple machines.&lt;/p&gt;&lt;p&gt;Loaded Plugin: &lt;i&gt;%1&lt;/i&gt;&lt;br/&gt;Qt-Version: &lt;a href=&quot;https://www.qt.io/&quot;&gt;%2&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Developed by: Felix Barz and Mike Zeller&lt;br/&gt;Project Website: &lt;a href=&quot;https://github.com/Baum42/pacsync&quot;&gt;https://github.com/Baum42/pacsync&lt;/a&gt;&lt;br/&gt;License: &lt;a href=&quot;https://github.com/Baum42/pacsync/blob/master/LICENSE&quot;&gt;BSD 3 Clause&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Icons based on &lt;a href=&quot;http://www.flaticon.com/authors/roundicons&quot;&gt;Roundicons&lt;/a&gt; from &lt;a href=&quot;http://www.flaticon.com&quot;&gt;www.flaticon.com&lt;/a&gt; and licensed by &lt;a href=&quot;http://creativecommons.org/licenses/by/3.0/&quot;&gt;CC 3.0 BY&lt;/a&gt;&lt;/p&gt;</source>
+        <source>&lt;p&gt;A tool to synchronize installed packages across multiple machines.&lt;/p&gt;&lt;p&gt;Loaded Plugin: &lt;i&gt;%1&lt;/i&gt;&lt;br/&gt;Qt-Version: &lt;a href=&quot;https://www.qt.io/&quot;&gt;%2&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Developed by: Felix Barz and Mike Zeller&lt;br/&gt;Project Website: &lt;a href=&quot;https://github.com/Baum42/paxchange&quot;&gt;https://github.com/Baum42/paxchange&lt;/a&gt;&lt;br/&gt;License: &lt;a href=&quot;https://github.com/Baum42/paxchange/blob/master/LICENSE&quot;&gt;BSD 3 Clause&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Icons based on &lt;a href=&quot;http://www.flaticon.com/authors/roundicons&quot;&gt;Roundicons&lt;/a&gt; from &lt;a href=&quot;http://www.flaticon.com&quot;&gt;www.flaticon.com&lt;/a&gt; and licensed by &lt;a href=&quot;http://creativecommons.org/licenses/by/3.0/&quot;&gt;CC 3.0 BY&lt;/a&gt;&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

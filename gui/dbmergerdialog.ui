@@ -35,11 +35,11 @@
         <bool>false</bool>
        </property>
        <property name="placeholder">
-        <string>select a pacsync database</string>
+        <string>select a paxchange database</string>
        </property>
        <property name="mimeTypeFilters">
         <stringlist>
-         <string>application/x-pacsync-database</string>
+         <string>application/x-paxchange-database</string>
          <string>application/octet-stream</string>
         </stringlist>
        </property>

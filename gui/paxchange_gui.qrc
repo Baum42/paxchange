@@ -1,0 +1,15 @@
+<RCC>
+	<qresource prefix="/icons">
+		<file alias="main.svg">icons/paxchange.svg</file>
+		<file alias="install.svg">icons/paxchange_install.svg</file>
+		<file alias="error.svg">icons/paxchange_error.svg</file>
+		<file alias="question.svg">icons/paxchange_question.svg</file>
+		<file alias="28106788.png">icons/28106788.png</file>
+	</qresource>
+	<qresource prefix="/icons/tray">
+		<file alias="main.ico">icons/paxchange.ico</file>
+		<file alias="install.ico">icons/paxchange_install.ico</file>
+		<file alias="error.ico">icons/paxchange_error.ico</file>
+		<file alias="question.ico">icons/paxchange_question.ico</file>
+	</qresource>
+</RCC>

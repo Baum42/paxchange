@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 	QApplication::setQuitOnLastWindowClosed(false);
 
 	//load translations
-	DatabaseController::loadTranslation(QStringLiteral("pacsync_gui"));
+	DatabaseController::loadTranslation(QStringLiteral("paxchange_gui"));
 	QCommandLineParser parser;
 	setupParser(parser);
 	parser.process(a);
