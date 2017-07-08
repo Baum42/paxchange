@@ -1,7 +1,7 @@
 #ifndef PACKAGEMANAGERPLUGIN_H
 #define PACKAGEMANAGERPLUGIN_H
 
-#include "libpacsync_global.h"
+#include "libpaxchange_global.h"
 
 #include <QObject>
 #include <QSettings>
@@ -10,9 +10,9 @@
 
 #include "syncedsettings.h"
 
-#define PackageManagerPlugin_iid "de.baum42.pacsync.PackageManagerPlugin"
+#define PackageManagerPlugin_iid "de.baum42.paxchange.PackageManagerPlugin"
 
-class LIBPACSYNC_SHARED_EXPORT PackageManagerPlugin : public QObject
+class LIBPAXCHANGE_SHARED_EXPORT PackageManagerPlugin : public QObject
 {
 	Q_OBJECT
 

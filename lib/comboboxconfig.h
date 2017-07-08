@@ -1,11 +1,11 @@
 #ifndef COMBOBOXCONFIG_H
 #define COMBOBOXCONFIG_H
 
-#include "libpacsync_global.h"
+#include "libpaxchange_global.h"
 #include <QStringList>
 #include <QVariant>
 
-class LIBPACSYNC_SHARED_EXPORT ComboboxConfig
+class LIBPAXCHANGE_SHARED_EXPORT ComboboxConfig
 {
 public:
 	QStringList displayNames;

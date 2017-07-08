@@ -1,11 +1,11 @@
 #ifndef PACKAGEDATABASE_H
 #define PACKAGEDATABASE_H
 
-#include "libpacsync_global.h"
+#include "libpaxchange_global.h"
 #include <QtJsonSerializer/QJsonSerializer>
 #include <QObject>
 
-class LIBPACSYNC_SHARED_EXPORT PackageInfo
+class LIBPAXCHANGE_SHARED_EXPORT PackageInfo
 {
 	Q_GADGET
 
@@ -23,7 +23,7 @@ public:
 	bool equals(const PackageInfo &other) const;
 };
 
-class LIBPACSYNC_SHARED_EXPORT UnclearPackageInfo : public PackageInfo
+class LIBPAXCHANGE_SHARED_EXPORT UnclearPackageInfo : public PackageInfo
 {
 	Q_GADGET
 
@@ -40,7 +40,7 @@ public:
 	bool equals(const UnclearPackageInfo &other) const;
 };
 
-class LIBPACSYNC_SHARED_EXPORT FilterInfo
+class LIBPAXCHANGE_SHARED_EXPORT FilterInfo
 {
 	Q_GADGET
 
@@ -72,7 +72,7 @@ public:
 	bool equals(const FilterInfo &other) const;
 };
 
-class LIBPACSYNC_SHARED_EXPORT ExtraFilter
+class LIBPAXCHANGE_SHARED_EXPORT ExtraFilter
 {
 	Q_GADGET
 
@@ -89,7 +89,7 @@ public:
 	bool equals(const ExtraFilter &other) const;
 };
 
-class LIBPACSYNC_SHARED_EXPORT PackageDatabase
+class LIBPAXCHANGE_SHARED_EXPORT PackageDatabase
 {
 	Q_GADGET
 

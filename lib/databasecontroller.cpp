@@ -352,5 +352,5 @@ static void setupDatabaseController()
 	QJsonSerializer::registerAllConverters<ExtraFilter>();
 
 	//load translations
-	DatabaseController::loadTranslation(QStringLiteral("pacsync_lib"));
+	DatabaseController::loadTranslation(QStringLiteral("paxchange_lib"));
 }

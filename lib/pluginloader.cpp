@@ -28,7 +28,7 @@ PluginLoader::PluginLoader(QObject *parent) :
 #else
 	auto path = QLibraryInfo::location(QLibraryInfo::PluginsPath);
 #endif
-	path += QStringLiteral("/pacsync");
+	path += QStringLiteral("/paxchange");
 
 	QDir plugDir(path);
 	plugDir.setFilter(QDir::Files | QDir::Readable);

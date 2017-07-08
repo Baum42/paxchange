@@ -1,11 +1,11 @@
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
-#include "libpacsync_global.h"
+#include "libpaxchange_global.h"
 #include <QString>
 #include <QException>
 
-class LIBPACSYNC_SHARED_EXPORT ExceptionBase : public QException
+class LIBPAXCHANGE_SHARED_EXPORT ExceptionBase : public QException
 {
 public:
 	ExceptionBase(const QString &what = QString());
@@ -27,7 +27,7 @@ public:
 };
 
 #define DEF_EXC(Type) \
-	class LIBPACSYNC_SHARED_EXPORT Type : public Exception<Type> { \
+	class LIBPAXCHANGE_SHARED_EXPORT Type : public Exception<Type> { \
 	public: \
 		inline Type(const QString &what) : \
 			Exception(what) \

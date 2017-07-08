@@ -1,7 +1,7 @@
 #ifndef DATABASECONTROLLER_H
 #define DATABASECONTROLLER_H
 
-#include "libpacsync_global.h"
+#include "libpaxchange_global.h"
 #include "packagedatabase.h"
 #include "pluginloader.h"
 #include "operationqueue.h"
@@ -16,7 +16,7 @@
 
 DEF_EXC(DatabaseException)
 
-class LIBPACSYNC_SHARED_EXPORT DatabaseController : public QObject
+class LIBPAXCHANGE_SHARED_EXPORT DatabaseController : public QObject
 {
 	Q_OBJECT
 

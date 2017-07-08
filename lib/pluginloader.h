@@ -1,7 +1,7 @@
 #ifndef PLUGINLOADER_H
 #define PLUGINLOADER_H
 
-#include "libpacsync_global.h"
+#include "libpaxchange_global.h"
 #include <QObject>
 #include <QPluginLoader>
 #include "exception.h"
@@ -9,7 +9,7 @@
 
 DEF_EXC(PluginLoadException)
 
-class LIBPACSYNC_SHARED_EXPORT PluginLoader : public QObject
+class LIBPAXCHANGE_SHARED_EXPORT PluginLoader : public QObject
 {
 	Q_OBJECT
 
