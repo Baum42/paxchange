@@ -30,13 +30,13 @@ void DbMergerDialog::reject()
 	QDialog::reject();
 }
 
-void DbMergerDialog::on_commandLinkButton_clicked()
+void DbMergerDialog::on_mergeButton_clicked()
 {
 	if(!QFile::exists(_ui->pathedit->path()))
 		return;
 
 	_ui->pathedit->setEnabled(false);
-	_ui->commandLinkButton->setEnabled(false);
+	_ui->mergeButton->setEnabled(false);
 
 	if(_merger->mergeDb(_ui->pathedit->path())) {
 		_ui->buttonBox->setStandardButtons(QDialogButtonBox::Close);

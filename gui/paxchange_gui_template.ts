@@ -46,8 +46,12 @@
     </message>
     <message>
         <location line="-27"/>
-        <location line="+37"/>
         <source>Merge Databases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>Merge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

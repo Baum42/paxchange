@@ -46,9 +46,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QCommandLinkButton" name="commandLinkButton">
+      <widget class="QPushButton" name="mergeButton">
        <property name="text">
-        <string>Merge Databases</string>
+        <string>Merge</string>
        </property>
       </widget>
      </item>
@@ -92,5 +92,38 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>DbMergerDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>244</x>
+     <y>371</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>133</x>
+     <y>363</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>DbMergerDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>284</x>
+     <y>379</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>105</x>
+     <y>393</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
