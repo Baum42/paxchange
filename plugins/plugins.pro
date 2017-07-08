@@ -1,8 +1,8 @@
 TEMPLATE = subdirs
 
-isEmpty(PACSYNC_PLUGINS): PACSYNC_PLUGINS = dummy pacman
-contains(PACSYNC_PLUGINS, dummy): SUBDIRS += pacdummy
-contains(PACSYNC_PLUGINS, pacman): SUBDIRS += pacman
+isEmpty(PAXCHANGE_PLUGINS): PAXCHANGE_PLUGINS = dummy pacman
+contains(PAXCHANGE_PLUGINS, dummy): SUBDIRS += pacdummy
+contains(PAXCHANGE_PLUGINS, pacman): SUBDIRS += pacman
 
 qpmlupdate.target = lupdate
 qpmlupdate.CONFIG += recursive

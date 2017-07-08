@@ -10,7 +10,7 @@ TARGET = pacdummy
 TEMPLATE = lib
 CONFIG += plugin
 
-DESTDIR = $$OUT_PWD/../../pacsync
+DESTDIR = $$OUT_PWD/../../paxchange
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -24,13 +24,13 @@ HEADERS += \
 DISTFILES += pacdummy.json
 
 unix {
-	target.path = $$[QT_INSTALL_PLUGINS]/pacsync
+	target.path = $$[QT_INSTALL_PLUGINS]/paxchange
 	INSTALLS += target
 }
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../lib/release/ -lpacsync
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../lib/debug/ -lpacsync
-else:unix: LIBS += -L$$OUT_PWD/../../lib/ -lpacsync
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../lib/release/ -lpaxchange
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../lib/debug/ -lpaxchange
+else:unix: LIBS += -L$$OUT_PWD/../../lib/ -lpaxchange
 
 INCLUDEPATH += $$PWD/../../lib
 DEPENDPATH += $$PWD/../../lib
