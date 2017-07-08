@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="de_DE">
 <context>
     <name>ConsoleOperator</name>
     <message>
         <location filename="consoleoperator.cpp" line="+33"/>
         <source>Press any key to continue...</source>
-        <translation type="unfinished"></translation>
+        <translation>Drücken Sie eine beliebige Taste um fortzufahren...</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Failed to start console for un/install operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte keine Konsole öffnen zum De/Installieren</translation>
     </message>
 </context>
 <context>
@@ -19,7 +19,7 @@
     <message>
         <location filename="wizard/databasewizard.cpp" line="+78"/>
         <source>Failed to create/load database!</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte Datenbank nicht erzeugen/laden!</translation>
     </message>
 </context>
 <context>
@@ -27,102 +27,106 @@
     <message>
         <location filename="dbmergerdialog.ui" line="+22"/>
         <source>Merge with:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mergen mit:</translation>
     </message>
     <message>
         <location line="+16"/>
-        <source>select a pacsync database</source>
-        <translation type="unfinished"></translation>
+        <source>select a paxchange database</source>
+        <translation>Wählen Sie eine Paxchange Datenbank</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>application/x-pacsync-database</source>
-        <translation type="unfinished"></translation>
+        <source>application/x-paxchange-database</source>
+        <translation></translation>
     </message>
     <message>
         <location line="+0"/>
         <source>application/octet-stream</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="-27"/>
-        <location line="+37"/>
         <source>Merge Databases</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbanken mergen</translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>Merge</source>
+        <translation>Merge</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Merge Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Merge Log</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Delete Merged file</source>
-        <translation type="unfinished"></translation>
+        <translation>Gemergete Datei löschen</translation>
     </message>
     <message>
         <location filename="dbmergerdialog.cpp" line="+47"/>
         <source>Merged without any conflicts!</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Konflikte bei mergen!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Merge completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Merg abgeschlossen!</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Failed to merge the specified database with the current one! The file does either not exist or is corrupted.</source>
         <oldsource>Failed to merger the specified database with the current one! The file does either not exist or is corrupted.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Konnte die ausgewählte Datenbank nicht mit der aktuellen mergen! Die Datei existiert entweder nicht oder ist korrumpiert.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Merge failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Merge Fehlgeschlagen!</translation>
     </message>
 </context>
 <context>
     <name>DbPathPage</name>
     <message>
         <location filename="wizard/dbpathpage.ui" line="+39"/>
-        <source>select a pacsync database</source>
-        <translation type="unfinished"></translation>
+        <source>select a paxchange database</source>
+        <translation>Wählen Sie eine Paxchange Datenbank</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>application/x-pacsync-database</source>
-        <translation type="unfinished"></translation>
+        <source>application/x-paxchange-database</source>
+        <translation></translation>
     </message>
     <message>
         <location line="+0"/>
         <source>application/octet-stream</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wizard/dbpathpage.cpp" line="+25"/>
         <source>Create new Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Datenbank erstellen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Create a new Database file to store your package synchronization state to.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erzeugen Sie eine neue Datenbank-Datei um Ihre synchronisierten Pakete zu speichern.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Open Existing Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Existierende Datenbank öffnen</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Open an existing Pac-Sync database to be used for this machine.</source>
-        <translation type="unfinished"></translation>
+        <source>Open an existing Paxchange database to be used for this machine.</source>
+        <translation>Laden Sie eine existierende Paxchange Datenbank um sich auf diesem Rechner zu nutzen.</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Failed to load database!</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbank konnte nicht geladen werden!</translation>
     </message>
 </context>
 <context>
@@ -130,22 +134,22 @@
     <message>
         <location filename="wizard/dbselectionpage.ui" line="+14"/>
         <source>Select the database</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbank auswählen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Select the database you want to use, and if you want to create a new one or use an existing one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie die Datenbank, mit der Sie arbeiten möchten - Entweder eine Neue erzeugen oder eine Existierende laden.</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Create new Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Datenbank erstellen</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Load Existing Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Existierende Datenbank öffnen</translation>
     </message>
 </context>
 <context>
@@ -153,77 +157,77 @@
     <message>
         <location filename="widgets/editpackageswidget.ui" line="+14"/>
         <source>Edit Synchronized Packages</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronisierte Pakete bearbeiten</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Select the packages you want to add to the database. Those packages will be synchronized across your machines.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie die Pakete, welche Sie zur Datenbank hinzufügen möchten. Diese werden auf all ihrem Rechnern synchronisiert.</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Extra Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra Filter</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Enter a regular expression to filter the lists below</source>
-        <translation type="unfinished"></translation>
+        <translation>Geben Sie einen regulären Ausdruck zum Filtern ein</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>&amp;Installed Packages:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Installierte Pakete:</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>Add packages to sync list (Ctrl+Right)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pakete zur Synchronisationsliste hinzufügen (Strg+Rechts)</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>-&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>-&gt;</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Ctrl+Right</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Remove packages from sync list (Ctrl+Left)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pakete aus der Synchronisationsliste entfernen (Strg+Links)</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&lt;-</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;-</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Ctrl+Left</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Clear all selections (Esc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswahl zurücksetzen (Esc)</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Esc</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+11"/>
         <source>&amp;Synchronized Packages:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Synchronisierte Pakete:</translation>
     </message>
 </context>
 <context>
@@ -231,57 +235,57 @@
     <message>
         <location filename="widgets/extrafilterswidget.ui" line="+14"/>
         <source>Extra Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra Filter</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Add additional filters. Those have precedence over the normal filters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügen Sie Extra-Filter hinzu. Diese haben Vorrang vor den normalen Filtern.</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Filter Expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter Ausdruck</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modus</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>&amp;Add Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter &amp;hinzufügen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Ctrl+Ins</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+9"/>
         <source>&amp;Remove Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtern &amp;entfernen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="widgets/extrafilterswidget.cpp" line="+98"/>
         <source>Synchronize</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronisieren</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Don&apos;t Synchronize</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht Synchronisieren</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Ask</source>
-        <translation type="unfinished"></translation>
+        <translation>Nachfragen</translation>
     </message>
 </context>
 <context>
@@ -289,7 +293,7 @@
     <message>
         <location filename="widgets/filterswidget.cpp" line="+176"/>
         <source>New Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuer Filter</translation>
     </message>
 </context>
 <context>
@@ -298,77 +302,77 @@
         <location filename="widgets/filterswidget.ui" line="+14"/>
         <source>Package Filters</source>
         <oldsource>Database Filters</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Paket-Filter</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Edit the filters to be used to determine which packages should be added to the database. Everytime you install packages, they are compared against these filters to decide if they should be synced.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstellen Sie Filter, welche entscheiden, ob Pakete nach einer Installation automatisch zur Synchronisation zur Datenbank hinzugefügt werden sollen.</translation>
     </message>
     <message>
         <location line="+86"/>
         <source>Filter &amp;Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter &amp;Name:</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Extra Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra Filter</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Filter by regex</source>
-        <translation type="unfinished"></translation>
+        <translation>Mit regulärem Ausdruck filtern</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&amp;Synchronize</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Synchronisieren</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&amp;Don&apos;t Synchronize</source>
-        <translation type="unfinished"></translation>
+        <translation>N&amp;icht Synchronisieren</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>A&amp;sk</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach&amp;fragen</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Remove &amp;Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht-Verfügbare &amp;löschen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Shift+Del</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+9"/>
         <source>&amp;Add</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hinzufügen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Ctrl+Ins</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+9"/>
         <source>&amp;Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Entfernen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="widgets/filterswidget.cpp" line="-119"/>
         <source>%1-%2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1-%2</translation>
     </message>
 </context>
 <context>
@@ -376,40 +380,44 @@
     <message>
         <location filename="main.cpp" line="+78"/>
         <source>Explicitly select the plugin to be loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestimmt das Plugin, welches geladen werden soll</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Forwards the arguments to the plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitet folgende Argumente an das Plugin weiter</translation>
     </message>
 </context>
 <context>
     <name>GlobalFilterWidget</name>
     <message>
+        <source>Global Filter Fallback</source>
+        <translation type="vanished">Globaler Filter </translation>
+    </message>
+    <message>
         <location filename="widgets/globalfilterwidget.ui" line="+14"/>
         <source>Default Install reaction</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard Installations-Reaktion</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Select what should happen as default action when packages are installed on your machine. This is used as fallback if no other filters apply.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie aus, was passieren soll, wenn ein Paket installiert wird. Diese Regel wird als Standard verwendet, falls keine spezifischen Filter auf ein Paket zutreffen.</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>Synchronize &amp;Everything</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Alles Synchronisieren</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Synchronize &amp;Nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nichts Synchronisieren</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Always &amp;Ask</source>
-        <translation type="unfinished"></translation>
+        <translation>Immer Nach&amp;fragen</translation>
     </message>
 </context>
 <context>
@@ -417,107 +425,107 @@
     <message>
         <location filename="settingsdialog.ui" line="+14"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemein</translation>
     </message>
     <message>
         <location line="+45"/>
         <source>Preferred &amp;Plugin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevorzugtes &amp;Plugin:</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin</translation>
     </message>
     <message>
         <location filename="settingsdialog.cpp" line="+39"/>
         <source>Periodic &amp;Sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Periodische &amp;Synchronisation</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>In cases you file system does not report when the database file gets changed externally, you can enable a periodic resync of the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Falls Ihr Dateisystem externe Änderungen an einer Datei nicht erkennen kann, können sie die Datenbank periodisch neu laden lassen.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Automatic Change detection</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatische Änderungs-Erkennung</translation>
     </message>
     <message>
         <location line="+1"/>
         <source> Minutes</source>
-        <translation type="unfinished"></translation>
+        <translation> Minuten</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Use &amp;GUI Installer</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;GUI-Installer verwenden</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>If supported by the plugin, a GUI will be used instead of a console popup</source>
-        <translation type="unfinished"></translation>
+        <translation>Falls das Plugin es unterstützt, wird eine GUI zur Installation verwendet, anstatt eines Konsolen-Fensters</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Synchronize &amp;Uninstalls</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Deinstallationen Synchronisieren</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>If enabled and packages that are synchronized get uninstalled, they will be uninstalled on all machines.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn die Option aktiviert ist, und synchronisierte Pakete deinstalliert werden, wird dieser ebenfalls auf allen anderen Rechnern deinstalliert.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Operation &amp;Order</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Operations-Reihenfolge</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Specify the order in which operations should be done</source>
-        <translation type="unfinished"></translation>
+        <translation>Spezifizieren Sie die Reihenfolge, in der Operationen durchgeführt werden sollen</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Install then uninstall</source>
-        <translation type="unfinished"></translation>
+        <translation>Erst Installieren, dann Deinstallieren</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Uninstall then install</source>
-        <translation type="unfinished"></translation>
+        <translation>Erst Deinstallieren, dann Installieren</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Default &amp;Console</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard-&amp;Konsole</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Specify the console to use for operations. If left empty, the TERM environment variable will be used</source>
-        <translation type="unfinished"></translation>
+        <translation>Geben Sie die Konsolenanwendung an, welche für De/Installationen verwendet werden soll. Wenn nicht explizit angegeben, wird die Konsole aus der TERM Umgebungsvariable verwendet</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Please restart the application to apply the changed default plugin!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte starten Sie die Anwendung neu, um das geänderte Plugin zu laden!</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Plugin changed</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin geändert</translation>
     </message>
     <message>
         <location line="+97"/>
         <source>:</source>
-        <translation type="unfinished"></translation>
+        <translation>:</translation>
     </message>
 </context>
 <context>
@@ -525,119 +533,119 @@
     <message>
         <location filename="traycontrol.cpp" line="+35"/>
         <source>Review unclear packages</source>
-        <translation type="unfinished"></translation>
+        <translation>Unklare Pakete sichten</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Change Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbank wechseln</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Database Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbank-Aktionen</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Merge Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbank mergen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Synchronize</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronisieren</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Edit Packages</source>
-        <translation type="unfinished"></translation>
+        <translation>Pakete bearbeiten</translation>
     </message>
     <message>
         <location line="+3"/>
         <location line="+133"/>
         <source>Edit Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter bearbeiten</translation>
     </message>
     <message>
         <location line="-129"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+162"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Über</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 — Version %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 — Version %2</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&lt;p&gt;A tool to synchronize installed packages across multiple machines.&lt;/p&gt;&lt;p&gt;Loaded Plugin: &lt;i&gt;%1&lt;/i&gt;&lt;br/&gt;Qt-Version: &lt;a href=&quot;https://www.qt.io/&quot;&gt;%2&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Developed by: Felix Barz and Mike Zeller&lt;br/&gt;Project Website: &lt;a href=&quot;https://github.com/Baum42/pacsync&quot;&gt;https://github.com/Baum42/pacsync&lt;/a&gt;&lt;br/&gt;License: &lt;a href=&quot;https://github.com/Baum42/pacsync/blob/master/LICENSE&quot;&gt;BSD 3 Clause&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Icons based on &lt;a href=&quot;http://www.flaticon.com/authors/roundicons&quot;&gt;Roundicons&lt;/a&gt; from &lt;a href=&quot;http://www.flaticon.com&quot;&gt;www.flaticon.com&lt;/a&gt; and licensed by &lt;a href=&quot;http://creativecommons.org/licenses/by/3.0/&quot;&gt;CC 3.0 BY&lt;/a&gt;&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&lt;p&gt;A tool to synchronize installed packages across multiple machines.&lt;/p&gt;&lt;p&gt;Loaded Plugin: &lt;i&gt;%1&lt;/i&gt;&lt;br/&gt;Qt-Version: &lt;a href=&quot;https://www.qt.io/&quot;&gt;%2&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Developed by: Felix Barz and Mike Zeller&lt;br/&gt;Project Website: &lt;a href=&quot;https://github.com/Baum42/paxchange&quot;&gt;https://github.com/Baum42/paxchange&lt;/a&gt;&lt;br/&gt;License: &lt;a href=&quot;https://github.com/Baum42/paxchange/blob/master/LICENSE&quot;&gt;BSD 3 Clause&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Icons based on &lt;a href=&quot;http://www.flaticon.com/authors/roundicons&quot;&gt;Roundicons&lt;/a&gt; from &lt;a href=&quot;http://www.flaticon.com&quot;&gt;www.flaticon.com&lt;/a&gt; and licensed by &lt;a href=&quot;http://creativecommons.org/licenses/by/3.0/&quot;&gt;CC 3.0 BY&lt;/a&gt;&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Ein Tool zum Synchronisieren von installierten Paketen über mehrere Rechner&lt;/p&gt;&lt;p&gt;Geladenes Plugin: &lt;i&gt;%1&lt;/i&gt;&lt;br/&gt;Qt-Version: &lt;a href=&quot;https://www.qt.io/&quot;&gt;%2&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Entwickelt von: Felix Barz und Mike Zeller&lt;br/&gt;Projekt Website: &lt;a href=&quot;https://github.com/Baum42/paxchange&quot;&gt;https://github.com/Baum42/paxchange&lt;/a&gt;&lt;br/&gt;Lizenz: &lt;a href=&quot;https://github.com/Baum42/paxchange/blob/master/LICENSE&quot;&gt;BSD 3 Clause&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Icons basieren auf &lt;a href=&quot;http://www.flaticon.com/authors/roundicons&quot;&gt;Roundicons&lt;/a&gt; von &lt;a href=&quot;http://www.flaticon.com&quot;&gt;www.flaticon.com&lt;/a&gt; unter der Lizenz &lt;a href=&quot;http://creativecommons.org/licenses/by/3.0/&quot;&gt;CC 3.0 BY&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Über Qt</translation>
     </message>
     <message>
         <location line="-174"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <location line="+62"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung</translation>
     </message>
     <message>
         <location line="+129"/>
         <source>The package database has changed. Packages have to be %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Paket-Datenbank wurde geändert. Pakete müssen %1 werden.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>installed</source>
-        <translation type="unfinished"></translation>
+        <translation>installiert</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Install new packages</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Pakete installieren</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>uninstalled</source>
-        <translation type="unfinished"></translation>
+        <translation>deinstalliert</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Uninstall old packages</source>
-        <translation type="unfinished"></translation>
+        <translation>Alte Pakete deinstallieren</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Packages changed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Pakete geändert!</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Packages unclear!</source>
-        <translation type="unfinished"></translation>
+        <translation>Pakete unklar!</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>There are %L1 packages that need to be revised for synchronization.</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt %L1 unklare Pakete, bei überprüft werden muss, ob sie synchronisiert werden sollen.</translation>
     </message>
 </context>
 <context>
@@ -646,37 +654,37 @@
         <location filename="widgets/unclearpackageswidget.ui" line="+14"/>
         <source>Resolve Unclear Packages</source>
         <oldsource>Relove Unclear Packages</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Unklare Pakete auflösen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Decide whether you want to synchronize packages or not. Those packages either had conflicts or are ment to be solved by hand.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entscheiden Sie, welche der Pakete Sie synchronisieren möchten, und welche nicht. Die Pakete hatten entweder mehrere zutreffende Filter, oder einen &quot;Nachfragen&quot; Filter.</translation>
     </message>
     <message>
         <location line="+34"/>
         <source>Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Paket</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Synchronize / Conflicting Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronisieren / Zutreffende Filter</translation>
     </message>
     <message>
         <location filename="widgets/unclearpackageswidget.cpp" line="+40"/>
         <source>Unclear Packages</source>
-        <translation type="unfinished"></translation>
+        <translation>Unklare Pakete</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Conflicting Packages</source>
-        <translation type="unfinished"></translation>
+        <translation>Pakete mit Filter Konflikt</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>, </source>
-        <translation type="unfinished"></translation>
+        <translation>, </translation>
     </message>
 </context>
 </TS>

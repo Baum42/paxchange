@@ -22,7 +22,7 @@ public slots:
 	void reject() override;
 
 private slots:
-	void on_commandLinkButton_clicked();
+	void on_mergeButton_clicked();
 
 private:
 	Ui::DbMergerDialog *_ui;

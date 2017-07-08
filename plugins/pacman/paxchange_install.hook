@@ -4,7 +4,7 @@ Type=Package
 Target=*
 
 [Action]
-Description=Pacsync install hook
-Exec=/usr/share/libalpm/scripts/pacsync.sh i
+Description=Paxchange install hook
+Exec=/usr/share/libalpm/scripts/paxchange.sh i
 When=PostTransaction
 NeedsTargets

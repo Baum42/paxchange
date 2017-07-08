@@ -234,8 +234,8 @@ void TrayControl::about()
 				   "<p>Loaded Plugin: <i>%1</i><br/>"
 				   "Qt-Version: <a href=\"https://www.qt.io/\">%2</a></p>"
 				   "<p>Developed by: Felix Barz and Mike Zeller<br/>"
-				   "Project Website: <a href=\"https://github.com/Baum42/pacsync\">https://github.com/Baum42/pacsync</a><br/>"
-				   "License: <a href=\"https://github.com/Baum42/pacsync/blob/master/LICENSE\">BSD 3 Clause</a></p>"
+				   "Project Website: <a href=\"https://github.com/Baum42/paxchange\">https://github.com/Baum42/paxchange</a><br/>"
+				   "License: <a href=\"https://github.com/Baum42/paxchange/blob/master/LICENSE\">BSD 3 Clause</a></p>"
 				   "<p>Icons based on <a href=\"http://www.flaticon.com/authors/roundicons\">Roundicons</a> from <a href=\"http://www.flaticon.com\">www.flaticon.com</a> and licensed by <a href=\"http://creativecommons.org/licenses/by/3.0/\">CC 3.0 BY</a></p>")
 				.arg(PluginLoader::currentPlugin())
 				.arg(QStringLiteral(QT_VERSION_STR));

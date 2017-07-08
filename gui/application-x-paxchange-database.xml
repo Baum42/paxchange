@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+	<mime-type type="application/x-paxchange-database">
+		<comment>Package database of Paxchange</comment>
+		<comment xml:lang="en">Package database of Paxchange</comment>
+		<comment xml:lang="de">Paxchange Paket-Datenbank</comment>
+		<icon name="x-paxchange-database"/>
+		<glob-deleteall/>
+		<glob pattern="*.psdb"/>
+	</mime-type>
+</mime-info>

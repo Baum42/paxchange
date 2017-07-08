@@ -4,7 +4,7 @@ Type=Package
 Target=*
 
 [Action]
-Description=Pacsync remove hook
-Exec=/usr/share/libalpm/scripts/pacsync.sh r
+Description=Paxchange remove hook
+Exec=/usr/share/libalpm/scripts/paxchange.sh r
 When=PostTransaction
 NeedsTargets

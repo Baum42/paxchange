@@ -1,13 +1,13 @@
 #ifndef OPERATIONQUEUE_H
 #define OPERATIONQUEUE_H
 
-#include "libpacsync_global.h"
+#include "libpaxchange_global.h"
 #include <QObject>
 #include <QQueue>
 #include "packagemanagerplugin.h"
 class DatabaseController;
 
-class LIBPACSYNC_SHARED_EXPORT OperationQueue : public QObject
+class LIBPAXCHANGE_SHARED_EXPORT OperationQueue : public QObject
 {
 	Q_OBJECT
 

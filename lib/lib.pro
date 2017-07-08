@@ -3,10 +3,10 @@ TEMPLATE = lib
 QT += jsonserializer
 QT -= gui
 
-TARGET = pacsync
-VERSION = $$PACSYNCVER
+TARGET = paxchange
+VERSION = $$PAXCHANGEVER
 
-DEFINES += PACSYNC_LIBRARY
+DEFINES += PAXCHANGE_LIBRARY
 
 isEmpty(PS_STD_PLG): DEFINES += PS_STD_PLG=\\\"\\\"
 else: DEFINES += PS_STD_PLG=\\\"$$PS_STD_PLG\\\"
@@ -18,11 +18,11 @@ HEADERS += \
 	databasecontroller.h \
 	packagedatabase.h \
 	operationqueue.h \
-	libpacsync_global.h \
 	comboboxconfig.h \
 	syncedsettings.h \
 	changefilter.h \
-	databasemerger.h
+	databasemerger.h \
+    libpaxchange_global.h
 
 SOURCES += \
 	packagemanagerplugin.cpp \
@@ -36,18 +36,18 @@ SOURCES += \
 	changefilter.cpp \
 	databasemerger.cpp
 
-TRANSLATIONS += pacsync_lib_de.ts \
-	pacsync_lib_template.ts
+TRANSLATIONS += paxchange_lib_de.ts \
+	paxchange_lib_template.ts
 
 DISTFILES += \
-	pacsync_lib_template.ts \
-	pacsync_lib_de.ts
+	paxchange_lib_template.ts \
+	paxchange_lib_de.ts
 
 unix {
 	target.path = $$[QT_INSTALL_LIBS]
 
 	trInstall.path = $$[QT_INSTALL_TRANSLATIONS]
-	trInstall.files = $$OUT_PWD/pacsync_lib_de.qm
+	trInstall.files = $$OUT_PWD/paxchange_lib_de.qm
 	trInstall.CONFIG += no_check_exist
 
 	INSTALLS += target trInstall

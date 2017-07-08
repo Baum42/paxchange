@@ -28,7 +28,7 @@ void DbPathPage::initializePage()
 		setFinalPage(false);
 	} else if(field(QStringLiteral("isLoad")).toBool()) {
 		setTitle(tr("Open Existing Database"));
-		setSubTitle(tr("Open an existing Pac-Sync database to be used for this machine."));
+		setSubTitle(tr("Open an existing Paxchange database to be used for this machine."));
 		ui->pathedit->setPathMode(QPathEdit::ExistingFile);
 		ui->pathedit->setPath(DatabaseController::instance()->currentPath());
 		setFinalPage(true);
