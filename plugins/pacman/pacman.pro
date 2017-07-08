@@ -10,7 +10,7 @@ TARGET = pacman
 TEMPLATE = lib
 CONFIG += plugin
 
-DESTDIR = $$OUT_PWD/../../pacsync
+DESTDIR = $$OUT_PWD/../../paxchange
 
 HEADERS += \
 	pacmanplugin.h
@@ -19,20 +19,20 @@ SOURCES += \
 	pacmanplugin.cpp
 
 DISTFILES += pacman.json \
-	pacsync_plugin_pacman_de.ts \
-	pacsync_plugin_pacman_template.ts \
-	pacsync.sh \
-	pacsync_install.hook \
-	pacsync_remove.hook
+    paxchange.sh \
+    paxchange_install.hook \
+    paxchange_plugin_pacman_de.ts \
+    paxchange_plugin_pacman_template.ts \
+    paxchange_remove.hook
 
-TRANSLATIONS += pacsync_plugin_pacman_de.ts \
-	pacsync_plugin_pacman_template.ts
+TRANSLATIONS += paxchange_plugin_pacman_de.ts \
+	paxchange_plugin_pacman_template.ts
 
 unix {
-	target.path = $$[QT_INSTALL_PLUGINS]/pacsync
+	target.path = $$[QT_INSTALL_PLUGINS]/paxchange
 
 	trInstall.path = $$[QT_INSTALL_TRANSLATIONS]
-	trInstall.files = $$OUT_PWD/pacsync_plugin_pacman_de.qm
+	trInstall.files = $$OUT_PWD/paxchange_plugin_pacman_de.qm
 	trInstall.CONFIG += no_check_exist
 
 	INSTALLS += target trInstall
@@ -40,9 +40,9 @@ unix {
 
 include(vendor/vendor.pri)
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../lib/release/ -lpacsync
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../lib/debug/ -lpacsync
-else:unix: LIBS += -L$$OUT_PWD/../../lib/ -lpacsync
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../lib/release/ -lpaxchange
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../lib/debug/ -lpaxchange
+else:unix: LIBS += -L$$OUT_PWD/../../lib/ -lpaxchange
 
 INCLUDEPATH += $$PWD/../../lib
 DEPENDPATH += $$PWD/../../lib
