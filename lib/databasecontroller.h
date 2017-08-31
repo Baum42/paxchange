@@ -96,6 +96,6 @@ private:
 	void writeFile(PackageDatabase p, const QString &path);
 	void writeCurrentFile();
 	QString lockPath(const QString &path);
-	};
+};
 
 #endif // DATABASECONTROLLER_H

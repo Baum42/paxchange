@@ -17,13 +17,13 @@ class LIBPAXCHANGE_SHARED_EXPORT PackageManagerPlugin : public QObject
 	Q_OBJECT
 
 public:
-	struct FilterInfo {
+	struct LIBPAXCHANGE_SHARED_EXPORT FilterInfo {
 		QString text;
 		QString toolTip;
 		bool defaultValue;
 	};
 
-	struct SettingsInfo {
+	struct LIBPAXCHANGE_SHARED_EXPORT SettingsInfo {
 		QString displayName;
 		QString description;
 		QString settingsKeys;

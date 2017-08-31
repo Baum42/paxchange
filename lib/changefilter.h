@@ -1,6 +1,7 @@
 #ifndef CHANGEFILTER_H
 #define CHANGEFILTER_H
 
+#include "libpaxchange_global.h"
 #include "packagedatabase.h"
 
 #include <QObject>
@@ -9,7 +10,7 @@
 #include <QHash>
 #include <functional>
 
-class ChangeFilter : public QObject
+class LIBPAXCHANGE_SHARED_EXPORT ChangeFilter : public QObject
 {
 	Q_OBJECT
 

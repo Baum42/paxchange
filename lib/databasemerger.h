@@ -1,10 +1,11 @@
 #ifndef DATABASEMERGER_H
 #define DATABASEMERGER_H
 
+#include "libpaxchange_global.h"
 #include <QObject>
 class QJsonSerializer;
 
-class DatabaseMerger : public QObject
+class LIBPAXCHANGE_SHARED_EXPORT DatabaseMerger : public QObject
 {
 	Q_OBJECT
 

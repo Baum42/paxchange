@@ -1,9 +1,10 @@
 #ifndef SYNCEDSETTINGS_H
 #define SYNCEDSETTINGS_H
 
+#include "libpaxchange_global.h"
 #include <QVariant>
 
-class SyncedSettings
+class LIBPAXCHANGE_SHARED_EXPORT SyncedSettings
 {
 public:
 	SyncedSettings();
