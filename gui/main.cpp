@@ -30,10 +30,11 @@ int main(int argc, char *argv[])
 	parser.process(a);
 
 	QSingleInstance instance;
+	instance.setGlobal(true);
 	instance.setStartupFunction([&]() {
 		if(parser.isSet(QStringLiteral("f"))){
 			PluginLoader::cacheForwardedPluginArgs(parser.positionalArguments());
-			QMetaObject::invokeMethod(qApp, "quit", Qt::QueuedConnection); //DEBUG
+			QMetaObject::invokeMethod(qApp, "quit", Qt::QueuedConnection);
 			return EXIT_SUCCESS;
 		}
 
@@ -49,7 +50,7 @@ int main(int argc, char *argv[])
 
 		if(!DatabaseController::instance()->isLoaded()) {
 			if(!DatabaseWizard::run()) {
-				QMetaObject::invokeMethod(qApp, "quit", Qt::QueuedConnection); //DEBUG
+				QMetaObject::invokeMethod(qApp, "quit", Qt::QueuedConnection);
 				return EXIT_SUCCESS;
 			}
 		} else
