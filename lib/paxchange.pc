@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include/paxchange
+
+Name: Paxchange
+Description: A tool to synchronize installed packages across multiple machines
+Version: 1.0.1
+Requires: Qt5Core Qt5JsonSerializer
+Libs: -lpaxchange
+Cflags: -I${includedir}

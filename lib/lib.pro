@@ -22,7 +22,7 @@ HEADERS += \
 	syncedsettings.h \
 	changefilter.h \
 	databasemerger.h \
-    libpaxchange_global.h
+	libpaxchange_global.h
 
 SOURCES += \
 	packagemanagerplugin.cpp \
@@ -41,7 +41,8 @@ TRANSLATIONS += paxchange_lib_de.ts \
 
 DISTFILES += \
 	paxchange_lib_template.ts \
-	paxchange_lib_de.ts
+	paxchange_lib_de.ts \
+	paxchange.pc
 
 unix {
 	target.path = $$[QT_INSTALL_LIBS]
@@ -50,7 +51,13 @@ unix {
 	trInstall.files = $$OUT_PWD/paxchange_lib_de.qm
 	trInstall.CONFIG += no_check_exist
 
-	INSTALLS += target trInstall
+	hdrInstall.path = /usr/include/$$TARGET
+	hdrInstall.files = $$HEADERS
+
+	pkgInstall.path = /usr/lib/pkgconfig
+	pkgInstall.files = paxchange.pc
+
+	INSTALLS += target hdrInstall pkgInstall trInstall
 }
 
 include(vendor/vendor.pri)
