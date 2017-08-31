@@ -35,17 +35,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>application/x-paxchange-database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>application/octet-stream</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-27"/>
+        <location line="-24"/>
         <source>Merge Databases</source>
         <translation type="unfinished"></translation>
     </message>
@@ -91,16 +81,6 @@
     <message>
         <location filename="wizard/dbpathpage.ui" line="+39"/>
         <source>select a paxchange database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>application/x-paxchange-database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>application/octet-stream</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

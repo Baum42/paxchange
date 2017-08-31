@@ -35,17 +35,7 @@
         <translation>Wählen Sie eine Paxchange Datenbank</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>application/x-paxchange-database</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>application/octet-stream</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="-27"/>
+        <location line="-24"/>
         <source>Merge Databases</source>
         <translation>Datenbanken mergen</translation>
     </message>
@@ -92,16 +82,6 @@
         <location filename="wizard/dbpathpage.ui" line="+39"/>
         <source>select a paxchange database</source>
         <translation>Wählen Sie eine Paxchange Datenbank</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>application/x-paxchange-database</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>application/octet-stream</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="wizard/dbpathpage.cpp" line="+25"/>
@@ -192,7 +172,7 @@
     <message>
         <location line="+7"/>
         <source>Ctrl+Right</source>
-        <translation></translation>
+        <translation>Ctrl+Right</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -207,7 +187,7 @@
     <message>
         <location line="+7"/>
         <source>Ctrl+Left</source>
-        <translation></translation>
+        <translation>Ctrl+Left</translation>
     </message>
     <message>
         <location line="+20"/>
@@ -222,7 +202,7 @@
     <message>
         <location line="+7"/>
         <source>Esc</source>
-        <translation></translation>
+        <translation>Esc</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -260,7 +240,7 @@
     <message>
         <location line="+3"/>
         <source>Ctrl+Ins</source>
-        <translation></translation>
+        <translation>Ctrl+Ins</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -270,7 +250,7 @@
     <message>
         <location line="+3"/>
         <source>Del</source>
-        <translation></translation>
+        <translation>Del</translation>
     </message>
     <message>
         <location filename="widgets/extrafilterswidget.cpp" line="+98"/>
@@ -347,7 +327,7 @@
     <message>
         <location line="+3"/>
         <source>Shift+Del</source>
-        <translation></translation>
+        <translation>Shift+Del</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -357,7 +337,7 @@
     <message>
         <location line="+3"/>
         <source>Ctrl+Ins</source>
-        <translation></translation>
+        <translation>Ctrl+Ins</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -367,7 +347,7 @@
     <message>
         <location line="+3"/>
         <source>Del</source>
-        <translation></translation>
+        <translation>Del</translation>
     </message>
     <message>
         <location filename="widgets/filterswidget.cpp" line="-119"/>
