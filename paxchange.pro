@@ -8,7 +8,8 @@ SUBDIRS += \
 DISTFILES += README.md \
 	LICENSE \
 	TODO.md \
-	symlinkInit.sh
+	symlinkInit.sh \
+	.qmake.conf
 
 gui.depends += lib
 plugins.depends += lib
