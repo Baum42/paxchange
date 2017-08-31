@@ -76,7 +76,7 @@
 <context>
     <name>OperationQueue</name>
     <message>
-        <location filename="operationqueue.cpp" line="+76"/>
+        <location filename="operationqueue.cpp" line="+79"/>
         <source>Failed to reload database!</source>
         <translation>Datenbank konnte nicht geladen werden!</translation>
     </message>

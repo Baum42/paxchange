@@ -358,7 +358,7 @@
 <context>
     <name>GLOBAL</name>
     <message>
-        <location filename="main.cpp" line="+78"/>
+        <location filename="main.cpp" line="+79"/>
         <source>Explicitly select the plugin to be loaded</source>
         <translation>Bestimmt das Plugin, welches geladen werden soll</translation>
     </message>
@@ -588,7 +588,7 @@
         <translation>Warnung</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+131"/>
         <source>The package database has changed. Packages have to be %1.</source>
         <translation>Die Paket-Datenbank wurde geändert. Pakete müssen %1 werden.</translation>
     </message>

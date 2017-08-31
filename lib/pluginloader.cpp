@@ -88,34 +88,50 @@ PackageManagerPlugin *PluginLoader::plugin()
 
 void PluginLoader::cacheForwardedPluginArgs(QStringList args)
 {
-	auto cacheDir = QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
-	cacheDir.mkpath(QStringLiteral("hooks"));
-	cacheDir.cd(QStringLiteral("hooks"));
+	QDir cacheDir(QStringLiteral("/var/cache/paxchange"));
 
-	QTemporaryFile file(cacheDir.absoluteFilePath(QStringLiteral("XXXXXX.cmd")));
-	file.setAutoRemove(false);
-	file.open();
-	QDataStream stream(&file);
-	stream << args;
-	file.close();
+	QFile file(cacheDir.absoluteFilePath(QStringLiteral("hooks.cache")));
+	auto overwrite = file.exists();
+	if(file.open(QIODevice::WriteOnly)) {
+		if(overwrite)
+			qWarning() << "Overwriting previously chached package changes!";
+
+		QDataStream stream(&file);
+		stream << args;
+		file.close();
+
+		qInfo().noquote() << "Cached packages changes because"
+						  << QCoreApplication::applicationName()
+						  << "is not running. Run"
+						  << QCoreApplication::applicationName()
+						  << "before the next package change to react to these changes.";
+	} else {
+		qCritical().noquote() << "Failed to cache packages changes with error:"
+							  << file.errorString();
+	}
 }
 
 void PluginLoader::readCachedForwardedPluginArgs()
 {
-	auto cacheDir = QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
-	if(cacheDir.cd(QStringLiteral("hooks"))){
-		foreach (auto fileInfo, cacheDir.entryInfoList(QDir::Files)) {
-			QFile file(fileInfo.absoluteFilePath());
-			file.open(QIODevice::ReadOnly);
-			QDataStream stream(&file);
-			QStringList args;
-			stream >> args;
-			QMetaObject::invokeMethod(plugin(), "forwardedArguments",
-									   Qt::QueuedConnection,
-									   Q_ARG(QStringList, args));
-			file.close();
-			file.remove();
-		}
+	QDir cacheDir(QStringLiteral("/var/cache/paxchange"));
+
+	QFile file(cacheDir.absoluteFilePath(QStringLiteral("hooks.cache")));
+	if(!file.exists())
+		return;
+
+	if(file.open(QIODevice::ReadOnly)) {
+		QDataStream stream(&file);
+		QStringList args;
+		stream >> args;
+		QMetaObject::invokeMethod(plugin(), "forwardedArguments",
+								   Qt::QueuedConnection,
+								   Q_ARG(QStringList, args));
+		file.close();
+		if(!file.remove())
+			qWarning() << "Failed to remove cache file:" << file.fileName();
+	} else {
+		qCritical().noquote() << "Failed to read cached packages changes with error:"
+							  << file.errorString();
 	}
 }
 

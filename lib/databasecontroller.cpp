@@ -355,6 +355,24 @@ static void setupDatabaseController()
 	QJsonSerializer::registerAllConverters<FilterInfo>();
 	QJsonSerializer::registerAllConverters<ExtraFilter>();
 
+#ifdef Q_OS_WIN
+	qSetMessagePattern(QStringLiteral("%{if-debug}[Debug]    %{endif}"
+									  "%{if-info}[Info]     %{endif}"
+									  "%{if-warning}[Warning]  %{endif}"
+									  "%{if-critical}[Critical] %{endif}"
+									  "%{if-fatal}[Fatal]    %{endif}"
+									  "%{if-category}%{category}: %{endif}"
+									  "%{message}"));
+#else
+	qSetMessagePattern(QStringLiteral("%{if-debug}[\033[32mDebug\033[0m]    %{endif}"
+									  "%{if-info}[\033[36mInfo\033[0m]     %{endif}"
+									  "%{if-warning}[\033[33mWarning\033[0m]  %{endif}"
+									  "%{if-critical}[\033[31mCritical\033[0m] %{endif}"
+									  "%{if-fatal}[\033[35mFatal\033[0m]    %{endif}"
+									  "%{if-category}%{category}: %{endif}"
+									  "%{message}"));
+#endif
+
 	//load translations
 	DatabaseController::loadTranslation(QStringLiteral("paxchange_lib"));
 }
