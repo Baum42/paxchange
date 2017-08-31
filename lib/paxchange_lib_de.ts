@@ -17,13 +17,18 @@
 <context>
     <name>DatabaseController</name>
     <message>
-        <location filename="databasecontroller.cpp" line="+245"/>
+        <location filename="databasecontroller.cpp" line="+53"/>
+        <source>Failed to load last database file!</source>
+        <translation>Konnte zuletzt genutzte Datenbank-Datei nicht laden!</translation>
+    </message>
+    <message>
+        <location line="+193"/>
         <source>Failed to reload changed package database</source>
         <oldsource>Failed to reload changed file</oldsource>
         <translation>Konnte geänderte Paket-Datenbank nicht laden</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+89"/>
         <source>Failed to save package database!</source>
         <oldsource>Failed to save file!</oldsource>
         <translation>Konnte Paket-Datenbank nicht speichern!</translation>

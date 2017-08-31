@@ -47,9 +47,11 @@ DatabaseController::DatabaseController(QObject *parent) :
 			sync();
 		}
 	} catch(QException &e) {
-		qCritical() << e.what();
+		qCritical() << "Load failed:" << e.what();
 		cleanUp();
-		qApp->exit(EXIT_FAILURE);
+		QMetaObject::invokeMethod(this, "guiError", Qt::QueuedConnection,
+								  Q_ARG(QString, tr("Failed to load last database file!")),
+								  Q_ARG(bool, true));
 		return;
 	}
 
@@ -131,10 +133,9 @@ void DatabaseController::loadDb(const QString &path)
 {
 	cleanUp();
 
-	_settings->setValue(QStringLiteral("path"), path);
 	_dbPath = path;
-
 	readFile();
+	_settings->setValue(QStringLiteral("path"), path);
 
 	_watcher->addPath(_dbPath);
 	_loaded = true;
@@ -293,11 +294,14 @@ void DatabaseController::cleanUp()
 
 void DatabaseController::readFile()
 {
+	QFile file(_dbPath);
+	if(!file.exists())
+		throw DatabaseException(QStringLiteral("Database file does not exist"));
+
 	QLockFile lock(lockPath(_dbPath));
 	if(!lock.lock())
 		throw DatabaseException(QStringLiteral("Lock failed"));
 
-	QFile file(_dbPath);
 	if(!file.open(QIODevice::ReadOnly))
 		throw DatabaseException(file.errorString());
 	_packageDatabase = _js->deserializeFrom<PackageDatabase>(&file);
