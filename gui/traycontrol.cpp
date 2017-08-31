@@ -257,6 +257,8 @@ void TrayControl::operationsChanged(OperationQueue::OpertionsFlags operations)
 		reloadIcon();
 	} else {
 		auto op = DatabaseController::instance()->operationQueue();
+		if(op->isOperating())
+			return;
 
 		auto message = tr("The package database has changed. Packages have to be %1.");
 		if(op->nextOperation() == OperationQueue::Install) {

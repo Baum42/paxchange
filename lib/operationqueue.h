@@ -12,6 +12,7 @@ class LIBPAXCHANGE_SHARED_EXPORT OperationQueue : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(OpertionsFlags operations READ operations NOTIFY operationsChanged)
+	Q_PROPERTY(bool operating READ isOperating NOTIFY operatingChanged)
 
 public:
 	enum OpertionsFlag {
@@ -27,6 +28,7 @@ public:
 
 	OpertionsFlags operations() const;
 	OpertionsFlag nextOperation() const;
+	bool isOperating() const;
 
 public slots:
 	void setOperations(const QStringList &install, const QStringList &uninstall);
@@ -35,6 +37,7 @@ public slots:
 
 signals:
 	void operationsChanged(OpertionsFlags operations);
+	void operatingChanged(bool operating);
 	void startCmd(QString cmd);
 
 private:

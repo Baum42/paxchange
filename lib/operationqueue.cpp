@@ -51,6 +51,8 @@ void OperationQueue::startOperation()
 	auto useGui = _controller->readSettings(QStringLiteral("lib/operations/usegui"), true).toBool();
 
 	_operating = true;
+	emit operatingChanged(_operating);
+
 	if(_nextOpFlag == Install) {
 		if(!useGui || !_plugin->startGuiInstall(_nextOp))
 			emit startCmd(_plugin->installationCmd(_nextOp));
@@ -69,6 +71,7 @@ void OperationQueue::cmdDone()
 	try {
 		if(_operating) {
 			_operating = false;
+			emit operatingChanged(_operating);
 			_controller->reloadDb();
 		}
 	} catch(QException &e) {
@@ -85,4 +88,9 @@ OperationQueue::OpertionsFlags OperationQueue::operations() const
 OperationQueue::OpertionsFlag OperationQueue::nextOperation() const
 {
 	return _nextOpFlag;
+}
+
+bool OperationQueue::isOperating() const
+{
+	return _operating;
 }
