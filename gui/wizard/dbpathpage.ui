@@ -39,7 +39,7 @@
       <string>select a paxchange database</string>
      </property>
      <property name="mimeTypeFilters">
-      <stringlist>
+      <stringlist notr="true">
        <string>application/x-paxchange-database</string>
        <string>application/octet-stream</string>
       </stringlist>

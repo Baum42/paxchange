@@ -7,7 +7,8 @@ SUBDIRS += \
 
 DISTFILES += README.md \
 	LICENSE \
-	TODO.md
+	TODO.md \
+	symlinkInit.sh
 
 gui.depends += lib
 plugins.depends += lib
