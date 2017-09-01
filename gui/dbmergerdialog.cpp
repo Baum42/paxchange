@@ -23,11 +23,11 @@ void DbMergerDialog::merge(QWidget *parent)
 	dialog.exec();
 }
 
-void DbMergerDialog::reject()
+void DbMergerDialog::accept()
 {
 	if(_ui->deleteCheckBox->isChecked())
 		QFile::remove(_ui->pathedit->path());
-	QDialog::reject();
+	QDialog::accept();
 }
 
 void DbMergerDialog::on_mergeButton_clicked()
@@ -51,6 +51,7 @@ void DbMergerDialog::on_mergeButton_clicked()
 		}
 
 		DialogMaster::information(this, tr("Merge completed!"));
+		accept();
 	} else {
 		DialogMaster::critical(this,
 							   tr("Failed to merge the specified database with the current one! "

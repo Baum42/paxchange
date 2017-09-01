@@ -19,7 +19,7 @@ public:
 	static void merge(QWidget *parent = nullptr);
 
 public slots:
-	void reject() override;
+	void accept() override;
 
 private slots:
 	void on_mergeButton_clicked();

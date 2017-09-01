@@ -4,10 +4,10 @@
  <widget class="QDialog" name="DbMergerDialog">
   <property name="geometry">
    <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>653</width>
-    <height>402</height>
+	<x>0</x>
+	<y>0</y>
+	<width>653</width>
+	<height>402</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,72 +15,72 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Merge with:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPathEdit" name="pathedit">
-       <property name="style">
-        <enum>QPathEdit::JoinedButton</enum>
-       </property>
-       <property name="editable">
-        <bool>true</bool>
-       </property>
-       <property name="allowEmptyPath">
-        <bool>false</bool>
-       </property>
-       <property name="placeholder">
-        <string>select a paxchange database</string>
-       </property>
-       <property name="mimeTypeFilters">
-        <stringlist notr="true">
-         <string>application/x-paxchange-database</string>
-         <string>application/octet-stream</string>
-        </stringlist>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="mergeButton">
-       <property name="text">
-        <string>Merge</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+	<layout class="QHBoxLayout" name="horizontalLayout">
+	 <item>
+	  <widget class="QLabel" name="label">
+	   <property name="text">
+		<string>Merge with:</string>
+	   </property>
+	  </widget>
+	 </item>
+	 <item>
+	  <widget class="QPathEdit" name="pathedit">
+	   <property name="style">
+		<enum>QPathEdit::JoinedButton</enum>
+	   </property>
+	   <property name="editable">
+		<bool>true</bool>
+	   </property>
+	   <property name="allowEmptyPath">
+		<bool>false</bool>
+	   </property>
+	   <property name="placeholder">
+		<string>select a paxchange database</string>
+	   </property>
+	   <property name="mimeTypeFilters">
+		<stringlist notr="true">
+		 <string>application/x-paxchange-database</string>
+		 <string>application/octet-stream</string>
+		</stringlist>
+	   </property>
+	  </widget>
+	 </item>
+	 <item>
+	  <widget class="QPushButton" name="mergeButton">
+	   <property name="text">
+		<string>Merge</string>
+	   </property>
+	  </widget>
+	 </item>
+	</layout>
    </item>
    <item>
-    <widget class="QTextBrowser" name="textBrowser">
-     <property name="placeholderText">
-      <string>Merge Log</string>
-     </property>
-    </widget>
+	<widget class="QTextBrowser" name="textBrowser">
+	 <property name="placeholderText">
+	  <string>Merge Log</string>
+	 </property>
+	</widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QCheckBox" name="deleteCheckBox">
-       <property name="text">
-        <string>Delete Merged file</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDialogButtonBox" name="buttonBox">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="standardButtons">
-        <set>QDialogButtonBox::Cancel</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
+	<layout class="QHBoxLayout" name="horizontalLayout_2">
+	 <item>
+	  <widget class="QCheckBox" name="deleteCheckBox">
+	   <property name="text">
+		<string>Delete Merged file</string>
+	   </property>
+	  </widget>
+	 </item>
+	 <item>
+	  <widget class="QDialogButtonBox" name="buttonBox">
+	   <property name="orientation">
+		<enum>Qt::Horizontal</enum>
+	   </property>
+	   <property name="standardButtons">
+		<set>QDialogButtonBox::Cancel</set>
+	   </property>
+	  </widget>
+	 </item>
+	</layout>
    </item>
   </layout>
  </widget>
@@ -92,5 +92,22 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>DbMergerDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+	<hint type="sourcelabel">
+	 <x>109</x>
+	 <y>387</y>
+	</hint>
+	<hint type="destinationlabel">
+	 <x>178</x>
+	 <y>393</y>
+	</hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
