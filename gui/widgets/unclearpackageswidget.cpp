@@ -141,14 +141,16 @@ void UnclearDelegate::initStyleOption(QStyleOptionViewItem *option, const QModel
 	QStyle* style = widget ? widget->style() : QApplication::style();
 
 	QStyledItemDelegate::initStyleOption(option, index);
-	option->features |= QStyleOptionViewItem::HasDecoration;
-	option->decorationAlignment = Qt::AlignLeft;
-	option->decorationPosition = QStyleOptionViewItem::Left;
-	option->decorationSize = {
-		style->pixelMetric(QStyle::PM_IndicatorWidth, option, widget) +
-		style->pixelMetric(QStyle::PM_CheckBoxLabelSpacing, option, widget),
-		style->pixelMetric(QStyle::PM_IndicatorHeight, option, widget)
-	};
+
+	if(index.data(UnclearPackagesWidget::IsIgnorableRole).toBool()) {
+		option->features |= QStyleOptionViewItem::HasDecoration;
+		option->decorationAlignment = Qt::AlignLeft;
+		option->decorationPosition = QStyleOptionViewItem::Left;
+		option->decorationSize = {
+			style->pixelMetric(QStyle::PM_IndicatorWidth, option, widget),
+			style->pixelMetric(QStyle::PM_IndicatorHeight, option, widget)
+		};
+	}
 }
 
 void UnclearDelegate::initIgnOpt(QStyle *style, QWidget *widget, QStyleOptionViewItem *option) const
