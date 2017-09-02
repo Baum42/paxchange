@@ -4,12 +4,12 @@
 #include <QPainter>
 #include <QPushButton>
 #include <QHeaderView>
+#include <QMouseEvent>
 
 UnclearPackagesWidget::UnclearPackagesWidget(QWidget *parent) :
 	QWidget(parent),
 	_ui(new Ui::UnclearPackagesWidget),
-	_packageMapping(),
-	_ingorePkgs()
+	_packageMapping()
 {
 	_ui->setupUi(this);
 	_ui->treeWidget->setItemDelegateForColumn(1, new UnclearDelegate(this));
@@ -25,24 +25,14 @@ UnclearPackagesWidget::~UnclearPackagesWidget()
 
 UnclearHelper UnclearPackagesWidget::packages() const
 {
-	QList<UnclearPackageInfo> packages;
+	UnclearHelper packages;
 	for(auto it = _packageMapping.constBegin(); it != _packageMapping.constEnd(); ++it) {
-		if(it.key() && it.key()->checkState(1) == Qt::Checked)
-			packages.append(it.value());
+		if(it.key()->checkState(1) == Qt::Checked)
+			packages.sync.append(it.value());
+		else if(it.key()->data(1, IgnoreCheckRole).toInt() == Qt::Checked)
+			packages.ignore.append(it.value());
 	}
-	return {packages, _ingorePkgs};
-}
-
-bool UnclearPackagesWidget::eventFilter(QObject *watched, QEvent *event)
-{
-	qDebug() << event->type();
-	if(event->type() == QEvent::MouseButtonPress ||
-	   event->type() == QEvent::MouseButtonRelease) {
-		qDebug() << "repaint";
-		_ui->treeWidget->repaint();
-	}
-
-	return QWidget::eventFilter(watched, event);
+	return packages;
 }
 
 void UnclearPackagesWidget::setPackages(UnclearHelper packages)
@@ -50,80 +40,42 @@ void UnclearPackagesWidget::setPackages(UnclearHelper packages)
 	_ui->treeWidget->clear();
 
 	QHash<QString, QTreeWidgetItem*> machines;
-	foreach (auto package, packages.packages) {
+	foreach (auto package, packages.sync) {
 		auto machine = machines.value(package.hostName);
 		if(!machine) {
-			machine = new QTreeWidgetItem(_ui->treeWidget, {package.hostName});
+			machine = new UnclearItem(_ui->treeWidget, {package.hostName});
 			machine->setFlags(machine->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsTristate);
 			machine->setCheckState(1, Qt::Unchecked);
-			auto ask = new QTreeWidgetItem(machine, {tr("Unclear Packages")});
+			auto ask = new UnclearItem(machine, {tr("Unclear Packages")}, true);
 			ask->setFlags(ask->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsTristate);
 			ask->setCheckState(1, Qt::Unchecked);
-			createBtn(ask, true);
-			auto conf = new QTreeWidgetItem(machine, {tr("Conflicting Packages")});
+			auto conf = new UnclearItem(machine, {tr("Conflicting Packages")});
 			conf->setFlags(conf->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsTristate);
 			conf->setCheckState(1, Qt::Unchecked);
 			machines.insert(package.hostName, machine);
 		}
 
-		QTreeWidgetItem *parent = nullptr;
+		UnclearItem *parent = nullptr;
 		if(package.filterNames.isEmpty())
-			parent = machine->child(0);
+			parent = static_cast<UnclearItem*>(machine->child(0));
 		else
-			parent = machine->child(1);
+			parent = static_cast<UnclearItem*>(machine->child(1));
 
-		auto child = new QTreeWidgetItem(parent, {package.name, package.filterNames.join(tr(", "))});
+		auto child = new UnclearItem(parent, {package.name, package.filterNames.join(tr(", "))}, parent->isIgnorable());
 		child->setFlags(child->flags() | Qt::ItemIsUserCheckable);
 		child->setCheckState(1, Qt::Unchecked);
-		if(package.filterNames.isEmpty())
-			createBtn(child, false);
 		_packageMapping.insert(child, package);
 	}
 
 	_ui->treeWidget->expandAll();
 }
 
-void UnclearPackagesWidget::createBtn(QTreeWidgetItem *item, bool isAll)
-{
-	return;
-	auto btn = new QPushButton(isAll ?
-								   tr("Add Ignore Filter for all") :
-								   tr("Add Ignore Filter"),
-							   _ui->treeWidget->viewport());
-	btn->setAutoDefault(false);
-	btn->setDefault(false);
-	btn->setFlat(true);
-
-	connect(btn, &QPushButton::clicked, this, [this, item](){
-		btnAction(item);
-	});
-
-	item->setData(1, ButtonWidgetRole, QVariant::fromValue(btn));
-}
-
-void UnclearPackagesWidget::btnAction(QTreeWidgetItem *item)
-{
-	auto info = _packageMapping.take(item);
-	if(info.isValid())
-		_ingorePkgs.append(info);
-
-	for(auto i = 0; i < item->childCount(); i++) {
-		auto child = item->child(i);
-		btnAction(child);
-	}
-	auto btn = item->data(1, ButtonWidgetRole).value<QWidget*>();
-	if(btn)
-		btn->deleteLater();
-	delete item;
-}
-
 
 
 UnclearHelper::UnclearHelper(const QList<UnclearPackageInfo> &packages, const QList<UnclearPackageInfo> &ignored) :
-	packages(packages),
-	ignored(ignored)
+	sync(packages),
+	ignore(ignored)
 {}
-
 
 
 UnclearDelegate::UnclearDelegate(QObject *parent) :
@@ -132,35 +84,132 @@ UnclearDelegate::UnclearDelegate(QObject *parent) :
 
 void UnclearDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+	auto opt = option;
+	initStyleOption(&opt, index);
+
 	auto widget = qobject_cast<QWidget*>(option.styleObject);
+	auto style = widget ? widget->style() : QApplication::style();
+
+	style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
+
+	//fake a second checkbox
+	if(index.data(UnclearPackagesWidget::IsIgnorableRole).toBool()) {
+		painter->save();
+		painter->setClipRect(opt.rect);
+		initIgnOpt(style, widget, &opt);
+		style->drawPrimitive(QStyle::PE_IndicatorItemViewItemCheck, &opt, painter, widget);
+		painter->restore();
+	}
+}
+
+bool UnclearDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+	Q_ASSERT(event);
+	Q_ASSERT(model);
+
+	if(index.data(UnclearPackagesWidget::IsIgnorableRole).toBool()) {
+		auto value = index.data(UnclearPackagesWidget::IgnoreCheckRole);
+
+		if ((event->type() == QEvent::MouseButtonRelease)
+			|| (event->type() == QEvent::MouseButtonDblClick)
+			|| (event->type() == QEvent::MouseButtonPress)) {
+			auto opt = option;
+			initStyleOption(&opt, index);
+			auto widget = qobject_cast<QWidget*>(option.styleObject);
+			auto style = widget ? widget->style() : QApplication::style();
+			initIgnOpt(style, widget, &opt);
+
+			auto mEvent = static_cast<QMouseEvent*>(event);
+			if (mEvent->button() == Qt::LeftButton && opt.rect.contains(mEvent->pos())) {
+				if ((event->type() == QEvent::MouseButtonPress)
+					|| (event->type() == QEvent::MouseButtonDblClick))
+					return true;
+
+				auto state = static_cast<Qt::CheckState>(value.toInt());
+				state = (state == Qt::Checked) ? Qt::Unchecked : Qt::Checked;
+				return model->setData(index, state, UnclearPackagesWidget::IgnoreCheckRole);
+			}
+		}
+	}
+
+	return QStyledItemDelegate::editorEvent(event, model, option, index);
+}
+
+void UnclearDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+	auto widget = qobject_cast<QWidget*>(option->styleObject);
 	QStyle* style = widget ? widget->style() : QApplication::style();
 
-	auto opt = option;
-	opt.features |= QStyleOptionViewItem::HasDecoration;
-	opt.decorationAlignment = Qt::AlignLeft;
-	opt.decorationPosition = QStyleOptionViewItem::Left;
-	opt.decorationSize = {
-		style->pixelMetric(QStyle::PM_IndicatorWidth, &opt, widget),
-		style->pixelMetric(QStyle::PM_IndicatorHeight, &opt, widget)
+	QStyledItemDelegate::initStyleOption(option, index);
+	option->features |= QStyleOptionViewItem::HasDecoration;
+	option->decorationAlignment = Qt::AlignLeft;
+	option->decorationPosition = QStyleOptionViewItem::Left;
+	option->decorationSize = {
+		style->pixelMetric(QStyle::PM_IndicatorWidth, option, widget) +
+		style->pixelMetric(QStyle::PM_CheckBoxLabelSpacing, option, widget),
+		style->pixelMetric(QStyle::PM_IndicatorHeight, option, widget)
 	};
+}
 
-	QStyledItemDelegate::paint(painter, opt, index);
+void UnclearDelegate::initIgnOpt(QStyle *style, QWidget *widget, QStyleOptionViewItem *option) const
+{
+	option->rect = style->proxy()->subElementRect(QStyle::SE_ItemViewItemCheckIndicator, option, widget);
+	option->rect.moveLeft(option->rect.left() +
+					  style->pixelMetric(QStyle::PM_IndicatorWidth, option, widget) +
+					  style->pixelMetric(QStyle::PM_CheckBoxLabelSpacing, option, widget));
 
-	QStyleOptionButton cOpt;
-	if(widget)
-		cOpt.initFrom(widget);
-	cOpt.state = opt.state;
-	cOpt.direction = opt.direction;
-	cOpt.rect = opt.rect;
-	cOpt.fontMetrics = opt.fontMetrics;
-	cOpt.palette = opt.palette;
-	cOpt.styleObject = opt.styleObject;
-	cOpt.rect = opt.rect;
+	option->state = option->state & ~QStyle::State_HasFocus;
+	switch (option->index.data(UnclearPackagesWidget::IgnoreCheckRole).toInt()) {
+	case Qt::Unchecked:
+		option->state |= QStyle::State_Off;
+		break;
+	case Qt::PartiallyChecked:
+		option->state |= QStyle::State_NoChange;
+		break;
+	case Qt::Checked:
+		option->state |= QStyle::State_On;
+		break;
+	}
+}
 
-	cOpt.rect.setLeft(cOpt.rect.left() +
-					  style->pixelMetric(QStyle::PM_IndicatorWidth, &opt, widget)/* +
-					  style->pixelMetric(QStyle::PM_CheckBoxLabelSpacing, &opt, widget)*/);
 
-	style->drawControl(QStyle::CE_CheckBox, &cOpt, painter, widget);
-	painter->drawRect(opt.rect);
+
+UnclearItem::UnclearItem(QTreeWidgetItem *parent, const QStringList &strings, bool isIgnorable) :
+	QTreeWidgetItem(parent, strings)
+{
+	setData(1, UnclearPackagesWidget::IsIgnorableRole, isIgnorable);
+}
+
+UnclearItem::UnclearItem(QTreeWidget *view, const QStringList &strings) :
+	QTreeWidgetItem(view, strings)
+{
+	setData(1, UnclearPackagesWidget::IsIgnorableRole, false);
+}
+
+bool UnclearItem::isIgnorable() const
+{
+	return data(1, UnclearPackagesWidget::IsIgnorableRole).toBool();
+}
+
+QVariant UnclearItem::data(int column, int role) const
+{
+	if(role == UnclearPackagesWidget::IgnoreCheckRole)
+		return QTreeWidgetItem::data(column + 2, Qt::CheckStateRole);
+	else
+		return QTreeWidgetItem::data(column, role);
+}
+
+void UnclearItem::setData(int column, int role, const QVariant &value)
+{
+	if(role == UnclearPackagesWidget::IgnoreCheckRole) {
+		role = Qt::CheckStateRole;
+		QTreeWidgetItem::setData(column + 2, role, value);
+		if(value.toInt() == Qt::Checked)
+			QTreeWidgetItem::setData(column, role, Qt::Unchecked);
+	} else if(role == Qt::CheckStateRole) {
+		QTreeWidgetItem::setData(column, role, value);
+		if(value.toInt() == Qt::Checked)
+			QTreeWidgetItem::setData(column + 2, role, Qt::Unchecked);
+	} else
+		QTreeWidgetItem::setData(column, role, value);
 }

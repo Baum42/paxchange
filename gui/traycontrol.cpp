@@ -120,9 +120,9 @@ void TrayControl::showUnclearDialog()
 																				 &ok);
 	if(ok) {
 		ctr->beginSaveTransaction();
-		if(!packages.ignored.isEmpty()) {
+		if(!packages.ignore.isEmpty()) {
 			auto filters = ctr->extraFilters();
-			foreach(auto ign, packages.ignored) {
+			foreach(auto ign, packages.ignore) {
 				filters.append({
 								   QStringLiteral("^%1$").arg(QRegularExpression::escape(ign.name)),
 								   FilterInfo::Skip
@@ -130,7 +130,7 @@ void TrayControl::showUnclearDialog()
 			}
 			ctr->setExtraFilters(filters);
 		}
-		ctr->clearPackages(packages.packages);
+		ctr->clearPackages(packages.sync);
 		ctr->commitSave();
 		ctr->sync();
 	}

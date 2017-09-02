@@ -56,7 +56,7 @@
      </column>
      <column>
       <property name="text">
-       <string>Synchronize / Conflicting Filters</string>
+       <string>Synchronize / Ignore / Conflicting Filters</string>
       </property>
      </column>
     </widget>
