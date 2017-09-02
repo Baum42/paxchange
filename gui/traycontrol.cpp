@@ -114,23 +114,35 @@ void TrayControl::showUnclearDialog()
 	enableAll(false);
 
 	auto ctr = DatabaseController::instance();
-	auto ok = false;
-	auto packages = ContentDialog::execute<UnclearPackagesWidget, UnclearHelper>(ctr->listUnclearPackages(),
-																				 nullptr,
-																				 &ok);
-	if(ok) {
-		ctr->beginSaveTransaction();
+	auto resList = ContentDialog::execute(tr("Resolve Unclear Packages"),
+										  QList<QWidget*>({
+											  new UnclearPackagesWidget(),
+											  new FiltersWidget(),
+											  new ExtraFiltersWidget()
+										  }),
+										  {
+											  QVariant::fromValue<UnclearHelper>(ctr->listUnclearPackages()),
+											  QVariant::fromValue(ctr->filters()),
+											  QVariant::fromValue(ctr->extraFilters())
+										  }, 0);
+
+	if(!resList.isEmpty()) {
+		auto packages = resList[0].value<UnclearHelper>();
+		auto filters = resList[2].value<QList<ExtraFilter>>();
+
 		if(!packages.ignore.isEmpty()) {
-			auto filters = ctr->extraFilters();
 			foreach(auto ign, packages.ignore) {
 				filters.append({
 								   QStringLiteral("^%1$").arg(QRegularExpression::escape(ign.name)),
 								   FilterInfo::Skip
 							   });
 			}
-			ctr->setExtraFilters(filters);
 		}
+
+		ctr->beginSaveTransaction();
 		ctr->clearPackages(packages.sync);
+		ctr->setFilters(resList[1].value<QMap<QString,FilterInfo>>());
+		ctr->setExtraFilters(filters);
 		ctr->commitSave();
 		ctr->sync();
 	}
