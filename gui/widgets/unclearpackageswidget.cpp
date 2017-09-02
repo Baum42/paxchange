@@ -85,6 +85,7 @@ void UnclearPackagesWidget::setPackages(UnclearHelper packages)
 
 void UnclearPackagesWidget::createBtn(QTreeWidgetItem *item, bool isAll)
 {
+	return;
 	auto btn = new QPushButton(isAll ?
 								   tr("Add Ignore Filter for all") :
 								   tr("Add Ignore Filter"),
@@ -131,26 +132,35 @@ UnclearDelegate::UnclearDelegate(QObject *parent) :
 
 void UnclearDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	QStyledItemDelegate::paint(painter, option, index);
+	auto widget = qobject_cast<QWidget*>(option.styleObject);
+	QStyle* style = widget ? widget->style() : QApplication::style();
 
-	auto w = index.data(UnclearPackagesWidget::ButtonWidgetRole).value<QPushButton*>();
-	if(w) {
-		QStyle* style = nullptr;
-		auto widget = qobject_cast<QTreeWidget*>(option.styleObject);
-		if(widget)
-			style = widget->style();
-		else
-			style = QApplication::style();
+	auto opt = option;
+	opt.features |= QStyleOptionViewItem::HasDecoration;
+	opt.decorationAlignment = Qt::AlignLeft;
+	opt.decorationPosition = QStyleOptionViewItem::Left;
+	opt.decorationSize = {
+		style->pixelMetric(QStyle::PM_IndicatorWidth, &opt, widget),
+		style->pixelMetric(QStyle::PM_IndicatorHeight, &opt, widget)
+	};
 
-		auto opt = option;
-		auto delta = style->pixelMetric(QStyle::PM_IndicatorWidth, &opt, widget) +
-					 style->pixelMetric(QStyle::PM_CheckBoxLabelSpacing, &opt, widget);
+	QStyledItemDelegate::paint(painter, opt, index);
 
-		auto rect = option.rect;
-		rect.setLeft(rect.x() + delta);
-		rect.setWidth(w->fontMetrics().width(w->text()) +
-					  w->style()->pixelMetric(QStyle::PM_ButtonMargin, nullptr, w) * 2);
-		w->setGeometry(rect);
-		w->setVisible(opt.state.testFlag(QStyle::State_MouseOver));
-	}
+	QStyleOptionButton cOpt;
+	if(widget)
+		cOpt.initFrom(widget);
+	cOpt.state = opt.state;
+	cOpt.direction = opt.direction;
+	cOpt.rect = opt.rect;
+	cOpt.fontMetrics = opt.fontMetrics;
+	cOpt.palette = opt.palette;
+	cOpt.styleObject = opt.styleObject;
+	cOpt.rect = opt.rect;
+
+	cOpt.rect.setLeft(cOpt.rect.left() +
+					  style->pixelMetric(QStyle::PM_IndicatorWidth, &opt, widget)/* +
+					  style->pixelMetric(QStyle::PM_CheckBoxLabelSpacing, &opt, widget)*/);
+
+	style->drawControl(QStyle::CE_CheckBox, &cOpt, painter, widget);
+	painter->drawRect(opt.rect);
 }
