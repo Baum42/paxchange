@@ -10,6 +10,9 @@
     <height>480</height>
    </rect>
   </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>Resolve Unclear Packages</string>
   </property>

@@ -1,6 +1,7 @@
 #ifndef UNCLEARPACKAGESWIDGET_H
 #define UNCLEARPACKAGESWIDGET_H
 
+#include <QStyledItemDelegate>
 #include <QTreeWidget>
 #include <QWidget>
 #include <packagedatabase.h>
@@ -8,6 +9,15 @@
 namespace Ui {
 class UnclearPackagesWidget;
 }
+
+class UnclearDelegate : public QStyledItemDelegate
+{
+public:
+	UnclearDelegate(QObject *parent = nullptr);
+
+	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
+};
 
 class UnclearPackagesWidget : public QWidget
 {
@@ -20,6 +30,8 @@ public:
 	~UnclearPackagesWidget();
 
 	QList<UnclearPackageInfo> packages() const;
+
+	bool eventFilter(QObject *watched, QEvent *event) override;
 
 public slots:
 	void setPackages(QList<UnclearPackageInfo> packages);
