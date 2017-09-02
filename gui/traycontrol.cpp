@@ -115,11 +115,25 @@ void TrayControl::showUnclearDialog()
 
 	auto ctr = DatabaseController::instance();
 	auto ok = false;
-	auto packages = ContentDialog::execute<UnclearPackagesWidget, QList<UnclearPackageInfo>>(ctr->listUnclearPackages(),
-																							 nullptr,
-																							 &ok);
-	if(ok)
-		ctr->clearPackages(packages);
+	auto packages = ContentDialog::execute<UnclearPackagesWidget, UnclearHelper>(ctr->listUnclearPackages(),
+																				 nullptr,
+																				 &ok);
+	if(ok) {
+		ctr->beginSaveTransaction();
+		if(!packages.ignored.isEmpty()) {
+			auto filters = ctr->extraFilters();
+			foreach(auto ign, packages.ignored) {
+				filters.append({
+								   QStringLiteral("^%1$").arg(QRegularExpression::escape(ign.name)),
+								   FilterInfo::Skip
+							   });
+			}
+			ctr->setExtraFilters(filters);
+		}
+		ctr->clearPackages(packages.packages);
+		ctr->commitSave();
+		ctr->sync();
+	}
 
 	enableAll(true);
 }

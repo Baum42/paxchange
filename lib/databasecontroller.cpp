@@ -227,7 +227,6 @@ void DatabaseController::clearPackages(const QList<UnclearPackageInfo> &clearedP
 		_packageDatabase.packages[package.name] = package;
 	_packageDatabase.unclearPackages.clear();
 	writeCurrentFile();
-	sync();
 }
 
 void DatabaseController::sync()
