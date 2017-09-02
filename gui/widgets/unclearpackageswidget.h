@@ -16,7 +16,6 @@ public:
 	UnclearDelegate(QObject *parent = nullptr);
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
 };
 
 class UnclearPackagesWidget : public QWidget

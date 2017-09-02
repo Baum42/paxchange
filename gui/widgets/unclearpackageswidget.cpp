@@ -2,6 +2,8 @@
 #include "ui_unclearpackageswidget.h"
 
 #include <QPainter>
+#include <QPushButton>
+#include <QHeaderView>
 
 UnclearPackagesWidget::UnclearPackagesWidget(QWidget *parent) :
 	QWidget(parent),
@@ -56,6 +58,9 @@ void UnclearPackagesWidget::setPackages(QList<UnclearPackageInfo> packages)
 			auto ask = new QTreeWidgetItem(machine, {tr("Unclear Packages")});
 			ask->setFlags(ask->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsTristate);
 			ask->setCheckState(1, Qt::Unchecked);
+			auto w = new QPushButton(tr("Add Ignore Filter for all"), _ui->treeWidget->viewport());
+			w->setFlat(true);
+			ask->setData(1, Qt::UserRole, QVariant::fromValue(w));
 			auto conf = new QTreeWidgetItem(machine, {tr("Conflicting Packages")});
 			conf->setFlags(conf->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsTristate);
 			conf->setCheckState(1, Qt::Unchecked);
@@ -71,6 +76,11 @@ void UnclearPackagesWidget::setPackages(QList<UnclearPackageInfo> packages)
 		auto child = new QTreeWidgetItem(parent, {package.name, package.filterNames.join(tr(", "))});
 		child->setFlags(child->flags() | Qt::ItemIsUserCheckable);
 		child->setCheckState(1, Qt::Unchecked);
+		if(package.filterNames.isEmpty()) {
+			auto w = new QPushButton(tr("Add Ignore Filter"), _ui->treeWidget->viewport());
+			w->setFlat(true);
+			child->setData(1, Qt::UserRole, QVariant::fromValue(w));
+		}
 		_packageMapping.insert(child, package);
 	}
 
@@ -86,35 +96,24 @@ UnclearDelegate::UnclearDelegate(QObject *parent) :
 void UnclearDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	QStyledItemDelegate::paint(painter, option, index);
-	auto opt = option;
 
-	QStyle* style = nullptr;
-	auto widget = qobject_cast<QWidget*>(option.styleObject);
-	if(widget)
-		style = widget->style();
-	else
-		style = QApplication::style();
+	auto w = index.data(Qt::UserRole).value<QPushButton*>();
+	if(w) {
+		QStyle* style = nullptr;
+		auto widget = qobject_cast<QTreeWidget*>(option.styleObject);
+		if(widget)
+			style = widget->style();
+		else
+			style = QApplication::style();
 
-	auto delta = style->pixelMetric(QStyle::PM_IndicatorWidth, &opt, widget) +
-				 style->pixelMetric(QStyle::PM_CheckBoxLabelSpacing, &opt, widget);
+		auto opt = option;
+		auto delta = style->pixelMetric(QStyle::PM_IndicatorWidth, &opt, widget) +
+					 style->pixelMetric(QStyle::PM_CheckBoxLabelSpacing, &opt, widget);
 
-	QStyleOptionButton tOpt;
-	tOpt.initFrom(widget);
-	tOpt.rect = opt.rect;
-	tOpt.state = opt.state;
-	tOpt.features = QStyleOptionButton::Flat;
-	tOpt.text = tr("Add Ignore Filter");
-
-	tOpt.rect.setLeft(tOpt.rect.x() + delta);
-	tOpt.rect.setWidth(tOpt.fontMetrics.width(tOpt.text) + style->pixelMetric(QStyle::PM_ButtonMargin) * 2);
-	if(tOpt.rect.contains(widget->mapFromGlobal(QCursor::pos())))
-		tOpt.state |= QStyle::State_Sunken;
-	qDebug() << (int)tOpt.state;
-
-	style->drawControl(QStyle::CE_PushButton, &tOpt, painter, widget);
-}
-
-void UnclearDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
-{
-	QStyledItemDelegate::setModelData(editor, model, index);
+		auto rect = option.rect;
+		rect.setLeft(rect.x() + delta);
+		rect.setWidth(w->fontMetrics().width(w->text()) +
+					  w->style()->pixelMetric(QStyle::PM_ButtonMargin, nullptr, w) * 2);
+		w->setGeometry(rect);
+	}
 }
