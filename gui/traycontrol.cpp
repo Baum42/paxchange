@@ -160,6 +160,12 @@ void TrayControl::showUnclearDialog()
 
 void TrayControl::showMessage(const QString &text, bool critical)
 {
+	//log to console
+	if(critical)
+		qCritical().noquote() << text;
+	else
+		qWarning().noquote() << text;
+
 	QTimer::singleShot(500, this, [=](){
 		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/error.ico")));
 		_tray->show();
