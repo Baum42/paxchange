@@ -95,7 +95,6 @@ TrayControl::TrayControl(QObject *parent) :
 
 	_tray->setContextMenu(_trayMenu);
 	_tray->setToolTip(QApplication::applicationDisplayName());
-	showMessage("test123", true);
 }
 
 TrayControl::~TrayControl()
@@ -164,7 +163,7 @@ void TrayControl::showMessage(const QString &text, bool critical)
 	QTimer::singleShot(500, this, [=](){
 		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/error.ico")));
 		_tray->show();
-		_tray->showMessage(critical ? tr("Error") : tr("Warning"),
+		_tray->showMessage((critical ? tr("%1: Error") : tr("%1: Warning")).arg(QApplication::applicationDisplayName()),
 						   text,
 						   critical ? QSystemTrayIcon::Critical : QSystemTrayIcon::Warning);
 
@@ -332,7 +331,7 @@ void TrayControl::operationsChanged(OperationQueue::OpertionsFlags operations)
 
 		reloadIcon();
 		_tray->show();
-		_tray->showMessage(tr("Packages changed!"),
+		_tray->showMessage(tr("%1: Packages changed!").arg(QApplication::applicationDisplayName()),
 						   message,
 						   QSystemTrayIcon::Information);
 	}
@@ -347,7 +346,7 @@ void TrayControl::showUnclear(int count)
 		_unclearAction->setVisible(true);
 		reloadIcon();
 		_tray->show();
-		_tray->showMessage(tr("Packages unclear!"),
+		_tray->showMessage(tr("%1: Packages unclear!").arg(QApplication::applicationDisplayName()),
 						   tr("There are %L1 packages that need to be revised for synchronization.")
 						   .arg(count),
 						   QSystemTrayIcon::Information);

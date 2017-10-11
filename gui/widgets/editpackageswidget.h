@@ -8,6 +8,14 @@
 #include <packagemanagerplugin.h>
 #include "packagemodel.h"
 
+class DummyIconProxyModel : public QSortFilterProxyModel
+{
+public:
+	DummyIconProxyModel(QObject *parent = nullptr);
+
+	QVariant data(const QModelIndex &index, int role) const override;
+};
+
 namespace Ui {
 class EditPackagesWidget;
 }

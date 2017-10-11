@@ -9,7 +9,7 @@ EditPackagesWidget::EditPackagesWidget(QWidget *parent) :
 	_plugin(PluginLoader::plugin()),
 	_boxes(),
 	_pkgModel(new QStringListModel(this)),
-	_pkgFilter(new QSortFilterProxyModel(this)),
+	_pkgFilter(new DummyIconProxyModel(this)),
 	_dbModel(new PackageModel(this)),
 	_dbFilter(new QSortFilterProxyModel(this))
 {
@@ -113,4 +113,18 @@ void EditPackagesWidget::on_regexEdit_textChanged(const QString &text)
 		_pkgFilter->setFilterRegExp(regex);
 		_dbFilter->setFilterRegExp(regex);
 	}
+}
+
+
+
+DummyIconProxyModel::DummyIconProxyModel(QObject *parent) :
+	QSortFilterProxyModel(parent)
+{}
+
+QVariant DummyIconProxyModel::data(const QModelIndex &index, int role) const
+{
+	if(role == Qt::DecorationRole&& index.isValid() && index.column() == 0)
+		return QIcon::fromTheme(QStringLiteral("package-available"));
+	else
+		return QSortFilterProxyModel::data(index, role);
 }
