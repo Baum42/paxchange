@@ -40,16 +40,13 @@ TRANSLATIONS += paxchange_lib_de.ts \
 	paxchange_lib_template.ts
 
 DISTFILES += \
-	paxchange_lib_template.ts \
-	paxchange_lib_de.ts \
-	paxchange.pc
+	paxchange.pc \
+	$$TRANSLATIONS
 
 unix {
 	target.path = $$[QT_INSTALL_LIBS]
 
-	trInstall.path = $$[QT_INSTALL_TRANSLATIONS]
-	trInstall.files = $$OUT_PWD/paxchange_lib_de.qm
-	trInstall.CONFIG += no_check_exist
+	qpmx_ts_target.path = $$[QT_INSTALL_TRANSLATIONS]
 
 	hdrInstall.path = /usr/include/$$TARGET
 	hdrInstall.files = $$HEADERS
@@ -57,7 +54,8 @@ unix {
 	pkgInstall.path = /usr/lib/pkgconfig
 	pkgInstall.files = paxchange.pc
 
-	INSTALLS += target hdrInstall pkgInstall trInstall
+	INSTALLS += target qpmx_ts_target hdrInstall pkgInstall
 }
 
-include(vendor/vendor.pri)
+!ReleaseBuild:!DebugBuild:!system(qpmx -d $$shell_quote($$_PRO_FILE_PWD_) --qmake-run init $$QPMX_EXTRA_OPTIONS $$shell_quote($$QMAKE_QMAKE) $$shell_quote($$OUT_PWD)): error(qpmx initialization failed. Check the compilation log for details.)
+else: include($$OUT_PWD/qpmx_generated.pri)

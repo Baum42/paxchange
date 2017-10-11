@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT       += core gui widgets
+QT += core gui widgets
 
 TARGET = paxchange
 VERSION = $$PAXCHANGEVER
@@ -38,7 +38,7 @@ HEADERS += \
 	dbmergerdialog.h
 
 SOURCES += \
-		main.cpp \
+	main.cpp \
 	traycontrol.cpp \
 	contentdialog.cpp \
 	packagemodel.cpp \
@@ -69,26 +69,19 @@ FORMS += \
 RESOURCES += \
 	paxchange_gui.qrc
 
-DISTFILES += \
-	application-x-paxchange-database.xml \
-	paxchange_gui_de.ts \
-	paxchange_gui_template.ts \
-	paxchange.desktop
-
 TRANSLATIONS += paxchange_gui_de.ts \
 	paxchange_gui_template.ts
 
+DISTFILES += \
+	application-x-paxchange-database.xml \
+	paxchange.desktop \
+	$$TRANSLATIONS
+
 unix {
 	target.path = $$[QT_INSTALL_BINS]
-
-	trInstall.path = $$[QT_INSTALL_TRANSLATIONS]
-	trInstall.files = $$OUT_PWD/paxchange_gui_de.qm
-	trInstall.CONFIG += no_check_exist
-
-	INSTALLS += target trInstall
+	qpmx_ts_target.path = $$[QT_INSTALL_TRANSLATIONS]
+	INSTALLS += target qpmx_ts_target
 }
-
-include(vendor/vendor.pri)
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../lib/release/ -lpaxchange
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../lib/debug/ -lpaxchange
@@ -96,3 +89,6 @@ else:unix: LIBS += -L$$OUT_PWD/../lib/ -lpaxchange
 
 INCLUDEPATH += $$PWD/../lib
 DEPENDPATH += $$PWD/../lib
+
+!ReleaseBuild:!DebugBuild:!system(qpmx -d $$shell_quote($$_PRO_FILE_PWD_) --qmake-run init $$QPMX_EXTRA_OPTIONS $$shell_quote($$QMAKE_QMAKE) $$shell_quote($$OUT_PWD)): error(qpmx initialization failed. Check the compilation log for details.)
+else: include($$OUT_PWD/qpmx_generated.pri)
