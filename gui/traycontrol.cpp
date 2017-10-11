@@ -20,54 +20,62 @@ TrayControl::TrayControl(QObject *parent) :
 	_trayMenu(new QMenu()),
 	_operateAction(nullptr),
 	_unclearAction(nullptr),
-	_dialogAction(nullptr)
+	_errorAction(nullptr),
+	_lastCritical()
 {
 	qRegisterMetaType<QSystemTrayIcon::ActivationReason>("QSystemTrayIcon::ActivationReason");
 	auto db = DatabaseController::instance();
 
+	_errorAction = _trayMenu->addAction(QIcon::fromTheme(QStringLiteral("dialog-error-symbolic")),
+										tr("Show &Error-Message"),
+										this, &TrayControl::clearError);
+	auto font = _errorAction->font();
+	font.setBold(true);
+	_errorAction->setFont(font);
+	_errorAction->setVisible(false);
+
 	_operateAction = _trayMenu->addAction(QIcon(), QString(), this, &TrayControl::startOperation);
-	auto font = _operateAction->font();
 	font.setBold(true);
 	_operateAction->setFont(font);
 	_operateAction->setVisible(false);
 
 	_unclearAction = _trayMenu->addAction(QIcon::fromTheme(QStringLiteral("package-available-locked")),
-										  tr("Review unclear packages"),
+										  tr("Review &unclear packages"),
 										  this, &TrayControl::showUnclearDialog);
 	_unclearAction->setFont(font);
 	_unclearAction->setVisible(false);
 
 	_trayMenu->addSeparator();
 	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("package-new")),
-						 tr("Change Database"),
+						 tr("&Change Database"),
 						 this, &TrayControl::changeDatabase);
 
 	auto dbMenu = _trayMenu->addMenu(QIcon::fromTheme(QStringLiteral("package-available")),
-									 tr("Database Actions"));
+									 tr("Database &Actions"));
 	dbMenu->addAction(QIcon::fromTheme(QStringLiteral("merge")),
-					  tr("Merge Database"),
+					  tr("&Merge Database"),
 					  this, &TrayControl::mergeDatabase);
 	dbMenu->addAction(QIcon::fromTheme(QStringLiteral("view-refresh")),
-					  tr("Synchronize"),
+					  tr("&Synchronize"),
 					  db, &DatabaseController::sync);
 	dbMenu->addSeparator();
 	dbMenu->addAction(QIcon::fromTheme(QStringLiteral("package-upgrade")),
-					  tr("Edit Packages"),
+					  tr("Edit &Packages"),
 					  this, &TrayControl::editPackages);
 	dbMenu->addAction(QIcon::fromTheme(QStringLiteral("view-filter")),
-					  tr("Edit Filters"),
+					  tr("Edit &Filters"),
 					  this, &TrayControl::editFilters);
 	dbMenu->addSeparator();
 	dbMenu->addAction(QIcon::fromTheme(QStringLiteral("gtk-preferences")),
-					  tr("Settings"),
+					  tr("Se&ttings"),
 					  this, &TrayControl::openSettings);
 
 	_trayMenu->addSeparator();
 	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("help-about")),
-						 tr("About"),
+						 tr("A&bout"),
 						 this, &TrayControl::about);
 	_trayMenu->addAction(QIcon::fromTheme(QStringLiteral("gtk-quit")),
-						 tr("Quit"),
+						 tr("&Quit"),
 						 qApp, &QApplication::quit);
 
 	connect(db->operationQueue(), &OperationQueue::operationsChanged,
@@ -87,6 +95,7 @@ TrayControl::TrayControl(QObject *parent) :
 
 	_tray->setContextMenu(_trayMenu);
 	_tray->setToolTip(QApplication::applicationDisplayName());
+	showMessage("test123", true);
 }
 
 TrayControl::~TrayControl()
@@ -158,6 +167,12 @@ void TrayControl::showMessage(const QString &text, bool critical)
 		_tray->showMessage(critical ? tr("Error") : tr("Warning"),
 						   text,
 						   critical ? QSystemTrayIcon::Critical : QSystemTrayIcon::Warning);
+
+		if(critical) {
+			_lastCritical = text;
+			_errorAction->setVisible(true);
+			reloadIcon();
+		}
 	});
 }
 
@@ -170,7 +185,9 @@ void TrayControl::trayAction(QSystemTrayIcon::ActivationReason reason)
 {
 	switch (reason) {
 	case QSystemTrayIcon::Trigger:
-		if(_unclearAction->isVisible())
+		if(_errorAction->isVisible())
+			_errorAction->trigger();
+		else if(_unclearAction->isVisible())
 			_unclearAction->trigger();
 		else if(_operateAction->isVisible())
 			_operateAction->trigger();
@@ -189,7 +206,9 @@ void TrayControl::changeDatabase()
 
 void TrayControl::mergeDatabase()
 {
+	enableAll(false);
 	DbMergerDialog::merge();
+	enableAll(true);
 }
 
 void TrayControl::editPackages()
@@ -244,6 +263,19 @@ void TrayControl::openSettings()
 	enableAll(true);
 }
 
+void TrayControl::clearError()
+{
+	enableAll(false);
+	DialogMaster::critical(nullptr,
+						   _lastCritical,
+						   tr("An error occured!"),
+						   tr("Last error"));
+	_lastCritical.clear();
+	_errorAction->setVisible(false);
+	reloadIcon();
+	enableAll(true);
+}
+
 void TrayControl::about()
 {
 	static int counter = 0;
@@ -290,11 +322,11 @@ void TrayControl::operationsChanged(OperationQueue::OpertionsFlags operations)
 		if(op->nextOperation() == OperationQueue::Install) {
 			message = message.arg(tr("installed"));
 			_operateAction->setIcon(QIcon::fromTheme(QStringLiteral("package-install")));
-			_operateAction->setText(tr("Install new packages"));
+			_operateAction->setText(tr("&Install new packages"));
 		} else if(op->nextOperation() == OperationQueue::Uninstall) {
 			message = message.arg(tr("uninstalled"));
 			_operateAction->setIcon(QIcon::fromTheme(QStringLiteral("package-remove")));
-			_operateAction->setText(tr("Uninstall old packages"));
+			_operateAction->setText(tr("Un&install old packages"));
 		}
 		_operateAction->setVisible(true);
 
@@ -331,7 +363,9 @@ void TrayControl::enableAll(bool enable)
 
 void TrayControl::reloadIcon()
 {
-	if(_unclearAction->isVisible())
+	if(_errorAction->isVisible())
+		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/error.ico")));
+	else if(_unclearAction->isVisible())
 		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/question.ico")));
 	else if(_operateAction->isVisible())
 		_tray->setIcon(QIcon(QStringLiteral(":/icons/tray/install.ico")));

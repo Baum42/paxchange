@@ -32,6 +32,7 @@ private slots:
 	void editPackages();
 	void editFilters();
 	void openSettings();
+	void clearError();
 
 	void about();
 
@@ -44,7 +45,8 @@ private:
 
 	QAction *_operateAction;
 	QAction *_unclearAction;
-	QAction *_dialogAction;
+	QAction *_errorAction;
+	QString _lastCritical;
 
 	void enableAll(bool enable);
 	void reloadIcon();
