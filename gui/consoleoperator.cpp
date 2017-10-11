@@ -28,10 +28,11 @@ void ConsoleOperator::startCmd(QString cmd)
 	tmp->open();
 
 	QTextStream stream(tmp);
-	stream << QStringLiteral("#!/bin/sh\n")
-		   << cmd << QStringLiteral("\necho -e\nread -n 1 -p \"")
-		   << tr("Press any key to continue...")
-		   << QStringLiteral("\"\n");
+	stream << "#!/bin/sh\n"
+		   << "echo '" << tr("executing: %1").arg(cmd) << "'\n"
+		   << cmd
+		   << "\necho -e\n"
+		   << "read -n 1 -p \"" << tr("Press any key to continue...") << "\"\n";
 	stream.flush();
 	tmp->close();
 	tmp->setPermissions(tmp->permissions() | QFileDevice::ExeUser);
