@@ -47,6 +47,7 @@ unix {
 	target.path = $$[QT_INSTALL_LIBS]
 
 	qpmx_ts_target.path = $$[QT_INSTALL_TRANSLATIONS]
+	qpmx_ts_target.files += paxchange_lib_template.ts
 
 	hdrInstall.path = /usr/include/$$TARGET
 	hdrInstall.files = $$HEADERS

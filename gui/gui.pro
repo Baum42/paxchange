@@ -80,6 +80,7 @@ DISTFILES += \
 unix {
 	target.path = $$[QT_INSTALL_BINS]
 	qpmx_ts_target.path = $$[QT_INSTALL_TRANSLATIONS]
+	qpmx_ts_target.files += paxchange_gui_template.ts
 	INSTALLS += target qpmx_ts_target
 }
 

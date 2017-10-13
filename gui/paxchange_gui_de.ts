@@ -4,12 +4,17 @@
 <context>
     <name>ConsoleOperator</name>
     <message>
-        <location filename="consoleoperator.cpp" line="+33"/>
+        <location filename="consoleoperator.cpp" line="+32"/>
+        <source>executing: %1</source>
+        <translation>Führe aus: %1</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Press any key to continue...</source>
         <translation>Drücken Sie eine beliebige Taste um fortzufahren...</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+22"/>
         <source>Failed to start console for un/install operations</source>
         <translation>Konnte keine Konsole öffnen zum De/Installieren</translation>
     </message>
@@ -65,7 +70,7 @@
         <translation>Merg abgeschlossen!</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Failed to merge the specified database with the current one! The file does either not exist or is corrupted.</source>
         <oldsource>Failed to merger the specified database with the current one! The file does either not exist or is corrupted.</oldsource>
         <translation>Konnte die ausgewählte Datenbank nicht mit der aktuellen mergen! Die Datei existiert entweder nicht oder ist korrumpiert.</translation>
@@ -371,10 +376,6 @@
 <context>
     <name>GlobalFilterWidget</name>
     <message>
-        <source>Global Filter Fallback</source>
-        <translation type="vanished">Globaler Filter </translation>
-    </message>
-    <message>
         <location filename="widgets/globalfilterwidget.ui" line="+14"/>
         <source>Default Install reaction</source>
         <translation>Standard Installations-Reaktion</translation>
@@ -511,49 +512,92 @@
 <context>
     <name>TrayControl</name>
     <message>
-        <location filename="traycontrol.cpp" line="+35"/>
-        <source>Review unclear packages</source>
-        <translation>Unklare Pakete sichten</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Change Database</source>
-        <translation>Datenbank wechseln</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Database Actions</source>
-        <translation>Datenbank-Aktionen</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Merge Database</source>
-        <translation>Datenbank mergen</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Synchronize</source>
-        <translation>Synchronisieren</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Edit Packages</source>
-        <translation>Pakete bearbeiten</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location line="+133"/>
+        <location filename="traycontrol.cpp" line="+241"/>
         <source>Edit Filters</source>
         <translation>Filter bearbeiten</translation>
     </message>
     <message>
-        <location line="-129"/>
-        <source>Settings</source>
-        <translation>Einstellungen</translation>
+        <location line="-211"/>
+        <source>Show &amp;Error-Message</source>
+        <translation>&amp;Fehler-Meldung anzeigen</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Review &amp;unclear packages</source>
+        <translation>&amp;Unklare Pakete sichten</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>&amp;Change Database</source>
+        <translation>Datenbank &amp;wechseln</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Database &amp;Actions</source>
+        <translation>Datenbank-&amp;Aktionen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&amp;Merge Database</source>
+        <translation>Datenbanken &amp;mergen</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;Synchronize</source>
+        <translation>&amp;Synchronisieren</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Edit &amp;Packages</source>
+        <translation>&amp;Pakete bearbeiten</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Edit &amp;Filters</source>
+        <translation>&amp;Filter bearbeiten</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Se&amp;ttings</source>
+        <translation>&amp;Einstellungen</translation>
     </message>
     <message>
         <location line="+5"/>
-        <location line="+162"/>
+        <source>A&amp;bout</source>
+        <translation>&amp;Über</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;Quit</source>
+        <translation>&amp;Beenden</translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <source>Resolve Unclear Packages</source>
+        <translation>Unklare Pakete auflösen</translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <source>%1: Error</source>
+        <translation>%1: Error</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>%1: Warning</source>
+        <translation>%1: Warnung</translation>
+    </message>
+    <message>
+        <location line="+104"/>
+        <source>An error occured!</source>
+        <translation>Ein Fehler ist aufgetreten!</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Last error</source>
+        <translation>Letzer Fehler</translation>
+    </message>
+    <message>
+        <location line="+15"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
@@ -573,22 +617,27 @@
         <translation>Über Qt</translation>
     </message>
     <message>
-        <location line="-174"/>
-        <source>Quit</source>
-        <translation>Beenden</translation>
+        <location line="+23"/>
+        <source>&amp;Install new packages</source>
+        <translation>Neue Pakete &amp;installieren</translation>
     </message>
     <message>
-        <location line="+62"/>
-        <source>Error</source>
-        <translation>Error</translation>
+        <location line="+4"/>
+        <source>Un&amp;install old packages</source>
+        <translation>Alte Pakete de&amp;installieren</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Warning</source>
-        <translation>Warnung</translation>
+        <location line="+6"/>
+        <source>%1: Packages changed!</source>
+        <translation>%1: Pakete geändert!</translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+15"/>
+        <source>%1: Packages unclear!</source>
+        <translation>%1: Pakete unklar!</translation>
+    </message>
+    <message>
+        <location line="-29"/>
         <source>The package database has changed. Packages have to be %1.</source>
         <translation>Die Paket-Datenbank wurde geändert. Pakete müssen %1 werden.</translation>
     </message>
@@ -598,32 +647,12 @@
         <translation>installiert</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Install new packages</source>
-        <translation>Neue Pakete installieren</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>uninstalled</source>
         <translation>deinstalliert</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Uninstall old packages</source>
-        <translation>Alte Pakete deinstallieren</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Packages changed!</source>
-        <translation>Pakete geändert!</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Packages unclear!</source>
-        <translation>Pakete unklar!</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+24"/>
         <source>There are %L1 packages that need to be revised for synchronization.</source>
         <translation>Es gibt %L1 unklare Pakete, bei überprüft werden muss, ob sie synchronisiert werden sollen.</translation>
     </message>
@@ -631,7 +660,7 @@
 <context>
     <name>UnclearPackagesWidget</name>
     <message>
-        <location filename="widgets/unclearpackageswidget.ui" line="+14"/>
+        <location filename="widgets/unclearpackageswidget.ui" line="+17"/>
         <source>Resolve Unclear Packages</source>
         <oldsource>Relove Unclear Packages</oldsource>
         <translation>Unklare Pakete auflösen</translation>
@@ -648,11 +677,11 @@
     </message>
     <message>
         <location line="+5"/>
-        <source>Synchronize / Conflicting Filters</source>
-        <translation>Synchronisieren / Zutreffende Filter</translation>
+        <source>Synchronize / Ignore / Conflicting Filters</source>
+        <translation>Synchronisieren / Ignorieren / Zutreffende Filter</translation>
     </message>
     <message>
-        <location filename="widgets/unclearpackageswidget.cpp" line="+40"/>
+        <location filename="widgets/unclearpackageswidget.cpp" line="+49"/>
         <source>Unclear Packages</source>
         <translation>Unklare Pakete</translation>
     </message>

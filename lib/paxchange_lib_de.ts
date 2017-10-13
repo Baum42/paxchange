@@ -22,7 +22,7 @@
         <translation>Konnte zuletzt genutzte Datenbank-Datei nicht laden!</translation>
     </message>
     <message>
-        <location line="+193"/>
+        <location line="+192"/>
         <source>Failed to reload changed package database</source>
         <oldsource>Failed to reload changed file</oldsource>
         <translation>Konnte geänderte Paket-Datenbank nicht laden</translation>

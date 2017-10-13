@@ -4,12 +4,17 @@
 <context>
     <name>ConsoleOperator</name>
     <message>
-        <location filename="consoleoperator.cpp" line="+33"/>
+        <location filename="consoleoperator.cpp" line="+32"/>
+        <source>executing: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Press any key to continue...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+22"/>
         <source>Failed to start console for un/install operations</source>
         <translation type="unfinished"></translation>
     </message>
@@ -65,7 +70,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Failed to merge the specified database with the current one! The file does either not exist or is corrupted.</source>
         <oldsource>Failed to merger the specified database with the current one! The file does either not exist or is corrupted.</oldsource>
         <translation type="unfinished"></translation>
@@ -507,49 +512,92 @@
 <context>
     <name>TrayControl</name>
     <message>
-        <location filename="traycontrol.cpp" line="+35"/>
-        <source>Review unclear packages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Change Database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Database Actions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Merge Database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Synchronize</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Edit Packages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location line="+133"/>
+        <location filename="traycontrol.cpp" line="+241"/>
         <source>Edit Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-129"/>
-        <source>Settings</source>
+        <location line="-211"/>
+        <source>Show &amp;Error-Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Review &amp;unclear packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>&amp;Change Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Database &amp;Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&amp;Merge Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;Synchronize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Edit &amp;Packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Edit &amp;Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Se&amp;ttings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location line="+162"/>
+        <source>A&amp;bout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <source>Resolve Unclear Packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <source>%1: Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>%1: Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+104"/>
+        <source>An error occured!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Last error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
@@ -569,22 +617,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-174"/>
-        <source>Quit</source>
+        <location line="+23"/>
+        <source>&amp;Install new packages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
-        <source>Error</source>
+        <location line="+4"/>
+        <source>Un&amp;install old packages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Warning</source>
+        <location line="+6"/>
+        <source>%1: Packages changed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+15"/>
+        <source>%1: Packages unclear!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-29"/>
         <source>The package database has changed. Packages have to be %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -594,32 +647,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Install new packages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>uninstalled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Uninstall old packages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Packages changed!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Packages unclear!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+24"/>
         <source>There are %L1 packages that need to be revised for synchronization.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -627,7 +660,7 @@
 <context>
     <name>UnclearPackagesWidget</name>
     <message>
-        <location filename="widgets/unclearpackageswidget.ui" line="+14"/>
+        <location filename="widgets/unclearpackageswidget.ui" line="+17"/>
         <source>Resolve Unclear Packages</source>
         <oldsource>Relove Unclear Packages</oldsource>
         <translation type="unfinished"></translation>
@@ -644,11 +677,11 @@
     </message>
     <message>
         <location line="+5"/>
-        <source>Synchronize / Conflicting Filters</source>
+        <source>Synchronize / Ignore / Conflicting Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="widgets/unclearpackageswidget.cpp" line="+40"/>
+        <location filename="widgets/unclearpackageswidget.cpp" line="+49"/>
         <source>Unclear Packages</source>
         <translation type="unfinished"></translation>
     </message>

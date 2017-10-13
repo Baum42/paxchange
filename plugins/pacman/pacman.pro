@@ -25,6 +25,7 @@ DISTFILES += pacman.json \
 unix {
 	target.path = $$[QT_INSTALL_PLUGINS]/paxchange
 	qpmx_ts_target.path = $$[QT_INSTALL_TRANSLATIONS]
+	qpmx_ts_target.files += paxchange_plugin_pacman_template.ts
 	INSTALLS += target qpmx_ts_target
 }
 

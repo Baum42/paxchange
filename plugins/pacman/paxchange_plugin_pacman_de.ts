@@ -45,10 +45,6 @@
         <translation>Die Parameter, welche bei einer Deinstallation übergeben werden. %p wird durch die Liste der Pakete ersetzt (getrennt mit Leerzeichen). Wenn nicht enthalten, werden diesen ans Ende angehangen</translation>
     </message>
     <message>
-        <source>Invalid plugin parameters</source>
-        <translation type="obsolete">Ungültige Plugin-Parameter</translation>
-    </message>
-    <message>
         <location line="-10"/>
         <source>&amp;Install parameters</source>
         <oldsource>Extra &amp;install parameters</oldsource>
