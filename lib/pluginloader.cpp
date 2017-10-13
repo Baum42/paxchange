@@ -7,9 +7,8 @@
 #include <QDebug>
 #include <QGlobalStatic>
 #include <QDataStream>
-#ifndef QT_NO_DEBUG
 #include <QCoreApplication>
-#else
+#ifdef QT_NO_DEBUG
 #include <QLibraryInfo>
 #endif
 
