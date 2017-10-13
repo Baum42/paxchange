@@ -33,8 +33,10 @@ int main(int argc, char *argv[])
 	instance.setGlobal(true);
 	instance.setStartupFunction([&]() {
 		if(parser.isSet(QStringLiteral("f"))){
-			PluginLoader::cacheForwardedPluginArgs(parser.positionalArguments());
-			QMetaObject::invokeMethod(qApp, "quit", Qt::QueuedConnection);
+			if(PluginLoader::cacheForwardedPluginArgs(parser.positionalArguments()))
+				QMetaObject::invokeMethod(qApp, "quit", Qt::QueuedConnection);
+			else
+				return EXIT_FAILURE;
 			return EXIT_SUCCESS;
 		}
 

@@ -86,9 +86,20 @@ PackageManagerPlugin *PluginLoader::plugin()
 	return pluginLoader->_plugin;
 }
 
-void PluginLoader::cacheForwardedPluginArgs(QStringList args)
+bool PluginLoader::cacheForwardedPluginArgs(QStringList args)
 {
 	QDir cacheDir(QStringLiteral("/var/cache/paxchange"));
+
+	if(!cacheDir.exists()) {
+		if(!cacheDir.mkpath(QStringLiteral("."))) {
+			qCritical().noquote() << "Failed to create cache directory" << cacheDir.absolutePath();
+			return false;
+		}
+		QFile::setPermissions(cacheDir.absolutePath(),
+							  QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ExeOwner |
+							  QFileDevice::ReadGroup | QFileDevice::WriteGroup | QFileDevice::ExeGroup |
+							  QFileDevice::ReadOther | QFileDevice::WriteOther | QFileDevice::ExeOther);
+	}
 
 	QFile file(cacheDir.absoluteFilePath(QStringLiteral("hooks.cache")));
 	auto overwrite = file.exists();
@@ -105,9 +116,11 @@ void PluginLoader::cacheForwardedPluginArgs(QStringList args)
 						  << "is not running. Run"
 						  << QCoreApplication::applicationName()
 						  << "before the next package change to react to these changes.";
+		return true;
 	} else {
 		qCritical().noquote() << "Failed to cache packages changes with error:"
 							  << file.errorString();
+		return false;
 	}
 }
 

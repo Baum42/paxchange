@@ -22,7 +22,7 @@ public:
 
 	static PackageManagerPlugin *plugin();
 
-	static void cacheForwardedPluginArgs(QStringList args);
+	static bool cacheForwardedPluginArgs(QStringList args);
 	static void readCachedForwardedPluginArgs();
 
 private:
