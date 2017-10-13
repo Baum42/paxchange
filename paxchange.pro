@@ -14,8 +14,8 @@ DISTFILES += README.md \
 gui.depends += lib
 plugins.depends += lib
 
-qpmlrelease.target = lrelease
-qpmlrelease.CONFIG += recursive
-qpmlrelease.recurse_target = lrelease
+qpmxlrelease.target = lrelease
+qpmxlrelease.CONFIG += recursive
+qpmxlrelease.recurse_target = lrelease
 
-QMAKE_EXTRA_TARGETS += lrelease
+QMAKE_EXTRA_TARGETS += qpmxlrelease
