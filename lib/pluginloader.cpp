@@ -31,7 +31,7 @@ PluginLoader::PluginLoader(QObject *parent) :
 
 	QDir plugDir(path);
 	plugDir.setFilter(QDir::Files | QDir::Readable);
-	foreach (auto plg, plugDir.entryList()) {
+	for (auto plg : plugDir.entryList()) {
 		auto loader = new QPluginLoader(plugDir.absoluteFilePath(plg), this);
 		auto meta = loader->metaData();
 		if(meta[QStringLiteral("IID")].toString() == QStringLiteral(PackageManagerPlugin_iid)) {

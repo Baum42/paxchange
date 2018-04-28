@@ -41,7 +41,7 @@ QList<ExtraFilter> ExtraFiltersWidget::extraFilters() const
 void ExtraFiltersWidget::setExtraFilters(QList<ExtraFilter> extraFilters)
 {
 	_ui->treeWidget->clear();
-	foreach(auto filter, extraFilters)
+	for(auto filter : extraFilters)
 		addFilter(filter);
 }
 

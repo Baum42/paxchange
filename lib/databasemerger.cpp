@@ -28,7 +28,7 @@ bool DatabaseMerger::mergeDb(QString dbPath)
 		otherFile.close();
 
 		//packages: keep install on conflict
-		foreach (auto pacInfo, pacDbOther.packages) {
+		for (auto pacInfo : pacDbOther.packages) {
 			if(!pacDbCurrent.packages.contains(pacInfo.name))
 				pacDbCurrent.packages[pacInfo.name] = pacInfo;
 			else if(pacInfo.removed != pacDbCurrent.packages[pacInfo.name].removed) {
@@ -38,7 +38,7 @@ bool DatabaseMerger::mergeDb(QString dbPath)
 		}
 
 		//unlearPackages: keep current on conflict
-		foreach (auto unclearPac, pacDbOther.unclearPackages) {
+		for (auto unclearPac : pacDbOther.unclearPackages) {
 			if(!pacDbCurrent.unclearPackages.contains(unclearPac.name))
 				pacDbCurrent.unclearPackages[unclearPac.name] = unclearPac;
 			else if(!unclearPac.equals(pacDbCurrent.unclearPackages[unclearPac.name]))
@@ -51,7 +51,7 @@ bool DatabaseMerger::mergeDb(QString dbPath)
 			_log.append(tr("Conflict on global filter mode - kept state of current database"));
 
 		//filter: auto rename on conflict
-		foreach (auto filter, pacDbOther.filters){
+		for (auto filter : pacDbOther.filters){
 			if(!pacDbCurrent.filters.contains(filter.name))
 				pacDbCurrent.filters[filter.name] = filter;
 			else if(!filter.equals(pacDbCurrent.filters[filter.name])){
@@ -68,7 +68,7 @@ bool DatabaseMerger::mergeDb(QString dbPath)
 		}
 
 		//extra filter: keep current on conflict
-		foreach (auto eFilter, pacDbOther.extraFilters) {
+		for (auto eFilter : pacDbOther.extraFilters) {
 			auto index = pacDbCurrent.extraFilters.indexOf(eFilter);
 			if(index == -1)
 				pacDbCurrent.extraFilters.append(eFilter);

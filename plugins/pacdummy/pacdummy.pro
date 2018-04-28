@@ -14,13 +14,14 @@ DESTDIR = $$OUT_PWD/../../paxchange
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
+HEADERS += \
+	pacdummyplugin.h \
+	pacstate.h
+
 SOURCES += \
 	pacdummyplugin.cpp \
 	pacstate.cpp
 
-HEADERS += \
-	pacdummyplugin.h \
-	pacstate.h
 DISTFILES += pacdummy.json
 
 unix {
@@ -38,6 +39,4 @@ DEPENDPATH += $$PWD/../../lib
 RESOURCES += \
 	pacdummy.qrc
 
-qpmlupdate.target = lupdate
-qpmlrelease.target = lrelease
-QMAKE_EXTRA_TARGETS += qpmlupdate qpmlrelease
+QMAKE_EXTRA_TARGETS += lrelease

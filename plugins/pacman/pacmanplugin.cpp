@@ -82,7 +82,7 @@ QList<PackageManagerPlugin::SettingsInfo> PacmanPlugin::listSettings() const
 			QStringLiteral("frontend"),
 			qMetaTypeId<ComboboxConfig>(),
 			QVariant::fromValue<ComboboxConfig>({
-				{QStringLiteral("pacaur"), QStringLiteral("yaourt"), QStringLiteral("pacman")},
+				{QStringLiteral("trizen"), QStringLiteral("yaourt"), QStringLiteral("pacman")},
 				{},
 				frontends[index].first,
 				true

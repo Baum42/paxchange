@@ -119,9 +119,14 @@ void SettingsDialog::accept()
 	for(auto it = _settingsWidgets.constBegin(); it != _settingsWidgets.constEnd(); ++it) {
 		auto cBox = qobject_cast<QComboBox*>(it.value());
 		if(cBox) {
-			auto data = cBox->currentData();
-			if(!data.isValid())
+			QVariant data;
+			if(cBox->isEditable())
 				data = cBox->currentText();
+			else {
+				data = cBox->currentData();
+				if(!data.isValid())
+					data = cBox->currentText();
+			}
 			changes.insert(it.key(), data);
 		} else {
 			auto userProp = it.value()->metaObject()->userProperty();
@@ -139,7 +144,7 @@ void SettingsDialog::createWidgets(QWidget *parent, QFormLayout *layout, bool as
 {
 	auto ctr = DatabaseController::instance();
 
-	foreach (auto info, infos) {
+	for (auto info : infos) {
 		auto key = asPlugin ?
 					   SyncedSettings::pluginKey(info.settingsKeys) :
 					   info.settingsKeys;

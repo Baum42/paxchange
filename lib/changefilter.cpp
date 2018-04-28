@@ -16,7 +16,7 @@ void ChangeFilter::packagesChanged(const QStringList &added, const QStringList &
 	auto db = DatabaseController::instance();
 
 	//check if already in db
-	foreach (auto pac, removed) {
+	for (auto pac : removed) {
 		auto info = db->getInfo(pac);
 		if(info.isValid() && !info.removed){
 			info.removed = true;
@@ -25,7 +25,7 @@ void ChangeFilter::packagesChanged(const QStringList &added, const QStringList &
 	}
 
 	QSet<QString> addedSet;
-	foreach(auto pac, added){
+	for(auto pac : added){
 		auto info = db->getInfo(pac);
 		if(info.isValid()){
 			if(info.removed){
@@ -39,7 +39,7 @@ void ChangeFilter::packagesChanged(const QStringList &added, const QStringList &
 	//extra filters
 	QHash<QString, QRegularExpression> eCache;
 	auto extraFilters = db->extraFilters();
-	foreach(auto filter, extraFilters)
+	for(auto filter : extraFilters)
 		eCache[filter.regex] = createRegEx(filter.regex);
 
 	applyFilters<ExtraFilter>(addedSet, extraFilters,
@@ -54,7 +54,7 @@ void ChangeFilter::packagesChanged(const QStringList &added, const QStringList &
 	//filters
 	QHash<QString, QPair<QRegularExpression, QStringList>> cache;
 	auto filters = db->filters().values();
-	foreach (auto filter, filters){
+	for (auto filter : filters){
 		if(filter.plugin == PluginLoader::currentPlugin())
 			cache[filter.name] = {createRegEx(filter.regex),
 								  PluginLoader::plugin()->listPackages(QVector<bool>::fromList(filter.pluginFilters))};
@@ -74,11 +74,11 @@ void ChangeFilter::packagesChanged(const QStringList &added, const QStringList &
 	//global
 	switch (db->globalMode()) {
 	case FilterInfo::Ask:
-		foreach (auto pac, addedSet)
+		for (auto pac : addedSet)
 			_uPacInfoList[pac] = {pac, QSysInfo::machineHostName()};
 		break;
 	case FilterInfo::Add:
-		foreach (auto pac, addedSet)
+		for (auto pac : addedSet)
 			_pacInfoList[pac] = pac;
 		break;
 	case FilterInfo::Skip:
@@ -112,7 +112,7 @@ void ChangeFilter::applyFilters(QSet<QString> &packages,
 		QStringList fmList;
 
 		auto mode = FilterInfo::Ask;
-		foreach(auto filter, filters){
+		for(auto filter : filters){
 			if(filterFn(*it, filter)){
 				fmList.append(filterNameFn(filter));
 				mode = filter.mode;

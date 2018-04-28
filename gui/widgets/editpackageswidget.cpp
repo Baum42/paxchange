@@ -54,7 +54,7 @@ void EditPackagesWidget::clear()
 
 void EditPackagesWidget::setupFilters()
 {
-	foreach (auto filter, _plugin->extraFilters()) {
+	for (auto filter : _plugin->extraFilters()) {
 		auto check = new QCheckBox(filter.text, _ui->groupBox);
 		check->setToolTip(filter.toolTip);
 		check->setChecked(filter.defaultValue);
@@ -80,7 +80,7 @@ void EditPackagesWidget::on_addButton_clicked()
 {
 	auto indexes = _ui->localPackageListView->selectionModel()->selectedIndexes();
 	auto targetList = _dbModel->stringList();
-	foreach(auto filterIndex, indexes) {
+	for(auto filterIndex : indexes) {
 		auto pkgName = _pkgModel->data(_pkgFilter->mapToSource(filterIndex), Qt::DisplayRole).toString();
 		if(!targetList.contains(pkgName))
 			targetList.append(pkgName);
@@ -93,9 +93,9 @@ void EditPackagesWidget::on_removeButton_clicked()
 {
 	auto indexes = _ui->dbPackageListView->selectionModel()->selectedIndexes();
 	QList<QPersistentModelIndex> pIndexes;
-	foreach(auto filterIndex, indexes)
+	for(auto filterIndex : indexes)
 		pIndexes.append(_dbFilter->mapToSource(filterIndex));
-	foreach(auto index, pIndexes)
+	for(auto index : pIndexes)
 		_dbModel->removeRow(index.row(), index.parent());
 	_ui->dbPackageListView->clearSelection();
 }

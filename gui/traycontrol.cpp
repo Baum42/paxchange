@@ -139,7 +139,7 @@ void TrayControl::showUnclearDialog()
 		auto filters = resList[2].value<QList<ExtraFilter>>();
 
 		if(!packages.ignore.isEmpty()) {
-			foreach(auto ign, packages.ignore) {
+			for(auto ign : packages.ignore) {
 				filters.append({
 								   QStringLiteral("^%1$").arg(QRegularExpression::escape(ign.name)),
 								   FilterInfo::Skip
@@ -361,7 +361,7 @@ void TrayControl::showUnclear(int count)
 
 void TrayControl::enableAll(bool enable)
 {
-	foreach(auto action, _trayMenu->actions())
+	for(auto action : _trayMenu->actions())
 		action->setEnabled(enable);
 	_trayMenu->actions().last()->setEnabled(true);
 }

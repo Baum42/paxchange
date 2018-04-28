@@ -121,7 +121,7 @@ QString DatabaseController::currentPath() const
 void DatabaseController::createDb(const QString &path, const QStringList &packages)
 {
 	PackageDatabase p;
-	foreach (auto package, packages)
+	for (auto package : packages)
 		p.packages[package] = {package, false};
 
 	writeFile(p, path);
@@ -215,7 +215,7 @@ void DatabaseController::updateDb(const QStringList &packages)
 		}
 	}
 
-	foreach (auto package, set)
+	for (auto package : set)
 		_packageDatabase.packages[package] = {package};
 
 	writeCurrentFile();
@@ -223,7 +223,7 @@ void DatabaseController::updateDb(const QStringList &packages)
 
 void DatabaseController::clearPackages(const QList<UnclearPackageInfo> &clearedPackages)
 {
-	foreach (auto package, clearedPackages)
+	for (auto package : clearedPackages)
 		_packageDatabase.packages[package.name] = package;
 	_packageDatabase.unclearPackages.clear();
 	writeCurrentFile();
@@ -252,9 +252,9 @@ void DatabaseController::fileChanged()
 
 void DatabaseController::updatePackages(const QList<PackageInfo> &addedPkg, const QList<UnclearPackageInfo> &unclearPkg)
 {
-	foreach (auto package, addedPkg)
+	for (auto package : addedPkg)
 		_packageDatabase.packages[package.name] = package;
-	foreach (auto unclear, unclearPkg)
+	for (auto unclear : unclearPkg)
 		_packageDatabase.unclearPackages[unclear.name] = unclear;
 	writeCurrentFile();
 	emit unclearPackagesChanged(_packageDatabase.unclearPackages.size());

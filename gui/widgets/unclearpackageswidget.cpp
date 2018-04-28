@@ -40,7 +40,7 @@ void UnclearPackagesWidget::setPackages(UnclearHelper packages)
 	_ui->treeWidget->clear();
 
 	QHash<QString, QTreeWidgetItem*> machines;
-	foreach (auto package, packages.sync) {
+	for (auto package : packages.sync) {
 		auto machine = machines.value(package.hostName);
 		if(!machine) {
 			machine = new UnclearItem(_ui->treeWidget, {package.hostName});

@@ -64,7 +64,7 @@ QVariantList ContentDialog::execute(const QString &windowTitle, const QList<QWid
 
 	QVariantList res;
 	if(dialog.exec() == QDialog::Accepted) {
-		foreach(auto contentWidget, contentWidgets) {
+		for(auto contentWidget : contentWidgets) {
 			auto prop = contentWidget->metaObject()->userProperty();
 			res.append(prop.read(contentWidget));
 		}

@@ -30,7 +30,7 @@ FiltersWidget::FiltersWidget(QWidget *parent) :
 			this, &FiltersWidget::updateEdit);
 
 	auto filters = PluginLoader::plugin()->extraFilters();
-	foreach (auto filter, filters) {
+	for (auto filter : filters) {
 		auto check = new QCheckBox(filter.text, _ui->extraFiltersGroup);
 		check->setToolTip(filter.toolTip);
 		check->setChecked(filter.defaultValue);
@@ -50,7 +50,7 @@ QMap<QString, FilterInfo> FiltersWidget::filters() const
 	updateEdit(_ui->listView->currentIndex(), _ui->listView->currentIndex());
 
 	QMap<QString, FilterInfo> filters;
-	foreach (auto f, _filterModel->filters()) {
+	for (auto f : _filterModel->filters()) {
 		const auto name = f.name;
 		auto idx = 0;
 		while(filters.contains(f.name))
@@ -77,7 +77,7 @@ void FiltersWidget::updateEdit(const QModelIndex &current, const QModelIndex &pr
 		info.regex = _ui->regexEdit->text();
 
 		info.pluginFilters.clear();
-		foreach (auto box, _boxes)
+		for (auto box : _boxes)
 			info.pluginFilters.append(box->isChecked());
 
 		if(_ui->modeAddButton->isChecked())

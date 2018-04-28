@@ -44,7 +44,7 @@ QList<PacDummyPlugin::FilterInfo> PacDummyPlugin::extraFilters()
 QStringList PacDummyPlugin::listAllPackages()
 {
 	QStringList list;
-	foreach (auto pacState, _pacList) {
+	for (auto pacState : _pacList) {
 		if(!pacState.installed)
 			continue;
 		list.append(pacState.name);
@@ -56,7 +56,7 @@ QStringList PacDummyPlugin::listAllPackages()
 QStringList PacDummyPlugin::listPackages(QVector<bool> extraFilters)
 {
 	QStringList list;
-	foreach (auto pacState, _pacList) {
+	for (auto pacState : _pacList) {
 		if(!pacState.installed)
 			continue;
 
@@ -94,7 +94,7 @@ QString PacDummyPlugin::installationCmd(const QStringList &packages)
 	tmp.setPermissions(tmp.permissions() | QFileDevice::ExeUser);
 
 	bool stateChanged = false;
-	foreach (auto package, packages) {
+	for (auto package : packages) {
 		for(int i = 0; i < _pacList.size(); i++){
 			if(_pacList[i].name == package){
 				_pacList[i].installed = true;
@@ -135,7 +135,7 @@ QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
 	tmp.setPermissions(tmp.permissions() | QFileDevice::ExeUser);
 
 	bool stateChanged = false;
-	foreach (auto package, packages) {
+	for (auto package : packages) {
 		for(int i = 0; i < _pacList.size(); i++){
 			if(_pacList[i].name == package){
 				_pacList[i].installed = false;

@@ -76,7 +76,7 @@ QVariant SyncedSettings::defaultValue(const QString &localKey) const
 	rGroups.append(localKey);
 	auto key = rGroups.join(QLatin1Char('/'));
 
-	foreach(auto info, PluginLoader::plugin()->listSettings()) {
+	for(auto info : PluginLoader::plugin()->listSettings()) {
 		if(info.settingsKeys == key){
 			if(qMetaTypeId<ComboboxConfig>() == info.defaultValue.userType())
 				return info.defaultValue.value<ComboboxConfig>().defaultValue;

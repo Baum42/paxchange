@@ -46,7 +46,7 @@ void DbMergerDialog::on_mergeButton_clicked()
 		if(log.isEmpty())
 			_ui->textBrowser->append(tr("Merged without any conflicts!"));
 		else {
-			foreach(auto entry, log)
+			for(auto entry : log)
 				_ui->textBrowser->append(entry);
 		}
 
