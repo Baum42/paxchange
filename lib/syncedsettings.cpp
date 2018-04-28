@@ -3,7 +3,7 @@
 #include "pluginloader.h"
 #include "syncedsettings.h"
 
-SyncedSettings::SyncedSettings(){}
+SyncedSettings::SyncedSettings() = default;
 
 SyncedSettings::~SyncedSettings()
 {

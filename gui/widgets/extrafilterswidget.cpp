@@ -85,7 +85,7 @@ void ExtraFiltersWidget::addFilter(const ExtraFilter &filter)
 	box->setCurrentIndex(filter.mode);
 	connect(box, QOverload<int>::of(&QComboBox::currentIndexChanged),
 			this, [item](int index){
-		item->setData(1, Qt::UserRole, QVariant::fromValue((FilterInfo::Mode)index));
+		item->setData(1, Qt::UserRole, QVariant::fromValue(static_cast<FilterInfo::Mode>(index)));
 	});
 	_ui->treeWidget->setItemWidget(item, 1, box);
 }

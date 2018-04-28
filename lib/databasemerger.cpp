@@ -23,8 +23,8 @@ bool DatabaseMerger::mergeDb(QString dbPath)
 		if(!otherFile.open(QIODevice::ReadOnly))
 			throw DatabaseException(otherFile.errorString());
 
-		PackageDatabase pacDbCurrent = _js->deserializeFrom<PackageDatabase>(&currentFile);
-		PackageDatabase pacDbOther = _js->deserializeFrom<PackageDatabase>(&otherFile);
+		auto pacDbCurrent = _js->deserializeFrom<PackageDatabase>(&currentFile);
+		auto pacDbOther = _js->deserializeFrom<PackageDatabase>(&otherFile);
 		otherFile.close();
 
 		//packages: keep install on conflict

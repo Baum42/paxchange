@@ -8,7 +8,7 @@ class DatabaseWizard : public QWizard
 	Q_OBJECT
 public:
 	explicit DatabaseWizard(QWidget *parent = nullptr);
-	~DatabaseWizard();
+	~DatabaseWizard() override;
 
 	static bool run();
 

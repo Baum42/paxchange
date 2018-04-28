@@ -95,9 +95,9 @@ QString PacDummyPlugin::installationCmd(const QStringList &packages)
 
 	bool stateChanged = false;
 	for (auto package : packages) {
-		for(int i = 0; i < _pacList.size(); i++){
-			if(_pacList[i].name == package){
-				_pacList[i].installed = true;
+		for(auto &pkg : _pacList){
+			if(pkg.name == package){
+				pkg.installed = true;
 				stateChanged = true;
 			}
 		}
@@ -136,9 +136,9 @@ QString PacDummyPlugin::uninstallationCmd(const QStringList &packages)
 
 	bool stateChanged = false;
 	for (auto package : packages) {
-		for(int i = 0; i < _pacList.size(); i++){
-			if(_pacList[i].name == package){
-				_pacList[i].installed = false;
+		for(auto &pkg : _pacList){
+			if(pkg.name == package){
+				pkg.installed = false;
 				stateChanged = true;
 			}
 		}

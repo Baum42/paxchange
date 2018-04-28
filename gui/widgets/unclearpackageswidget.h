@@ -40,8 +40,8 @@ private:
 class UnclearHelper
 {
 public:
-	UnclearHelper(const QList<UnclearPackageInfo> &sync = {},
-				  const QList<UnclearPackageInfo> &ignore = {});
+	UnclearHelper(QList<UnclearPackageInfo> sync = {},
+				  QList<UnclearPackageInfo> ignore = {});
 
 	QList<UnclearPackageInfo> sync;
 	QList<UnclearPackageInfo> ignore;
@@ -61,7 +61,7 @@ public:
 	Q_ENUM(ExtraRoles)
 
 	explicit UnclearPackagesWidget(QWidget *parent = nullptr);
-	~UnclearPackagesWidget();
+	~UnclearPackagesWidget() override;
 
 	UnclearHelper packages() const;
 

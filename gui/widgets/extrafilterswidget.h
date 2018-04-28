@@ -17,7 +17,7 @@ class ExtraFiltersWidget : public QWidget
 
 public:
 	explicit ExtraFiltersWidget(QWidget *parent = nullptr);
-	~ExtraFiltersWidget();
+	~ExtraFiltersWidget() override;
 
 	QList<ExtraFilter> extraFilters() const;
 

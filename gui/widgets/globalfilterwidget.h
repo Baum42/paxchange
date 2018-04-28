@@ -16,7 +16,7 @@ class GlobalFilterWidget : public QWidget
 
 public:
 	explicit GlobalFilterWidget(QWidget *parent = nullptr);
-	~GlobalFilterWidget();
+	~GlobalFilterWidget() override;
 
 	FilterInfo::Mode mode() const;
 

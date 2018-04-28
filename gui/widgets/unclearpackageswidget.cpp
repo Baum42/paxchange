@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "unclearpackageswidget.h"
 #include "ui_unclearpackageswidget.h"
 
@@ -5,6 +7,7 @@
 #include <QPushButton>
 #include <QHeaderView>
 #include <QMouseEvent>
+#include <utility>
 
 UnclearPackagesWidget::UnclearPackagesWidget(QWidget *parent) :
 	QWidget(parent),
@@ -72,9 +75,9 @@ void UnclearPackagesWidget::setPackages(UnclearHelper packages)
 
 
 
-UnclearHelper::UnclearHelper(const QList<UnclearPackageInfo> &packages, const QList<UnclearPackageInfo> &ignored) :
-	sync(packages),
-	ignore(ignored)
+UnclearHelper::UnclearHelper(QList<UnclearPackageInfo> packages, QList<UnclearPackageInfo> ignored) :
+	sync(std::move(packages)),
+	ignore(std::move(ignored))
 {}
 
 

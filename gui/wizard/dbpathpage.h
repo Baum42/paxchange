@@ -13,7 +13,7 @@ class DbPathPage : public QWizardPage
 
 public:
 	explicit DbPathPage(QWidget *parent = nullptr);
-	~DbPathPage();
+	~DbPathPage() override;
 
 	void initializePage() override;
 	void cleanupPage() override;

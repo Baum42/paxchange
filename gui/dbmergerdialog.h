@@ -14,7 +14,7 @@ class DbMergerDialog : public QDialog
 
 public:
 	explicit DbMergerDialog(QWidget *parent = nullptr);
-	~DbMergerDialog();
+	~DbMergerDialog() override;
 
 	static void merge(QWidget *parent = nullptr);
 

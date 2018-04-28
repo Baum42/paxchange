@@ -4,6 +4,7 @@
 #include <QWizardPage>
 #include <QMetaProperty>
 #include <QVBoxLayout>
+#include <utility>
 #include <databasecontroller.h>
 
 template <typename T>
@@ -11,7 +12,7 @@ class DbWidgetPage : public QWizardPage
 {
 public:
 	explicit DbWidgetPage(const QString &fieldName,
-						  const QByteArray &dbProperty,
+						  QByteArray dbProperty,
 						  QWidget *parent = nullptr);
 
 	void initializePage() override;
@@ -27,10 +28,10 @@ private:
 };
 
 template <typename T>
-DbWidgetPage<T>::DbWidgetPage(const QString &fieldName, const QByteArray &dbProperty, QWidget *parent) :
+DbWidgetPage<T>::DbWidgetPage(const QString &fieldName, QByteArray dbProperty, QWidget *parent) :
 	QWizardPage(parent),
 	widget(new T(this)),
-	_dbProperty(dbProperty)
+	_dbProperty(std::move(dbProperty))
 {
 	setLayout(new QVBoxLayout(this));
 	layout()->addWidget(widget);

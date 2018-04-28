@@ -28,7 +28,7 @@ class EditPackagesWidget : public QWidget
 
 public:
 	explicit EditPackagesWidget(QWidget *parent = nullptr);
-	~EditPackagesWidget();
+	~EditPackagesWidget() override;
 
 	QStringList packages() const;
 

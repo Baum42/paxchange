@@ -13,7 +13,7 @@ class DbSelectionPage : public QWizardPage
 
 public:
 	explicit DbSelectionPage(QWidget *parent = nullptr);
-	~DbSelectionPage();
+	~DbSelectionPage() override;
 
 	void cleanupPage() override;
 

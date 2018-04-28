@@ -1,12 +1,11 @@
 #include "packagemanagerplugin.h"
+#include <utility>
+
 PackageManagerPlugin::PackageManagerPlugin(QObject *parent) :
 	QObject(parent)
 {}
 
-void PackageManagerPlugin::initialize()
-{
-
-}
+void PackageManagerPlugin::initialize() {}
 
 bool PackageManagerPlugin::startGuiInstall(const QStringList &packages)
 {
@@ -36,11 +35,11 @@ void PackageManagerPlugin::forwardedArguments(QStringList args)
 }
 
 PackageManagerPlugin::SettingsInfo::SettingsInfo(QString displayName, QString description, QString settingsKeys, int type, QVariant defaultValue, QByteArray widgetClassName, QVariantMap widgetProperties) :
-	displayName(displayName),
-	description(description),
-	settingsKeys(settingsKeys),
+	displayName(std::move(displayName)),
+	description(std::move(description)),
+	settingsKeys(std::move(settingsKeys)),
 	type(type),
-	defaultValue(defaultValue),
-	widgetClassName(widgetClassName),
-	widgetProperties(widgetProperties)
+	defaultValue(std::move(defaultValue)),
+	widgetClassName(std::move(widgetClassName)),
+	widgetProperties(std::move(widgetProperties))
 {}

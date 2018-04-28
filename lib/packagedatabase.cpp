@@ -1,7 +1,9 @@
 #include "packagedatabase.h"
 
+#include <utility>
+
 PackageInfo::PackageInfo(QString name, bool removed) :
-	name(name),
+	name(std::move(name)),
 	removed(removed)
 {}
 
@@ -23,8 +25,8 @@ bool PackageInfo::equals(const PackageInfo &other) const
 
 UnclearPackageInfo::UnclearPackageInfo(QString name, QString hostName, QStringList filterNames) :
 	PackageInfo(name),
-	hostName(hostName),
-	filterNames(filterNames)
+	hostName(std::move(hostName)),
+	filterNames(std::move(filterNames))
 {}
 
 bool UnclearPackageInfo::operator ==(const UnclearPackageInfo &other) const
@@ -39,9 +41,9 @@ bool UnclearPackageInfo::equals(const UnclearPackageInfo &other) const
 			filterNames == other.filterNames;
 }
 
-FilterInfo::FilterInfo(const QString &name, const QString &plugin) :
-	name(name),
-	plugin(plugin),
+FilterInfo::FilterInfo(QString name, QString plugin) :
+	name(std::move(name)),
+	plugin(std::move(plugin)),
 	mode(Ask),
 	pluginFilters(),
 	regex()
@@ -62,7 +64,7 @@ bool FilterInfo::equals(const FilterInfo &other) const
 }
 
 ExtraFilter::ExtraFilter(QString regex, FilterInfo::Mode mode) :
-	regex(regex),
+	regex(std::move(regex)),
 	mode(mode)
 {}
 

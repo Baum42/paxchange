@@ -24,7 +24,7 @@ private:
 	QHash<QString, QWidget*> _settingsWidgets;
 
 	explicit SettingsDialog(QWidget *parent = nullptr);
-	~SettingsDialog();
+	~SettingsDialog() override;
 
 	void createWidgets(QWidget *parent,
 					   QFormLayout *layout,

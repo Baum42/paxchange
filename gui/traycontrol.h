@@ -14,7 +14,7 @@ class TrayControl : public QObject
 
 public:
 	explicit TrayControl(QObject *parent = nullptr);
-	~TrayControl();
+	~TrayControl() override;
 
 	void show();
 

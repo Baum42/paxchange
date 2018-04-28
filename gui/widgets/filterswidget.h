@@ -42,7 +42,7 @@ class FiltersWidget : public QWidget
 
 public:
 	explicit FiltersWidget(QWidget *parent = nullptr);
-	~FiltersWidget();
+	~FiltersWidget() override;
 
 	QMap<QString, FilterInfo> filters() const;
 
