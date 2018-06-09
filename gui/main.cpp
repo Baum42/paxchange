@@ -56,8 +56,6 @@ int main(int argc, char *argv[])
 	QApplication::setWindowIcon(QIcon(QStringLiteral(":/icons/main.svg")));
 	QApplication::setQuitOnLastWindowClosed(false);
 
-	qDebug() << QCoreApplication::arguments();
-
 	//load translations
 	DatabaseController::loadTranslation(QStringLiteral("paxchange_gui"));
 	QCommandLineParser parser;

@@ -17,17 +17,16 @@ TRANSLATIONS += paxchange_plugin_pacman_de.ts \
 	paxchange_plugin_pacman_template.ts
 
 DISTFILES += pacman.json \
-	paxchange.sh \
 	paxchange_install.hook \
 	paxchange_remove.hook \
 	$$TRANSLATIONS
 
-unix {
-	target.path = $$[QT_INSTALL_PLUGINS]/paxchange
-	qpmx_ts_target.path = $$[QT_INSTALL_TRANSLATIONS]
-	qpmx_ts_target.files += paxchange_plugin_pacman_template.ts
-	INSTALLS += target qpmx_ts_target
-}
+target.path = $$[QT_INSTALL_PLUGINS]/paxchange
+qpmx_ts_target.path = $$[QT_INSTALL_TRANSLATIONS]
+qpmx_ts_target.files += paxchange_plugin_pacman_template.ts
+hook.path = /usr/share/libalpm/hooks
+hook.files += paxchange_install.hook paxchange_remove.hook
+INSTALLS += target qpmx_ts_target hook
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../lib/release/ -lpaxchange
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../lib/debug/ -lpaxchange
